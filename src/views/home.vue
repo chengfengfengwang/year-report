@@ -911,7 +911,6 @@ export default {
     font-size: 36px;
     font-weight: 600;
     color: #3a316d;
-    letter-spacing: 2px;
     .l2 {
       margin-top: 3em;
     }

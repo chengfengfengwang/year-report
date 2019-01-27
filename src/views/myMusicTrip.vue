@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="page p1" v-show="true">
+    <div class="page p1" v-show="testShow">
       <div class="logo_area">
         <span class="name px1-right">年轻-aimusic</span>
         <img class="logo" src="../assets/img/mytrip/p1/logo.png" alt>
@@ -28,7 +28,11 @@
       </div>
       <Bottom v-show="page1.enterShow"></Bottom>
     </div>
-    <div class="page p2" v-bind:class="{fadeIn:page2.fadeIn,animationStart:page2.animationStart}" v-show="true">
+    <div
+      class="page p2"
+      v-bind:class="{fadeIn:page2.fadeIn,animationStart:page2.animationStart}"
+      v-show="testShow"
+    >
       <div class="text">
         <p class="t1">2018年 10 月 25 日，</p>
         <p class="t2">你是第 54003 个加入了AI音乐学院的同学</p>
@@ -47,7 +51,11 @@
       </div>
       <img src="../assets/img/mytrip/p2/hand.png" alt class="hand">
     </div>
-    <div class="page p3" v-bind:class="{fadeIn:page3.fadeIn,animationStart:page3.animationStart}" v-show="true">
+    <div
+      class="page p3"
+      v-bind:class="{fadeIn:page3.fadeIn,animationStart:page3.animationStart}"
+      v-show="testShow"
+    >
       <div class="text">
         <p class="t1">千里之行，始于足下</p>
         <p class="t2">这一年，你有一个小目标</p>
@@ -67,7 +75,7 @@
     <div
       class="page p4"
       v-bind:class="{fadeIn:page4.fadeIn,animationStart:page4.animationStart}"
-      v-show="true"
+      v-show="testShow"
     >
       <div class="text">
         <div class="l1">
@@ -98,7 +106,7 @@
     <div
       class="page p5"
       v-bind:class="{fadeIn:page5.fadeIn,animationStart:page5.animationStart}"
-      v-show="true"
+      v-show="testShow"
     >
       <div class="text">
         <div class="l1">勇于追求，不断超越</div>
@@ -189,9 +197,11 @@
 </template>
 <script>
 import Bottom from "./../components/Bottom";
+import html2canvas from "html2canvas";
 export default {
   data: function() {
     return {
+      testShow: false,
       page1: {
         fadeIn: false,
         animationStart: false,
@@ -214,8 +224,8 @@ export default {
         animationStart: false
       },
       page6: {
-        fadeIn: false,
-        animationStart: false
+        fadeIn: true,
+        animationStart: true
       },
       currentPage: "1",
       pageLock: false
@@ -227,6 +237,7 @@ export default {
   mounted() {
     this.bindTouchEvent();
     //this.getMycount();
+    this.createResultImg();
   },
   methods: {
     getMycount() {
@@ -306,7 +317,22 @@ export default {
     },
     reWatch() {
       console.log("qweqwe");
-      location.reload()
+      location.reload();
+    },
+    createResultImg() {
+      html2canvas(document.querySelector(".result"), {
+        backgroundColor: "transparent"
+      }).then(canvas => {
+        //document.querySelector('.result').style.display = 'none'
+        document.querySelector(".result").innerHTML = "";
+        var img = new Image();
+        img.classList.add("resultImg");
+        img.src = canvas.toDataURL("image/png");
+        img.onload = function() {
+          console.log("onload");
+          document.querySelector(".page.p6 .result").appendChild(img);
+        };
+      });
     },
     share() {}
   }
@@ -433,9 +459,9 @@ export default {
   z-index: 20;
   background: url("../assets/img/mytrip/p2/bg.png") no-repeat center;
   background-size: 100% 100%;
-  &.animationStart .text{
+  &.animationStart .text {
     .t1 {
-          animation: bubble 900ms linear 1s 1 normal forwards;
+      animation: bubble 900ms linear 1s 1 normal forwards;
     }
     .t2 {
       animation: bubble 900ms linear 2s 1 normal forwards;
@@ -460,7 +486,6 @@ export default {
       margin-top: 30px;
     }
     //animation: bubble 900ms linear 1s 1 normal forwards;
-   
   }
   .person {
     position: absolute;
@@ -510,7 +535,7 @@ export default {
   z-index: 30;
   background: url("../assets/img/mytrip/p3/bg.png") no-repeat center;
   background-size: 100% 100%;
-  &.animationStart .text{
+  &.animationStart .text {
     .t1 {
       animation: bubble 900ms linear 1s 1 normal forwards;
     }
@@ -762,6 +787,7 @@ export default {
     margin: 174px auto 0 auto;
     background: url("../assets/img/mytrip/p6/result-bg.png") no-repeat center;
     background-size: cover;
+    background-color: transparent;
     text-align: center;
     .avatar {
       width: 116px;
