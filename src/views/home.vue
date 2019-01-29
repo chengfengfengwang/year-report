@@ -347,8 +347,8 @@ export default {
         animationStart: false
       },
       page11: {
-        fadeIn: true,
-        animationStart: true
+        fadeIn: false,
+        animationStart: false
       },
       openInApp: false
     };

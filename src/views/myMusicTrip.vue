@@ -262,8 +262,8 @@ export default {
         animationStart: false
       },
       page6: {
-        fadeIn: false,
-        animationStart: false
+        fadeIn: true,
+        animationStart: true
       },
       currentPage: "1",
       pageLock: false,
