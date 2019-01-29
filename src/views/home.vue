@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <audio src="./../assets/bg_music.mp3" autoplay loop preload="auto"></audio>
     <div class="page loading">
       <div class="progress_wrapper">
         <div class="p_grey">
@@ -360,8 +361,19 @@ export default {
     this.cloudMove(document.querySelector(".p7 .cloud1"));
     this.cloudMove(document.querySelector(".p7 .cloud2"));
     this.cloudMove(document.querySelector(".p7 .cloud3"));
+    this.audio()
   },
   methods: {
+    audio(){
+      var audio = document.querySelector('audio');
+      console.log('qqqqq')
+      console.log(audio);
+      document.body.addEventListener('click',function(){
+        console.log('click')
+        audio.play();
+      })
+      
+    },
     initLoading() {
       var that = this;
       var p = document.querySelector(".p_color");
@@ -533,12 +545,15 @@ export default {
   top: 0;
   opacity: 0;
   transition: opacity 1s;
+  visibility: hidden;
   &.fadeIn {
     opacity: 1;
+    visibility: visible;
   }
 }
 .loading {
   opacity: 1;
+  visibility: visible;
   background: url("../assets/img/home/p3/bg.png") no-repeat center;
   background-size: cover;
   .progress_wrapper {
@@ -1241,7 +1256,7 @@ export default {
     position: absolute;
     left: 0;
     bottom: 0px;
-    background: url("../assets/img/home/p7/building.png") no-repeat center;
+    background: url("../assets/img/home/p7/building.png") repeat center;
     background-size: cover;
     width: 100%;
     height: 663px;
@@ -1259,6 +1274,7 @@ export default {
     animation: move 0.7s linear 0s infinite normal forwards;
   }
   .light {
+    display: none;
     position: absolute;
     left: 50%;
     bottom: 0px;
@@ -1269,6 +1285,7 @@ export default {
     height: 1147px;
   }
   .base {
+    display: none;
     position: absolute;
     left: 50%;
     bottom: -215px;

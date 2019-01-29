@@ -489,10 +489,12 @@ export default {
     createResultImg() {
       this.imgToBase64(this.userInfo.avatar).then(res => {
         this.avatarBase64 = res;
+        document.querySelector(".page.p6").classList.add('visi');
         html2canvas(document.querySelector(".result_wrapper"), {
           backgroundColor: "transparent",
           //allowTaint: true
         }).then(canvas => {
+          document.querySelector(".page.p6").classList.remove('visi');
           //return
           //把画好的canvas转成base64
           document.querySelector(".result_wrapper").innerHTML = "";
@@ -525,7 +527,7 @@ export default {
                 ctx.drawImage(img, 0, 0);
                 var base64 = canvas.toDataURL('image/png');
                 console.log('------')
-                console.log(base64);
+                //console.log(base64);
                 resolve(base64)
                 //document.querySelector('#test').src = base64
             }
@@ -582,8 +584,10 @@ export default {
   left: 0;
   top: 0;
   opacity: 0;
+  visibility: hidden;
   &.fadeIn {
     opacity: 1;
+    visibility: visible;
   }
   transition: opacity 1s;
   font-family: "noto";
@@ -593,6 +597,7 @@ export default {
 }
 .loading {
   opacity: 1;
+  visibility: visible;
   background: url("../assets/img/mytrip/p1/bg.png") no-repeat center;
   background-size: cover;
   .progress_wrapper {

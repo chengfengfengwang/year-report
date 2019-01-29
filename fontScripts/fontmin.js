@@ -2,7 +2,8 @@ var Fontmin = require('fontmin');
 var mediumText = `
 P2-f 年，
 一共有
-P11 准备好了`
+P11 准备好了
+P3-end 尤克里里 吉他 非洲鼓 拇指琴 卡林巴 01234567890`
 var fontmin = new Fontmin()
     .src('./originFont/SourceHanSerifCN-Medium.ttf')
     .use(Fontmin.glyph({
