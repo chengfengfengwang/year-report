@@ -153,6 +153,7 @@
       v-bind:class="{fadeIn:page6.fadeIn,animationStart:page6.animationStart}"
       v-show="true"
     >
+    <div class="result_wrapper">
       <div class="result">
         <img :src="avatarBase64" alt class="avatar" crossorigin="Anonymous">
         <div class="userinfo">
@@ -207,6 +208,8 @@
           </div>
         </div>
       </div>
+    </div>
+      
       <div v-show="openInApp" class="bottom_app">
         <div class="save_tip">长按图片保存成绩单</div>
         <div class="bottom_btn">
@@ -289,7 +292,7 @@ export default {
     this.bindTouchEvent();
     this.getMycount();
     this.initLoading();
-    //this.imgToBase64();
+    //this.imgToBase64('http://img.iguitar.immusician.com/avatar/cf8fb4dc146efe58190dd1706f04be95.jpg');
   },
   computed: {
     joinYear() {
@@ -477,60 +480,72 @@ export default {
       location.reload();
     },
     createResultImg() {
-      this.imgToBase64().then(res => {
+      this.imgToBase64(this.userInfo.avatar).then(res => {
         this.avatarBase64 = res;
-        html2canvas(document.querySelector(".result"), {
+        html2canvas(document.querySelector(".result_wrapper"), {
           backgroundColor: "transparent",
-          allowTaint: true
+          //allowTaint: true
         }).then(canvas => {
+          //return
           //把画好的canvas转成base64
-          document.querySelector(".result").innerHTML = "";
+          document.querySelector(".result_wrapper").innerHTML = "";
           var img = new Image();
           img.classList.add("resultImg");
           img.src = canvas.toDataURL("image/png");
           img.onload = function() {
             console.log("onload");
-            document.querySelector(".page.p6 .result").appendChild(img);
+            document.querySelector(".page.p6 .result_wrapper").appendChild(img);
           };
           //document.querySelector(".page.p6 .result").appendChild(canvas);
           //canvas.toDataURL("image/png");
         });
       });
     },
-    imgToBase64() {
+    imgToBase64(url) {
+      var url = url + '?' + new Date().valueOf();
       return new Promise((resolve, reject) => {
-        console.log("qwe");
-        var img = new Image(); //创建新的图片对象
-        var base64 = ""; //base64
-        img.src =
-          "http://img.iguitar.immusician.com/avatar/cf8fb4dc146efe58190dd1706f04be95.jpg-big?" +
-          new Date().valueOf();
-        img.setAttribute("crossOrigin", "Anonymous");
-        img.onload = function() {
-          console.log("图片onload");
-          //图片加载完，再draw 和 toDataURL
-          var canvas = document.createElement("canvas"); //获取canvas
-          canvas.width = img.width;
-          canvas.height = img.height;
-          var ctx = canvas.getContext("2d"); //对应的CanvasRenderingContext2D对象(画笔)
-          //console.log(ctx,img);
-          //console.log(canvas.width,canvas.height)
-          ctx.drawImage(img, 0, 0);
-          base64 = canvas.toDataURL("image/png");
-          //console.log(base64)
-          resolve(base64);
-        };
+            var img = new Image();
+            img.setAttribute("crossOrigin", "Anonymous");
+            img.src = url;
+            console.log(url)
+            console.log('------');
+            console.log(img.complete)
+            img.onload = function () {
+                var canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                var base64 = canvas.toDataURL('image/png');
+                console.log('------')
+                console.log(base64);
+                resolve(base64)
+                //document.querySelector('#test').src = base64
+            }
+        // console.log("qwe");
+        // var img = new Image(); //创建新的图片对象
+        // var base64 = ""; //base64
+        // img.src =
+        //   "http://img.iguitar.immusician.com/avatar/cf8fb4dc146efe58190dd1706f04be95.jpg-big?" +
+        //   new Date().valueOf();
+        // img.setAttribute("crossOrigin", "Anonymous");
+        // img.onload = function() {
+        //   console.log("图片onload");
+        //   //图片加载完，再draw 和 toDataURL
+        //   var canvas = document.createElement("canvas"); //获取canvas
+        //   canvas.width = img.width;
+        //   canvas.height = img.height;
+        //   var ctx = canvas.getContext("2d"); //对应的CanvasRenderingContext2D对象(画笔)
+        //   //console.log(ctx,img);
+        //   //console.log(canvas.width,canvas.height)
+        //   ctx.drawImage(img, 0, 0);
+        //   base64 = canvas.toDataURL("image/png");
+        //   //console.log(base64)
+        //   resolve(base64);
+        // };
       });
     },
     getGift() {
-      this.axios
-        .get("http://192.168.1.171:22222/v3/coupon/send_annals_coupon", {
-          headers: { coupon_id: "", uid: "" }
-        })
-        .then(res => {
-          console.log(res);
-        });
-      return;
       if (this.openInApp) {
         this.axios
           .get("http://192.168.1.171:22222/v3/coupon/send_annals_coupon", {
@@ -1009,7 +1024,7 @@ export default {
     position: absolute;
     width: 40px;
     left: 204px;
-    bottom: 290px;
+    top: 79.3%;
     animation: handRotate 900ms linear 0ms infinite alternate forwards;
     transform-origin: 0 0;
     @keyframes handRotate {
@@ -1089,11 +1104,14 @@ export default {
   z-index: 60;
   background: url("../assets/img/mytrip/p6/bg.png") no-repeat center;
   background-size: cover;
+  .result_wrapper{
+    padding-top: 20px;
+  }
   .result {
     position: relative;
     width: 630px;
     height: 887px;
-    margin: 94px auto 0 auto;
+    margin: 76px auto 0 auto;
     background: url("../assets/img/mytrip/p6/result-bg.png") no-repeat center;
     background-size: cover;
     background-color: transparent;
@@ -1239,14 +1257,14 @@ export default {
       }
     }
     .tip {
-      margin: 10px 0 30px 0;
+      margin: 10px 0 10px 0;
       font-size: 20px;
       font-family: PingFangSC-Regular;
     }
     .re {
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: center; 
       img {
         width: 30px;
       }

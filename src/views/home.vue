@@ -1,6 +1,18 @@
 <template>
   <div class="container">
-    <div class="p1 page" v-show="testPageShow">
+    <div class="page loading">
+      <div class="progress_wrapper">
+        <div class="p_grey">
+          <div class="p_color"></div>
+        </div>
+        <span id="progressStatus">加载中...</span>
+      </div>
+    </div>
+    <div
+      class="p1 page"
+      v-show="testPageShow"
+      v-bind:class="{fadeIn:page1.fadeIn,animationStart:page1.animationStart}"
+    >
       <div class="title"></div>
       <div class="year">
         <img class="front" src="../assets/img/home/p1/p1_201@2x.png" alt>
@@ -35,9 +47,17 @@
           <span class="year_num">2018</span>
           <span class="common_text">年，一共有</span>
         </p>
+        <!-- <p
+          class="c2"
+        >{{beginArr[0]}},{{beginArr[1]}}{{beginArr[2]}}{{beginArr[3]}},{{beginArr[4]}}{{beginArr[5]}}{{beginArr[6]}}人</p> -->
         <p
           class="c2"
-        >{{beginArr[0]}},{{beginArr[1]}}{{beginArr[2]}}{{beginArr[3]}},{{beginArr[4]}}{{beginArr[5]}}{{beginArr[6]}}人</p>
+        >1,131,123人</p>
+      </div>
+      <div class="middle_img">
+        <img src="../assets/img/home/p2/orbit_p2@2x.png" alt="" class="orbit">
+        <img src="../assets/img/home/p2/music_group.png" alt="" class="music_group">
+        <img src="../assets/img/home/p2/logo_p2@2x.png" alt="" class="music_logo">
       </div>
       <div class="t2">
         <p class="c1">在AI音乐学院</p>
@@ -246,16 +266,29 @@
       <img class="star1" src="../assets/img/home/p1/star1.png" alt>
       <img class="star2" src="../assets/img/home/p1/star2.png" alt>
       <img class="star3" src="../assets/img/home/p1/star3.png" alt>
-      <div class="ready_btn">
-        <img src="../assets/img/home/p11/p11_share@2x.png" alt> 准备好了
+      <div v-show="openInApp" class="open_in_app">
+        <div class="ready_btn">
+          <img src="../assets/img/home/p11/p11_share@2x.png" alt> 准备好了
+        </div>
+        <div class="bottom_menu">
+          <div class="left" @click="reWatch">
+            <img src="../assets/img/home/p11/p11_reboot@2x.png" alt>再看一遍
+          </div>
+          <router-link class="right" to="/myMusicTrip" tag="div">
+            <img src="../assets/img/home/p11/p11_next@2x.png" alt>查看我的2018
+          </router-link>
+        </div>
       </div>
-      <div class="bottom_menu">
-        <div class="left" @click="reWatch">
+      <div v-show="!openInApp" class="open_in_h5">
+        <div class="getgiftbtn" @click="getGiftInH5">
+          <img src="../assets/img/home/p11/getGiftBtn.png" alt>
+        </div>
+        <div class="getgifttext">
+          <img src="../assets/img/home/p11/getGiftText.png" alt>
+        </div>
+        <div @click="reWatch" class="rewatch">
           <img src="../assets/img/home/p11/p11_reboot@2x.png" alt>再看一遍
         </div>
-        <router-link class="right" to="/myMusicTrip" tag="div">
-          <img src="../assets/img/home/p11/p11_next@2x.png" alt>查看我的2018
-        </router-link>
       </div>
     </div>
     <!-- <div class="bottom"></div> -->
@@ -267,20 +300,23 @@ export default {
   name: "home",
   data() {
     return {
-      testPageShow: false,
+      testPageShow: true,
       beginArr: [0, 3, 9, 4, 7, 6, 3],
       endArr: [1, 1, 3, 1, 1, 2, 3],
       currentPage: "1",
       pageLock: false,
       timer: "", //所有定时器公用一个timer
-      page1: {},
+      page1: {
+        fadeIn: false,
+        animationStart: false
+      },
       page2: {
         fadeIn: false,
         animationStart: false
       },
       page3: {
-        fadeIn: true,
-        animationStart: true
+        fadeIn: false,
+        animationStart: false
       },
       page4: {
         fadeIn: false,
@@ -313,17 +349,69 @@ export default {
       page11: {
         fadeIn: false,
         animationStart: false
-      }
+      },
+      openInApp: true
     };
   },
   mounted() {
     this.bindTouchEvent();
+    this.initLoading();
     //this.page2NumChange();
     this.cloudMove(document.querySelector(".p7 .cloud1"));
     this.cloudMove(document.querySelector(".p7 .cloud2"));
     this.cloudMove(document.querySelector(".p7 .cloud3"));
   },
   methods: {
+    initLoading() {
+      var that = this;
+      var p = document.querySelector(".p_color");
+      var bgList = document.querySelectorAll(".page");
+      console.log(bgList);
+      var bgArr = [],
+        sum = 0;
+      var fakeTemp = 0;
+      var minPersent = (1 / bgList.length) * 100;
+      bgList.forEach(function(e, index) {
+        var style = e.currentStyle || window.getComputedStyle(e, false);
+        //console.log(style.backgroundImage.slice(4, -1).replace(/"/g, ""))
+        console.log(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
+        bgArr.push(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
+      });
+      var timer = setInterval(() => {
+        fakeTemp += 2;
+        if (fakeTemp < minPersent) {
+          p.style.width = fakeTemp + "%";
+        } else {
+          clearInterval(timer);
+        }
+      }, 1000);
+      // setTimeout(()=>{
+      //     clearInterval(timer)
+      // },3000)
+      bgArr.forEach((e, index) => {
+        var img = new Image();
+        img.src = e;
+        if (img.complete) {
+          responseImgLoad();
+        }
+        img.onload = function() {
+          responseImgLoad();
+        };
+      });
+      function responseImgLoad() {
+        clearInterval(timer);
+        sum++;
+        p.style.width = (sum / bgArr.length) * 100 + "%";
+        if (sum / bgArr.length == 1) {
+          setTimeout(() => {
+            console.log(that);
+            that.$set(that.page1, "fadeIn", true);
+            that.$set(that.page1, "animationStart", true);
+            document.querySelector("#progressStatus").innerHTML = "加载完成";
+          }, 1000);
+        }
+      }
+    },
     bindTouchEvent() {
       var that = this;
       var startX, startY, moveEndX, moveEndY;
@@ -426,6 +514,9 @@ export default {
     },
     reWatch() {
       location.reload();
+    },
+    getGiftInH5(){
+      location.href = "http://api.iguitar.immusician.com/d?c=annals";
     }
   }
 };
@@ -446,10 +537,44 @@ export default {
     opacity: 1;
   }
 }
+.loading {
+  opacity: 1;
+  background: url("../assets/img/home/p3/bg.png") no-repeat center;
+  background-size: cover;
+  .progress_wrapper {
+    margin: 500px auto 0 auto;
+    width: 50%;
+    padding: 0 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+    text-align: center;
+  }
+
+  .p_grey {
+    /* background-color: gray; */
+    width: 100%;
+    height: 30px;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid #999;
+    margin-bottom: 20px;
+  }
+
+  .p_color {
+    background-color: blueviolet;
+    width: 0%;
+    height: 30px;
+    border-radius: 30px;
+    transition: width 1000ms;
+  }
+  #progressStatus {
+    font-size: 30px;
+  }
+}
 .p1 {
   background: url("../assets/img/home/p1/p1_bg.png") no-repeat center;
   background-size: cover;
-  opacity: 1;
+  //opacity: 1;
   z-index: 10;
   .title {
     margin: 122px auto 0 auto;
@@ -596,11 +721,17 @@ export default {
   background: url("../assets/img/home/p2/p2_bg.png") no-repeat center;
   background-size: cover;
   text-align: center;
-  &.animationStart .t2 {
+  &.animationStart .t1 {
     .bubble1;
   }
+  &.animationStart .t2 {
+    .bubble2;
+  }
+  &.animationStart .bottom_text {
+    .bubble3;
+  }
   .t1 {
-    margin-top: 120px;
+    margin-top: 7%;
     .c1 {
       .year_num {
         font-family: "noto-bold";
@@ -622,10 +753,37 @@ export default {
       color: rgba(96, 255, 242, 1);
     }
   }
+  .middle_img{
+    position: absolute;
+    left: 50%;
+      top:45%;
+      transform: translateX(-50%);
+    .orbit{
+      position: absolute;
+      left: 50%;
+      top:50%;
+      transform: translateX(-50%) translateY(-50%);
+      width: 618px;
+    }
+    .music_group{
+      position: absolute;
+      left: 50%;
+      top:50%;
+      transform: translateX(-50%) translateY(-50%);
+      width: 537px;
+    }
+    .music_logo{
+      position: absolute;
+      left: 50%;
+      top:50%;
+      transform: translateX(-50%) translateY(-50%);
+      width: 363px;
+    }
+  }
   .t2 {
     position: absolute;
     left: 0px;
-    bottom: 279px;
+    top: 73%;
     width: 100%;
     font-size: 32px;
     font-family: noto-smbold;
@@ -636,7 +794,7 @@ export default {
   .bottom_text {
     position: absolute;
     left: 116px;
-    bottom: 126px;
+    top: 85%;
     width: 518px;
   }
 }
@@ -1147,7 +1305,7 @@ export default {
   .mode1 {
     width: 522px;
     position: absolute;
-    top: 139px;
+    top: 8%;
     left: 128px;
     z-index: 82;
     animation: float 2500ms linear infinite alternate;
@@ -1155,7 +1313,7 @@ export default {
   .mode2 {
     width: 390px;
     position: absolute;
-    top: 531px;
+    top: 29%;
     left: 297px;
     z-index: 83;
     animation: float 2500ms linear infinite alternate;
@@ -1163,7 +1321,7 @@ export default {
   .mode3 {
     width: 323px;
     position: absolute;
-    top: 530px;
+    top: 31%;
     left: 134px;
     z-index: 84;
     animation: float 2500ms linear infinite alternate;
@@ -1171,7 +1329,7 @@ export default {
   .mode4 {
     width: 323px;
     position: absolute;
-    bottom: 260px;
+    top: 42%;
     left: 130px;
     z-index: 81;
     animation: float 2500ms linear infinite alternate;
@@ -1181,7 +1339,7 @@ export default {
     text-align: center;
     width: 100%;
     left: 0;
-    bottom: 160px;
+    top: 80%;
     font-family: noto-smbold;
     font-size: 24px;
     color: #fff;
@@ -1484,7 +1642,7 @@ export default {
     width: 460px;
     position: absolute;
     left: 145px;
-    bottom: 306px;
+    top: 40%;
     animation: float 2000ms linear infinite alternate;
     @keyframes float {
       0% {
@@ -1497,73 +1655,104 @@ export default {
       }
     }
   }
-  .ready_btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    padding-bottom: 30px;
-    //text-align: center;
-    //vertical-align: middle;
-    position: absolute;
-    bottom: 200px;
-    left: 50%;
-    margin-left: -133px;
-    background: url("./../assets/img/home/p11/p11_button@2x.png") no-repeat
-      center;
-    background-size: cover;
-    width: 266px;
-    height: 100px;
-    img {
-      width: 33px;
-      margin-right: 15px;
-    }
-    font-size: 32px;
-    font-family: noto;
-    color: #fff;
-    opacity: 0;
-
-    @keyframes fadeUp {
-      0% {
-        opacity: 0;
-        transform: translateY(40px);
+  .open_in_app {
+    .ready_btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      padding-bottom: 30px;
+      //text-align: center;
+      //vertical-align: middle;
+      position: absolute;
+      top: 84%;
+      left: 50%;
+      margin-left: -133px;
+      background: url("./../assets/img/home/p11/p11_button@2x.png") no-repeat
+        center;
+      background-size: cover;
+      width: 266px;
+      height: 100px;
+      img {
+        width: 33px;
+        margin-right: 15px;
       }
-      100% {
-        opacity: 1;
-        transform: translateY(0px);
+      font-size: 32px;
+      font-family: noto;
+      color: #fff;
+      opacity: 0;
+
+      @keyframes fadeUp {
+        0% {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0px);
+        }
+      }
+    }
+    .bottom_menu {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 91%;
+      display: flex;
+      justify-content: space-around;
+      .left,
+      .right {
+        padding: 20px 0;
+        display: flex;
+        align-items: center;
+        img {
+          width: 24px;
+          margin-right: 18px;
+        }
+      }
+      font-size: 24px;
+      font-family: noto;
+      color: rgba(255, 255, 255, 1);
+      opacity: 0;
+
+      @keyframes fadeUp {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0px);
+        }
       }
     }
   }
-  .bottom_menu {
+  .open_in_h5{
     position: absolute;
-    width: 100%;
+    top:80%;
     left: 0;
-    bottom: 120px;
-    display: flex;
-    justify-content: space-around;
-    .left,
-    .right {
-      display: flex;
-      align-items: center;
-      img {
-        width: 24px;
-        margin-right: 18px;
+    width: 100%;
+    text-align: center;
+    .getgiftbtn{
+      img{
+        width: 324px;
       }
     }
-    font-size: 24px;
-    font-family: noto;
-    color: rgba(255, 255, 255, 1);
-    opacity: 0;
-
-    @keyframes fadeUp {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
+    .getgifttext{
+      img{
+        width: 218px;
       }
-      100% {
-        opacity: 1;
-        transform: translateY(0px);
-      }
+      margin-bottom: 10px;
+    }
+    .rewatch{
+      font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 18px;
+          margin-right: 18px;
+        }
     }
   }
 }
