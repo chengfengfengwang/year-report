@@ -607,6 +607,23 @@ export default {
   z-index: 10;
   background: url("../assets/img/mytrip/p1/bg.png") no-repeat center;
   background-size: 100% 100%;
+  &.animationStart .music_note{
+    &.note1 {
+      .fly_note1;
+    }
+    &.note2 {
+      .fly_note2;
+    }
+    &.note3 {
+      .fly_note3;
+    }
+    // &.note4 {
+    //   .fly_note4;
+    // }
+  };
+  &.animationStart .light{
+    animation: light_rotate 1000ms linear 1 normal forwards;
+  }
   //opacity: 1;
   .logo_area {
     position: absolute;
@@ -652,19 +669,19 @@ export default {
       width: 25px;
       left: 367px;
       top: 419px;
-      .fly_note1;
+      //.fly_note1;
     }
     &.note2 {
       width: 28px;
       left: 371px;
       top: 576px;
-      .fly_note2;
+      //.fly_note2;
     }
     &.note3 {
       width: 15px;
       left: 399px;
       top: 518px;
-      .fly_note3;
+      //.fly_note3;
     }
     &.note4 {
       width: 34px;
@@ -682,7 +699,7 @@ export default {
     img {
       width: 100%;
     }
-    .light_rotate;
+    //.light_rotate;
     @keyframes light_rotate {
       0% {
         transform: rotate(-30deg);
