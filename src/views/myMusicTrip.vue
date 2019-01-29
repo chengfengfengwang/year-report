@@ -262,8 +262,8 @@ export default {
         animationStart: false
       },
       page6: {
-        fadeIn: true,
-        animationStart: true
+        fadeIn: false,
+        animationStart: false
       },
       currentPage: "1",
       pageLock: false,
@@ -1110,6 +1110,7 @@ export default {
   background-size: cover;
   .result_wrapper{
     padding-top: 20px;
+    padding-bottom: 60px;
   }
   .result {
     position: relative;
@@ -1207,6 +1208,10 @@ export default {
         }
       }
     }
+  }
+  .bottom_app,.bottom_h5{
+    position: relative;
+    top:-120px;
   }
   .bottom_app {
     .save_tip {
