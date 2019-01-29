@@ -43,9 +43,9 @@
     >
       <div class="text">
         <p class="t1">{{joinYear}}年 {{joinMonth}} 月 {{joinDay}} 日，</p>
-        <p class="t2">你是第 {{joinIndex}} 个加入AI音乐学院的同学</p>
+        <p class="t2">{{author}}是第 {{joinIndex}} 个加入AI音乐学院的同学</p>
         <p class="t3 para">和 10W+ 的同学</p>
-        <p class="t4">一起开启了你的音乐之旅</p>
+        <p class="t4">一起开启了{{author}}的音乐之旅</p>
       </div>
       <div class="p_light">
         <img src="../assets/img/mytrip/p2/p-light.png" alt>
@@ -66,13 +66,13 @@
     >
       <div class="text">
         <p class="t1">千里之行，始于足下</p>
-        <p class="t2">这一年，你有一个小目标</p>
+        <p class="t2">这一年，{{author}}有一个小目标</p>
         <p class="t3">
           是学会
           <span class="instru">{{instrumentTypes.join('、')}}</span>
           <!-- <span v-for="item in instrumentTypes" :key="item" class="instru">{{item}}、</span> -->
         </p>
-        <p class="t4 para">你一共在AI音乐学院学习了 {{purchase_count}} 套课程</p>
+        <p class="t4 para">{{author}}一共在AI音乐学院学习了 {{purchase_count}} 套课程</p>
         <div class="t5">
           <div v-show="index<5" v-for="(item, index) in purchase_course" :key="item">《{{item}}》</div>
           <p v-show="purchase_course.length>4" style="margin-left:.5em">……</p>
@@ -107,7 +107,7 @@
           <span class="num">{{play_duration_lable}}%</span>的学员
         </div>
         <div class="l4">
-          恭喜你是当之无愧的
+          {{author}}是当之无愧的
           <img
             v-show="playName==1"
             class="img-name"
@@ -133,7 +133,7 @@
     >
       <div class="text">
         <div class="l1">勇于追求，不断超越</div>
-        <div class="l2">是你的人生态度</div>
+        <div class="l2">是{{author}}的人生态度</div>
         <div class="l3">
           一共拿到
           <span class="num">{{play_a_count}}</span>次
@@ -295,6 +295,13 @@ export default {
     //this.imgToBase64('http://img.iguitar.immusician.com/avatar/cf8fb4dc146efe58190dd1706f04be95.jpg');
   },
   computed: {
+    author(){
+      if(this.openInApp){
+        return '你'
+      }else{
+        return 'TA'
+      }
+    },
     joinYear() {
       return new Date(this.joinTime * 1000).getFullYear();
     },
@@ -707,14 +714,13 @@ export default {
   .light {
     width: 375px;
     transform-origin: 0 0;
-    transform: rotate(-30deg);
+    transform: rotate(0deg);
     position: absolute;
     left: 0;
     top: 0;
     img {
       width: 100%;
     }
-    //.light_rotate;
     @keyframes light_rotate {
       0% {
         transform: rotate(-30deg);
@@ -723,9 +729,6 @@ export default {
       100% {
         transform: rotate(0deg);
       }
-    }
-    .light_rotate {
-      animation: light_rotate 1000ms linear 1 normal forwards;
     }
   }
 }
@@ -750,6 +753,7 @@ export default {
   .text {
     margin: 157px 0 0 65px;
     line-height: 50px;
+    font-family: 'noto-regular';
     .t1,
     .t2,
     .t3,

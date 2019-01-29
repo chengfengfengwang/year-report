@@ -939,19 +939,19 @@ export default {
     position: absolute;
     left: 54px;
     top: 71px;
-    width: 356px;
+    width: 400px;
   }
   .text2 {
     position: absolute;
     left: 52px;
-    top: 180px;
-    width: 356px;
+    top: 220px;
+    width: 520px;
   }
   .text3 {
     position: absolute;
     left: 52px;
-    top: 286px;
-    width: 356px;
+    top: 370px;
+    width: 460px;
   }
   .text4 {
     position: absolute;
