@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="p1 page" v-show="true">
+    <div class="p1 page" v-show="testPageShow">
       <div class="title"></div>
       <div class="year">
         <img class="front" src="../assets/img/home/p1/p1_201@2x.png" alt>
@@ -28,7 +28,7 @@
     <div
       class="p2 page"
       v-bind:class="{fadeIn:page2.fadeIn,animationStart:page2.animationStart}"
-      v-show="true"
+      v-show="testPageShow"
     >
       <div class="t1">
         <p class="c1">
@@ -81,7 +81,7 @@
     <div
       class="p4 page"
       v-bind:class="{fadeIn:page4.fadeIn,animationStart:page4.animationStart}"
-      v-show="true"
+      v-show="testPageShow"
     >
       <img src="./../assets/img/home/p4/text1.png" alt class="text1">
       <img src="./../assets/img/home/p4/text2.png" alt class="text2">
@@ -99,7 +99,7 @@
     <div
       class="p5 page"
       v-bind:class="{fadeIn:page5.fadeIn,animationStart:page5.animationStart}"
-      v-show="true"
+      v-show="testPageShow"
     >
       <div class="layer1"></div>
       <img src="./../assets/img/home/p2/note.png" alt class="note note1">
@@ -123,7 +123,7 @@
     <div
       class="p6 page"
       v-bind:class="{fadeIn:page6.fadeIn,animationStart:page6.animationStart}"
-      v-show="true"
+      v-show="testPageShow"
     >
       <div class="text">
         <p class="l1">深夜0点</p>
@@ -138,7 +138,7 @@
     <div
       class="p7 page"
       v-bind:class="{fadeIn:page7.fadeIn,animationStart:page7.animationStart}"
-      v-show="true"
+      v-show="testPageShow"
     >
       <img src="./../assets/img/home/p7/text_img.png" alt class="text_img">
       <img src="./../assets/img/home/p7/text_img2.png" alt class="text_img2">
@@ -156,7 +156,7 @@
     <div
       class="p8 page"
       v-bind:class="{fadeIn:page8.fadeIn,animationStart:page8.animationStart}"
-      v-show="true"
+      v-show="testPageShow"
     >
       <img src="./../assets/img/home/p8/p8_bm@2x.png" alt class="mode1">
       <img src="./../assets/img/home/p8/p8_F@2x.png" alt class="mode2">
@@ -174,7 +174,11 @@
         </p>
       </div>
     </div>
-    <div class="p9 page" v-bind:class="{fadeIn:page9.fadeIn,animationStart:page9.animationStart}" v-show="true">
+    <div
+      class="p9 page"
+      v-bind:class="{fadeIn:page9.fadeIn,animationStart:page9.animationStart}"
+      v-show="testPageShow"
+    >
       <img class="zan" src="./../assets/img/home/p9/p9_like2@2x.png" alt>
       <img src="./../assets/img/home/p9/p9_TV@2x.png" alt class="tv">
       <div class="text1">
@@ -195,7 +199,11 @@
         </p>
       </div>
     </div>
-    <div class="p10 page" v-bind:class="{fadeIn:page10.fadeIn,animationStart:page10.animationStart}" v-show="true">
+    <div
+      class="p10 page"
+      v-bind:class="{fadeIn:page10.fadeIn,animationStart:page10.animationStart}"
+      v-show="testPageShow"
+    >
       <div class="text1">
         <p class="l1">这一年, AI音乐学院上新了</p>
         <p class="l2">
@@ -218,7 +226,11 @@
         <p class="l3">是AI年度最受欢迎的选修课程</p>
       </div>
     </div>
-    <div class="p11 page" v-bind:class="{fadeIn:page11.fadeIn,animationStart:page11.animationStart}" v-show="true">
+    <div
+      class="p11 page"
+      v-bind:class="{fadeIn:page11.fadeIn,animationStart:page11.animationStart}"
+      v-show="testPageShow"
+    >
       <div class="year">
         <img class="front" src="../assets/img/home/p1/p1_201@2x.png" alt>
         <img class="end" src="../assets/img/home/p1/p1_8@2x.png" alt>
@@ -255,6 +267,7 @@ export default {
   name: "home",
   data() {
     return {
+      testPageShow: false,
       beginArr: [0, 3, 9, 4, 7, 6, 3],
       endArr: [1, 1, 3, 1, 1, 2, 3],
       currentPage: "1",
@@ -266,8 +279,8 @@ export default {
         animationStart: false
       },
       page3: {
-        fadeIn: false,
-        animationStart: false
+        fadeIn: true,
+        animationStart: true
       },
       page4: {
         fadeIn: false,
@@ -305,6 +318,7 @@ export default {
   },
   mounted() {
     this.bindTouchEvent();
+    //this.page2NumChange();
     this.cloudMove(document.querySelector(".p7 .cloud1"));
     this.cloudMove(document.querySelector(".p7 .cloud2"));
     this.cloudMove(document.querySelector(".p7 .cloud3"));
@@ -323,6 +337,7 @@ export default {
       document
         .querySelector(".container")
         .addEventListener("touchmove", function(e) {
+          e.preventDefault();
           moveEndX = e.changedTouches[0].pageX;
           moveEndY = e.changedTouches[0].pageY;
           var X = moveEndX - startX;
@@ -409,8 +424,8 @@ export default {
         //console.log(move)
       }, 80);
     },
-    reWatch(){
-      location.reload()
+    reWatch() {
+      location.reload();
     }
   }
 };
@@ -433,7 +448,7 @@ export default {
 }
 .p1 {
   background: url("../assets/img/home/p1/p1_bg.png") no-repeat center;
-  background-size: 100% 100%;
+  background-size: cover;
   opacity: 1;
   z-index: 10;
   .title {
@@ -579,7 +594,7 @@ export default {
 .p2 {
   z-index: 20;
   background: url("../assets/img/home/p2/p2_bg.png") no-repeat center;
-  background-size: 100% 100%;
+  background-size: cover;
   text-align: center;
   &.animationStart .t2 {
     .bubble1;
@@ -628,7 +643,7 @@ export default {
 .p3 {
   z-index: 30;
   background: url("../assets/img/home/p3/bg.png") no-repeat center;
-  background-size: 100% 100%;
+  background-size: cover;
   &.animationStart .c1 {
     .bubble1;
   }
@@ -674,12 +689,14 @@ export default {
     overflow: hidden;
     position: absolute;
     left: -200px;
-    bottom: -100px;
+    top: 600px;
     // left: 0px;
     // bottom: 0px;
     background: url("./../assets/img/home/p3/earth_shadow.png") no-repeat center;
     background-size: cover;
+    z-index: 39;
     .map {
+      z-index: 31;
       //width: 100%;
       width: 1426px;
       height: 828px;
@@ -730,11 +747,11 @@ export default {
       }
       @keyframes mapMove {
         0% {
-          transform: translateX(-400px);
+          transform: translateX(-400px) translateY(0px);
         }
 
         100% {
-          transform: translateX(0px);
+          transform: translateX(0px) translateY(-50px);
         }
       }
     }
@@ -1180,16 +1197,16 @@ export default {
   z-index: 90;
   background: url("../assets/img/home/p8/p8_bg.png") no-repeat center;
   background-size: 100% 100%;
-  &.animationStart .zan{
+  &.animationStart .zan {
     animation: float 2000ms linear infinite alternate;
   }
-  &.animationStart .tv{
+  &.animationStart .tv {
     animation: float 2000ms linear infinite alternate;
   }
-  &.animationStart .text1{
+  &.animationStart .text1 {
     .bubble1;
   }
-  &.animationStart .text2{
+  &.animationStart .text2 {
     .bubble2;
   }
   .zan {
@@ -1241,19 +1258,19 @@ export default {
   z-index: 100;
   background: url("../assets/img/home/p8/p8_bg.png") no-repeat center;
   background-size: 100% 100%;
-  &.animationStart .text1 .l1{
+  &.animationStart .text1 .l1 {
     animation: p10bubble 700ms linear 300ms 1 normal forwards;
   }
-  &.animationStart .text1 .l2{
+  &.animationStart .text1 .l2 {
     animation: p10bubble 700ms linear 900ms 1 normal forwards;
   }
-  &.animationStart .text2 .l1{
+  &.animationStart .text2 .l1 {
     animation: p10bubble 700ms linear 1500ms 1 normal forwards;
   }
-  &.animationStart .text2 .l2{
+  &.animationStart .text2 .l2 {
     animation: p10bubble 700ms linear 2100ms 1 normal forwards;
   }
-  &.animationStart .text2 .l3{
+  &.animationStart .text2 .l3 {
     animation: p10bubble 700ms linear 2700ms 1 normal forwards;
   }
   @keyframes p10bubble {
@@ -1285,11 +1302,9 @@ export default {
 
     .l1 {
       opacity: 0;
-      
     }
     .l2 {
       opacity: 0;
-      
     }
   }
   .ring {
@@ -1339,15 +1354,12 @@ export default {
   .text2 {
     .l1 {
       opacity: 0;
-      
     }
     .l2 {
       opacity: 0;
-      
     }
     .l3 {
       opacity: 0;
-      
     }
     position: absolute;
     text-align: center;
@@ -1369,19 +1381,19 @@ export default {
   z-index: 110;
   background: url("../assets/img/home/p8/p8_bg.png") no-repeat center;
   background-size: 100% 100%;
-  &.animationStart .year .end{
+  &.animationStart .year .end {
     animation: numFadeOut 3000ms ease-out 500ms 1 normal forwards;
   }
-  &.animationStart .year .nine{
+  &.animationStart .year .nine {
     animation: numFadeIn 2000ms ease-out 3000ms 1 normal forwards;
   }
-  &.animationStart .text_img{
+  &.animationStart .text_img {
     animation: fadeIn 2000ms linear 5300ms 1 normal forwards;
   }
-  &.animationStart .ready_btn{
+  &.animationStart .ready_btn {
     animation: fadeUp 2000ms linear 7300ms 1 normal forwards;
-  }  
-  &.animationStart .bottom_menu{
+  }
+  &.animationStart .bottom_menu {
     animation: fadeUp 1000ms linear 8500ms 1 normal forwards;
   }
   .year {
@@ -1510,7 +1522,7 @@ export default {
     font-family: noto;
     color: #fff;
     opacity: 0;
-    
+
     @keyframes fadeUp {
       0% {
         opacity: 0;
@@ -1542,7 +1554,7 @@ export default {
     font-family: noto;
     color: rgba(255, 255, 255, 1);
     opacity: 0;
-    
+
     @keyframes fadeUp {
       0% {
         opacity: 0;

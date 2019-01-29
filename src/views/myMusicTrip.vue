@@ -1,8 +1,16 @@
 <template>
   <div class="container">
-    <div class="page p1" v-show="testShow">
+    <div class="page loading">
+      <div class="progress_wrapper">
+        <div class="p_grey">
+          <div class="p_color"></div>
+        </div>
+        <span id="progressStatus">加载中...</span>
+      </div>
+    </div>
+    <div class="page p1" v-show="testShow" v-bind:class="{fadeIn:page1.fadeIn,animationStart:page1.animationStart}">
       <div class="logo_area">
-        <span class="name px1-right">年轻-aimusic</span>
+        <span class="name px1-right">{{userInfo.nickname}}</span>
         <img class="logo" src="../assets/img/mytrip/p1/logo.png" alt>
       </div>
       <div class="text_img">
@@ -34,8 +42,8 @@
       v-show="testShow"
     >
       <div class="text">
-        <p class="t1">2018年 10 月 25 日，</p>
-        <p class="t2">你是第 54003 个加入了AI音乐学院的同学</p>
+        <p class="t1">{{joinYear}}年 {{joinMonth}} 月 {{joinDay}} 日，</p>
+        <p class="t2">你是第 {{joinIndex}} 个加入AI音乐学院的同学</p>
         <p class="t3 para">和 10W+ 的同学</p>
         <p class="t4">一起开启了你的音乐之旅</p>
       </div>
@@ -61,10 +69,18 @@
         <p class="t2">这一年，你有一个小目标</p>
         <p class="t3">
           是学会
-          <span class="instru">尤克里里</span>
+          <span class="instru">{{instrumentTypes.join('、')}}</span>
+          <!-- <span v-for="item in instrumentTypes" :key="item" class="instru">{{item}}、</span> -->
         </p>
-        <p class="t4 para">你一共在AI音乐学院学习了 5 套课程</p>
-        <p class="t5">《尤克里里初级课》《尤克里里初级课》《尤克里里初级课》《尤克里里初级课》</p>
+        <p class="t4 para">你一共在AI音乐学院学习了 {{purchase_count}} 套课程</p>
+        <div class="t5">
+          <div v-show="index<5" v-for="(item, index) in purchase_course" :key="item">《{{item}}》</div>
+          <p v-show="purchase_course.length>4" style="margin-left:.5em">……</p>
+        </div>
+        <!-- <p class="t5">
+          <p v-show="index<5" v-for="(item, index) in purchase_course"  :key="item">《{{item}}》</p>
+          <p>……</p>
+        </p>-->
       </div>
       <div class="person">
         <img src="../assets/img/mytrip/p3/p.png" alt>
@@ -80,19 +96,26 @@
       <div class="text">
         <div class="l1">
           在线学琴时间
-          <span class="num">1304</span>分
+          <span class="num">{{play_duration}}</span>分
         </div>
         <div class="l2">
           弹奏音符
-          <span class="num">123456789</span>
+          <span class="num">{{play_beats_count}}</span>个
         </div>
         <div class="l3">
           超过了
-          <span class="num">49%</span>的学员
+          <span class="num">{{play_duration_lable}}%</span>的学员
         </div>
         <div class="l4">
           恭喜你是当之无愧的
-          <img class="img-name" src="../assets/img/mytrip/p4/name1.png" alt>
+          <img
+            v-show="playName==1"
+            class="img-name"
+            src="../assets/img/mytrip/p4/name1.png"
+            alt
+          >
+          <img v-show="playName==2" class="img-name" src="../assets/img/mytrip/p4/name2.png" alt>
+          <img v-show="playName==3" class="img-name" src="../assets/img/mytrip/p4/name3.png" alt>
         </div>
       </div>
       <img class="person" src="../assets/img/mytrip/p4/person.png" alt>
@@ -113,12 +136,12 @@
         <div class="l2">是你的人生态度</div>
         <div class="l3">
           一共拿到
-          <span class="num">345</span>次
+          <span class="num">{{play_a_count}}</span>次
           <span class="num">A</span>
         </div>
         <div class="l4">
           超过了
-          <span class="num">49%</span>的同学
+          <span class="num">{{play_a_lable}}%</span>的同学
         </div>
       </div>
       <img src="../assets/img/mytrip/p5/star.png" alt class="star">
@@ -131,41 +154,46 @@
       v-show="true"
     >
       <div class="result">
-        <img
-          src="http://img3.imgtn.bdimg.com/it/u=4252777213,3972425634&fm=26&gp=0.jpg"
-          alt
-          class="avatar"
-        >
+        <img :src="avatarBase64" alt class="avatar" crossorigin="Anonymous">
+        <div class="userinfo">
+          <div class="nickname">{{userInfo.nickname}}</div>
+          <div class="result_title">2018年学琴成绩单</div>
+        </div>
         <div class="result_main">
           <div>
-            <img class="name_img" src="../assets/img/mytrip/p6/name1.png" alt>
-            <div class="name_text">阁下莫非就是江湖人称的“乐器王子”？</div>
+            <img v-show="playName==1" class="name_img" src="../assets/img/mytrip/p4/name1.png" alt>
+            <img v-show="playName==2" class="name_img" src="../assets/img/mytrip/p4/name2.png" alt>
+            <img v-show="playName==3" class="name_img" src="../assets/img/mytrip/p4/name3.png" alt>
+            <div v-show="playName==1" class="name_text">年轻人，乐坛的接力棒就交给你了！</div>
+            <div v-show="playName==2" class="name_text">阁下莫非就是江湖人称的“乐器王子”？</div>
+            <div v-show="playName==3" class="name_text">尖叫声在哪里?</div>
           </div>
           <div class="learn_content">
             <p>
               学会了
-              <span class="b">尤克里里、吉他</span>
+              <span class="b">{{instrumentTypes.join('、')}}</span>
+              <!-- 学会了<span class="b">吉他、尤克里里</span> -->
             </p>
             <p>
               学习了
-              <span class="b">12</span>门课程
+              <span class="b">{{purchase_count}}</span>门课程
             </p>
             <p>
               学琴时间
-              <span class="b">4567</span>分钟
+              <span class="b">{{play_duration}}</span>分钟
             </p>
             <p>
               弹奏了
-              <span class="b">341123</span>个音符
+              <span class="b">{{play_beats_count}}</span>个音符
             </p>
             <p>
               一共获得了
-              <span class="b">456</span>次
+              <span class="b">{{play_a_count}}</span>次
               <span class="w">A</span>
             </p>
             <p>
               超过了
-              <span class="b">67%</span>的学员
+              <span class="b">{{play_a_lable}}%</span>的学员
             </p>
           </div>
         </div>
@@ -175,21 +203,28 @@
             <p>领取新年礼包</p>
           </div>
           <div class="right">
-            <img
-              src="http://img3.imgtn.bdimg.com/it/u=4252777213,3972425634&fm=26&gp=0.jpg"
-              alt
-              class="qrcode"
-            >
+            <img src="../assets/img/mytrip/p6/downloadQr.png" alt class="qrcode">
           </div>
         </div>
       </div>
-      <div class="save_tip">长按图片保存成绩单</div>
-      <div class="bottom_btn">
-        <div class="left" @click="reWatch">
-          <img src="../assets/img/mytrip/p6/rewatch.png" alt>再看一遍
+      <div v-show="openInApp" class="bottom_app">
+        <div class="save_tip">长按图片保存成绩单</div>
+        <div class="bottom_btn">
+          <div class="left" @click="reWatch">
+            <img src="../assets/img/mytrip/p6/rewatch.png" alt>再看一遍
+          </div>
+          <div class="right" @click="share">
+            <img src="../assets/img/mytrip/p6/share.png" alt>晒一晒
+          </div>
         </div>
-        <div class="right" @click="share">
-          <img src="../assets/img/mytrip/p6/share.png" alt>晒一晒
+      </div>
+      <div v-show="!openInApp" class="bottom_h5">
+        <div class="btn" @click="getGift">
+          <img src="../assets/img/mytrip/p6/gift.png" alt>领取新手礼包
+        </div>
+        <div class="tip">领取礼包需下载APP</div>
+        <div class="re" @click="reWatch">
+          <img src="../assets/img/mytrip/p6/rewatch-white.png" alt>再看一遍
         </div>
       </div>
     </div>
@@ -201,7 +236,7 @@ import html2canvas from "html2canvas";
 export default {
   data: function() {
     return {
-      testShow: false,
+      testShow: true,
       page1: {
         fadeIn: false,
         animationStart: false,
@@ -224,11 +259,27 @@ export default {
         animationStart: false
       },
       page6: {
-        fadeIn: true,
-        animationStart: true
+        fadeIn: false,
+        animationStart: false
       },
       currentPage: "1",
-      pageLock: false
+      pageLock: false,
+      userInfo: {
+        nickname: "",
+        avatar: ""
+      },
+      joinTime: "",
+      joinIndex: "",
+      instrument_types: [],
+      purchase_count: "", //学习的课程数量
+      purchase_course: [], //购买的课程名称
+      play_duration: "", //弹奏时长，分
+      play_beats_count: "", //弹奏音符
+      play_duration_lable: "", //超过多少人，百分比
+      play_a_count: "", //成绩A的次数
+      play_a_lable: "", //成绩超越的人
+      openInApp: false,
+      avatarBase64: ""
     };
   },
   components: {
@@ -236,15 +287,120 @@ export default {
   },
   mounted() {
     this.bindTouchEvent();
-    //this.getMycount();
-    this.createResultImg();
+    this.getMycount();
+    this.initLoading();
+    //this.imgToBase64();
+  },
+  computed: {
+    joinYear() {
+      return new Date(this.joinTime * 1000).getFullYear();
+    },
+    joinMonth() {
+      return new Date(this.joinTime * 1000).getMonth() + 1;
+    },
+    joinDay() {
+      return new Date(this.joinTime * 1000).getDate();
+    },
+    instrumentTypes() {
+      return this.instrument_types.map(function(e) {
+        switch (e) {
+          case 0:
+            return "吉他";
+            break;
+          case 1:
+            return "尤克里里";
+            break;
+          case 2:
+            return "卡林巴";
+            break;
+          case 3:
+            return "非洲鼓";
+            break;
+        }
+      });
+    },
+    playName() {
+      if (this.play_duration_lable < 50) {
+        return "1";
+      } else if (this.play_duration_lable < 90) {
+        return "2";
+      } else {
+        return "3";
+      }
+    }
   },
   methods: {
+    initLoading() {
+      var that = this;
+      var p = document.querySelector(".p_color");
+      var bgList = document.querySelectorAll(".page");
+      console.log(bgList)
+      var bgArr = [],
+        sum = 0;
+      var fakeTemp = 0;
+      var minPersent = (1 / bgList.length) * 100;
+      bgList.forEach(function(e, index) {
+        var style = e.currentStyle || window.getComputedStyle(e, false);
+        //console.log(style.backgroundImage.slice(4, -1).replace(/"/g, ""))
+        console.log(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
+        bgArr.push(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
+      });
+      var timer = setInterval(() => {
+        fakeTemp += 2;
+        if (fakeTemp < minPersent) {
+          p.style.width = fakeTemp + "%";
+        } else {
+          clearInterval(timer);
+        }
+      }, 1000);
+      // setTimeout(()=>{
+      //     clearInterval(timer)
+      // },3000)
+      bgArr.forEach((e, index) => {
+        var img = new Image();
+        img.src = e;
+        if (img.complete) {
+          responseImgLoad();
+        }
+        img.onload = function() {
+          responseImgLoad();
+        };
+      });
+      function responseImgLoad() {
+        clearInterval(timer);
+        sum++;
+        p.style.width = (sum / bgArr.length) * 100 + "%";
+        if (sum / bgArr.length == 1) {
+          setTimeout(() => {
+            console.log(that)
+            that.$set(that.page1, "fadeIn", true);
+            that.$set(that.page1, "animationStart", true);
+            document.querySelector("#progressStatus").innerHTML = "加载完成";
+          }, 1000);
+        }
+      }
+    },
+    responseImgLoad() {},
     getMycount() {
       this.axios
-        .get("http://192.168.1.171:22222/v3/user_info/?god=77369889")
+        .get("http://192.168.1.171:22222/v3/user_info/?god=268405561")
         .then(res => {
-          console.log(res);
+          var res = res.data.data;
+          this.userInfo.nickname = res.nickname;
+          this.userInfo.avatar = res.avatar;
+          this.joinTime = res.regtime;
+          this.instrument_types = res.instrument_types;
+          this.joinIndex = res.index;
+          this.purchase_count = res.purchase_count;
+          this.purchase_course = res.purchase_course;
+          this.play_duration = res.play_duration; //弹奏时间
+          this.play_beats_count = res.play_beats_count; //弹奏音符
+          this.play_duration_lable = res.play_duration_lable; //超过多少人
+          (this.play_a_count = res.play_a_count), //成绩A的次数
+            (this.play_a_lable = res.play_a_lable); //成绩超越的人
+          this.$nextTick(() => {
+            this.createResultImg();
+          });
         });
     },
     bindTouchEvent() {
@@ -260,6 +416,7 @@ export default {
       document
         .querySelector(".container")
         .addEventListener("touchmove", function(e) {
+          e.preventDefault();
           moveEndX = e.changedTouches[0].pageX;
           moveEndY = e.changedTouches[0].pageY;
           var X = moveEndX - startX;
@@ -320,19 +477,71 @@ export default {
       location.reload();
     },
     createResultImg() {
-      html2canvas(document.querySelector(".result"), {
-        backgroundColor: "transparent"
-      }).then(canvas => {
-        //document.querySelector('.result').style.display = 'none'
-        document.querySelector(".result").innerHTML = "";
-        var img = new Image();
-        img.classList.add("resultImg");
-        img.src = canvas.toDataURL("image/png");
+      this.imgToBase64().then(res => {
+        this.avatarBase64 = res;
+        html2canvas(document.querySelector(".result"), {
+          backgroundColor: "transparent",
+          allowTaint: true
+        }).then(canvas => {
+          //把画好的canvas转成base64
+          document.querySelector(".result").innerHTML = "";
+          var img = new Image();
+          img.classList.add("resultImg");
+          img.src = canvas.toDataURL("image/png");
+          img.onload = function() {
+            console.log("onload");
+            document.querySelector(".page.p6 .result").appendChild(img);
+          };
+          //document.querySelector(".page.p6 .result").appendChild(canvas);
+          //canvas.toDataURL("image/png");
+        });
+      });
+    },
+    imgToBase64() {
+      return new Promise((resolve, reject) => {
+        console.log("qwe");
+        var img = new Image(); //创建新的图片对象
+        var base64 = ""; //base64
+        img.src =
+          "http://img.iguitar.immusician.com/avatar/cf8fb4dc146efe58190dd1706f04be95.jpg-big?" +
+          new Date().valueOf();
+        img.setAttribute("crossOrigin", "Anonymous");
         img.onload = function() {
-          console.log("onload");
-          document.querySelector(".page.p6 .result").appendChild(img);
+          console.log("图片onload");
+          //图片加载完，再draw 和 toDataURL
+          var canvas = document.createElement("canvas"); //获取canvas
+          canvas.width = img.width;
+          canvas.height = img.height;
+          var ctx = canvas.getContext("2d"); //对应的CanvasRenderingContext2D对象(画笔)
+          //console.log(ctx,img);
+          //console.log(canvas.width,canvas.height)
+          ctx.drawImage(img, 0, 0);
+          base64 = canvas.toDataURL("image/png");
+          //console.log(base64)
+          resolve(base64);
         };
       });
+    },
+    getGift() {
+      this.axios
+        .get("http://192.168.1.171:22222/v3/coupon/send_annals_coupon", {
+          headers: { coupon_id: "", uid: "" }
+        })
+        .then(res => {
+          console.log(res);
+        });
+      return;
+      if (this.openInApp) {
+        this.axios
+          .get("http://192.168.1.171:22222/v3/coupon/send_annals_coupon", {
+            headers: { coupon_id: "", uid: "" }
+          })
+          .then(res => {
+            console.log(res);
+          });
+      } else {
+        location.href = "http://api.iguitar.immusician.com/d?c=annals";
+      }
     },
     share() {}
   }
@@ -360,12 +569,45 @@ export default {
   color: rgba(255, 255, 255, 1);
   line-height: 34px;
 }
+.loading {
+  opacity: 1;
+  background: url("../assets/img/mytrip/p1/bg.png") no-repeat center;
+  background-size: cover;
+  .progress_wrapper {
+    margin: 500px auto 0 auto;
+    width: 50%;
+    padding: 0 10px;
+    overflow: hidden;
+    box-sizing: border-box;
+    text-align: center;
+  }
 
+  .p_grey {
+    /* background-color: gray; */
+    width: 100%;
+    height: 30px;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid #999;
+    margin-bottom: 20px;
+  }
+
+  .p_color {
+    background-color: blueviolet;
+    width: 0%;
+    height: 30px;
+    border-radius: 30px;
+    transition: width 1000ms;
+  }
+  #progressStatus{
+    font-size: 30px;
+  }
+}
 .p1 {
   z-index: 10;
   background: url("../assets/img/mytrip/p1/bg.png") no-repeat center;
   background-size: 100% 100%;
-  opacity: 1;
+  //opacity: 1;
   .logo_area {
     position: absolute;
     right: 30px;
@@ -534,7 +776,7 @@ export default {
 .p3 {
   z-index: 30;
   background: url("../assets/img/mytrip/p3/bg.png") no-repeat center;
-  background-size: 100% 100%;
+  background-size: cover;
   &.animationStart .text {
     .t1 {
       animation: bubble 900ms linear 1s 1 normal forwards;
@@ -553,6 +795,7 @@ export default {
     }
   }
   .text {
+    font-family: noto-regular;
     margin: 104px 0 0 68px;
     line-height: 60px;
     .para {
@@ -565,10 +808,13 @@ export default {
     .t5 {
       opacity: 0;
     }
+    .t5 {
+      font-family: PingFangSC-Regular;
+    }
   }
   .person {
     position: absolute;
-    bottom: 116px;
+    top: 60%;
     right: 153px;
     img {
       width: 125px;
@@ -576,7 +822,7 @@ export default {
   }
   .arm {
     position: absolute;
-    top: 828px;
+    top: 60.6%;
     left: 350px;
     width: 150px;
     transform-origin: right bottom;
@@ -605,7 +851,8 @@ export default {
 .p4 {
   z-index: 40;
   background: url("../assets/img/mytrip/p4/bg.png") no-repeat center;
-  background-size: 100% 100%;
+  background-size: cover;
+  //background-position: left -90px;
   font-family: noto-regular;
   font-size: 32px;
   &.animationStart .text .l1 {
@@ -646,28 +893,73 @@ export default {
   .note1 {
     width: 28px;
     right: 300px;
-    bottom: 474px;
+    top: 760px;
+    .p4fly_note1;
   }
   .note2 {
     width: 25px;
     right: 364px;
-    bottom: 455px;
+    top: 800px;
+    .p4fly_note2;
   }
   .note3 {
     width: 34px;
     right: 352px;
-    bottom: 359px;
+    top: 900px;
+    .p4fly_note3;
+  }
+  @keyframes p4fly_note1 {
+    0% {
+      transform: translateX(0) translateY(0);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(-50px) translateY(-600px);
+      opacity: 0;
+    }
+  }
+  .p4fly_note1 {
+    animation: p4fly_note1 12700ms linear infinite normal forwards;
+  }
+  @keyframes p4fly_note2 {
+    0% {
+      transform: translateX(0) translateY(0);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(-70px) translateY(-700px);
+      opacity: 0;
+    }
+  }
+  .p4fly_note2 {
+    animation: p4fly_note2 12700ms linear infinite normal forwards;
+  }
+  @keyframes p4fly_note3 {
+    0% {
+      transform: translateX(0) translateY(0);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(-70px) translateY(-600px);
+      opacity: 0;
+    }
+  }
+  .p4fly_note3 {
+    animation: p4fly_note3 12700ms linear infinite normal forwards;
   }
   .person {
     position: absolute;
-    bottom: 144px;
+    top: 63%;
     left: 124px;
     width: 318px;
   }
   .light {
     width: 246px;
     position: absolute;
-    bottom: 355px;
+    top: 52%;
     right: 120px;
     animation: lightFadeIn 800ms linear 0ms infinite alternate forwards;
     @keyframes lightFadeIn {
@@ -733,7 +1025,7 @@ export default {
     .line-bubble4;
   }
   &.animationStart .man {
-    animation: float 1500ms linear 2600ms infinite alternate forwards;
+    animation: float 1500ms linear 600ms infinite alternate forwards;
   }
   .text {
     margin: 130px 0 0 126px;
@@ -757,13 +1049,13 @@ export default {
     width: 610px;
     position: absolute;
     left: 55px;
-    top: 640px;
+    top: 45.5%;
   }
   .light {
     width: 354px;
     position: absolute;
     right: 63px;
-    bottom: 335px;
+    top: 45.7%;
     animation: lightFadeIn 800ms linear 0ms infinite alternate forwards;
     @keyframes lightFadeIn {
       0% {
@@ -779,12 +1071,12 @@ export default {
 .p6 {
   z-index: 60;
   background: url("../assets/img/mytrip/p6/bg.png") no-repeat center;
-  background-size: 100% 100%;
+  background-size: cover;
   .result {
     position: relative;
     width: 630px;
     height: 887px;
-    margin: 174px auto 0 auto;
+    margin: 94px auto 0 auto;
     background: url("../assets/img/mytrip/p6/result-bg.png") no-repeat center;
     background-size: cover;
     background-color: transparent;
@@ -798,6 +1090,24 @@ export default {
       margin-left: -58px;
       border: 4px solid rgba(250, 105, 255, 1);
       border-radius: 50%;
+    }
+    .userinfo {
+      position: absolute;
+      left: 0;
+      top: 80px;
+      width: 100%;
+      text-align: center;
+      font-family: PingFangSC-Regular;
+      font-size: 34px;
+      color: #d08b6f;
+      //box-shadow:1px 6px 8px 0px rgba(208, 111, 139, 0.35);
+      .nickname {
+        margin-bottom: 30px;
+        font-size: 30px;
+      }
+      .result_title {
+        font-family: noto-bold;
+      }
     }
     .result_main {
       position: absolute;
@@ -820,9 +1130,15 @@ export default {
         color: #cb6f72;
         font-size: 28px;
         line-height: 50px;
-        margin-top: 30px;
-        margin-left: 180px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 13em;
+        top: 180px;
+        //margin-top: 30px;
+        //margin-left: 180px;
         text-align: left;
+        //text-align: center;
         .b {
           font-family: PingFangSC-Medium;
           color: #ff9e21;
@@ -853,33 +1169,70 @@ export default {
       }
     }
   }
-  .save_tip {
-    font-size: 22px;
-    font-family: PingFangSC-Regular;
-    text-align: center;
-  }
-  .bottom_btn {
-    display: flex;
-    justify-content: space-between;
-    margin: 47px 80px 0 80px;
-    font-size: 34px;
-    font-family: PingFangSC-Regular;
-    font-weight: 400;
-    color: rgba(203, 111, 114, 1);
-    img {
-      width: 35px;
-      margin-right: 10px;
+  .bottom_app {
+    .save_tip {
+      font-size: 22px;
+      font-family: PingFangSC-Regular;
+      text-align: center;
     }
-    .left,
-    .right {
+    .bottom_btn {
+      display: flex;
+      justify-content: space-between;
+      margin: 27px 80px 0 80px;
+      font-size: 34px;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(203, 111, 114, 1);
+      img {
+        width: 35px;
+        margin-right: 10px;
+      }
+      .left,
+      .right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 8px;
+        width: 240px;
+        height: 80px;
+        background: url("../assets/img/mytrip/p6/btn_bg.png") no-repeat center;
+        background-size: cover;
+      }
+    }
+  }
+  .bottom_h5 {
+    text-align: center;
+    .btn {
+      margin-top: 10px;
+      margin: 10px auto 10px auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-bottom: 8px;
-      width: 240px;
+      //padding-bottom: 8px;
+      width: 360px;
       height: 80px;
-      background: url("../assets/img/mytrip/p6/btn_bg.png") no-repeat center;
-      background-size: cover;
+      //background: url("../assets/img/mytrip/p6/btn_bg.png") no-repeat center;
+      //background-size: cover;
+      background-color: #fff;
+      border-radius: 80px;
+      color: #cb6f72;
+      img {
+        width: 35px;
+        margin-right: 10px;
+      }
+    }
+    .tip {
+      margin: 10px 0 30px 0;
+      font-size: 20px;
+      font-family: PingFangSC-Regular;
+    }
+    .re {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 30px;
+      }
     }
   }
 }

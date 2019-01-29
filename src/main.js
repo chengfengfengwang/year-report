@@ -30,6 +30,12 @@ const routes = [
     name: 'noData',
     component:
       resolve => require(['./views/noData.vue'], resolve)
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component:
+      resolve => require(['./views/test.vue'], resolve)
   }
 ]
 
