@@ -347,10 +347,10 @@ export default {
         animationStart: false
       },
       page11: {
-        fadeIn: false,
-        animationStart: false
+        fadeIn: true,
+        animationStart: true
       },
-      openInApp: true
+      openInApp: false
     };
   },
   mounted() {
@@ -1060,7 +1060,7 @@ export default {
   }
   .c1 {
     font-family: noto-smbold;
-    font-size: 24px;
+    font-size: 28px;
     margin: 70px 0 0 60px;
     letter-spacing: 2px;
   }
@@ -1554,6 +1554,9 @@ export default {
   &.animationStart .bottom_menu {
     animation: fadeUp 1000ms linear 8500ms 1 normal forwards;
   }
+  &.animationStart .open_in_h5 {
+    animation: fadeIn 1000ms linear 6500ms 1 normal forwards;
+  }
   .year {
     position: relative;
     margin: 90px auto 0 auto;
@@ -1733,6 +1736,7 @@ export default {
     left: 0;
     width: 100%;
     text-align: center;
+    opacity: 0;
     .getgiftbtn{
       img{
         width: 324px;

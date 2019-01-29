@@ -1064,7 +1064,7 @@ export default {
     animation: float 1500ms linear 600ms infinite alternate forwards;
   }
   .text {
-    margin: 130px 0 0 126px;
+    margin: 130px 0 0 70px;
     line-height: 50px;
     .num {
       font-family: noto;
