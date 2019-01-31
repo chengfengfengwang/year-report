@@ -425,7 +425,7 @@ export default {
           if (audio) {
             audio.play();
           }
-        },{once:true});
+        });
     },
     initLoading() {
       var that = this;
