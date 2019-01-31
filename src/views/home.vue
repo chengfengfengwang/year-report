@@ -392,7 +392,8 @@ export default {
       uid: "",
       isLogin: false,
       coupon_id: coupon_id,
-      shareShow: false
+      shareShow: false,
+      hasYearReport:false
     };
   },
   mounted() {
@@ -650,21 +651,14 @@ export default {
           btn: "确定"
         });
       } else {
-        console.log(`${baseUrl}/v3/is_user_info/?uid=${this.uid}`)
-        this.axios
-          .get(`${baseUrl}/v3/is_user_info/?uid=${this.uid}`)
-          .then(res => {
-            console.log('请求个人是否有年报')
-            console.log(res)
-            if (res.data.error == 0) {
-              this.$router.push("myMusicTrip");
-            } else {
-              layer.open({
-                content: "抱歉，你没有相关数据",
-                btn: "确定"
-              });
-            }
+        if(this.hasYearReport){
+          this.$router.push("myMusicTrip");
+        }else{
+          layer.open({
+            content: "抱歉，你没有相关数据",
+            btn: "确定"
           });
+        }
       }
     },
     hideShare() {
@@ -695,6 +689,20 @@ export default {
             }
           }, 2000);
         });
+    },
+    isHaveYearReport(){
+      console.log(`${baseUrl}/v3/is_user_info/?uid=${this.uid}`)
+        this.axios
+          .get(`${baseUrl}/v3/is_user_info/?uid=${this.uid}`)
+          .then(res => {
+            console.log('请求个人是否有年报结束')
+            console.log(res)
+            if (res.data.error == 0) {
+              this.hasYearReport = true
+            }else{
+              this.hasYearReport = false
+            }
+          });
     },
     share(num) {
       this.hideShare();
