@@ -397,6 +397,7 @@ export default {
     };
   },
   mounted() {
+    console.log('又打了一个包');
     console.log(location.href+'qew');
     var d = new Date();
     console.log(d.getDate()+'-'+d.getHours()+'-'+d.getMinutes())
@@ -423,7 +424,7 @@ export default {
           if (audio) {
             audio.play();
           }
-        });
+        },{once:true});
     },
     initLoading() {
       var that = this;

@@ -420,7 +420,7 @@ export default {
         .querySelector("#myMusicTrip")
         .addEventListener("touchstart", function() {
           audio.play();
-        });
+        },{once:true});
     },
     initLoading() {
       var that = this;
