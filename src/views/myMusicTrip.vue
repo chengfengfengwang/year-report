@@ -434,6 +434,7 @@ export default {
             .then(res => {
               console.log("个人数据请求成功");
               var res = res.data.data;
+              console.log(res);
               that.userInfo.nickname = res.nickname;
               that.userInfo.avatar = res.avatar;
               that.joinTime = res.regtime;
@@ -454,7 +455,7 @@ export default {
             });
         });
       }
-      getMycount();
+      promiseList.push(getMycount());
 
       var notoBold = new FontFaceObserver("noto-bold");
       promiseList.push(
@@ -588,7 +589,6 @@ export default {
       this.pageLock = true;
       if (direction == "up") {
         if (this.currentPage < 11) {
-          console.log("upupupup");
           this.currentPage++;
           this.$set(this["page" + this.currentPage], "fadeIn", true);
           this.$set(this["page" + this.currentPage], "animationStart", true);
@@ -620,7 +620,9 @@ export default {
       location.reload();
     },
     createResultImg() {
+      console.log('开始画图')
       this.imgToBase64(this.userInfo.avatar).then(res => {
+        console.log('base64生成完成')
         this.avatarBase64 = res;
         document.querySelector(".page.p6").classList.add("visi");
         html2canvas(document.querySelector(".result_wrapper"), {

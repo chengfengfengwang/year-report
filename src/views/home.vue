@@ -411,6 +411,7 @@ export default {
     //this.cloudMove(document.querySelector(".p7 .cloud3"));
     this.bindAudioEvent();
     autoPlayAudio("myAudio");
+    this.isHaveYearReport()
   },
   methods: {
     bindAudioEvent() {
