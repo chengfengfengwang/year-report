@@ -354,10 +354,6 @@ export default {
     Bottom
   },
   mounted() {
-    var output = new FontFaceObserver("noto-regular");
-    output.load().then(function() {
-      console.log("noto-regular has loaded.");
-    });
     this.openInApp = Boolean(window.WebShare);
     this.uid = getQueryVariable("uid");
     this.bindTouchEvent();

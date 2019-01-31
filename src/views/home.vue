@@ -1250,7 +1250,7 @@ export default {
   }
   .c1 {
     font-family: noto-smbold;
-    font-size: 28px;
+    font-size: 32px;
     margin: 70px 0 0 60px;
     letter-spacing: 2px;
   }
@@ -1260,11 +1260,11 @@ export default {
     .title {
       font-family: noto-bold;
       color: #9affe6;
-      font-size: 30px;
+      font-size: 32px;
     }
     .province {
       font-family: noto-smbold;
-      font-size: 30px;
+      font-size: 32px;
     }
   }
   .c3 {
@@ -1353,18 +1353,18 @@ export default {
   .l1 {
     font-family: noto-bold;
     color: #87f1de;
-    font-size: 30px;
+    font-size: 34px;
   }
   .l2,
   .l3 {
     font-family: noto-smbold;
     color: #fff;
-    font-size: 26px;
+    font-size: 34px;
   }
   .num {
     color: #87f1de;
     font-family: noto-bold;
-    font-size: 30px;
+    font-size: 36px;
   }
 }
 .p7 {
@@ -1576,7 +1576,8 @@ export default {
     left: 0;
     top: 75%;
     font-family: noto-smbold;
-    font-size: 26px;
+    font-size: 32px;
+    //line-height: 80px;
     color: #fff;
     line-height: 40px;
     .w {
@@ -1621,7 +1622,7 @@ export default {
     left: 0;
     top: 150px;
     font-family: noto-smbold;
-    font-size: 30px;
+    font-size: 32px;
     color: #fff;
     line-height: 60px;
     .b {
@@ -1637,7 +1638,7 @@ export default {
     left: 0;
     bottom: 173px;
     font-family: noto-smbold;
-    font-size: 24px;
+    font-size: 30px;
     color: #fff;
     line-height: 40px;
     .b {
@@ -1684,7 +1685,7 @@ export default {
     left: 0;
     top: 150px;
     font-family: noto-smbold;
-    font-size: 30px;
+    font-size: 32px;
     color: #fff;
     line-height: 60px;
     .b {
@@ -1761,7 +1762,7 @@ export default {
     left: 0;
     bottom: 230px;
     font-family: noto-bold;
-    font-size: 24px;
+    font-size: 30px;
     color: #fff;
     line-height: 60px;
     .b {
