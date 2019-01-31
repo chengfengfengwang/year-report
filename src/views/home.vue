@@ -405,9 +405,9 @@ export default {
     this.isLogin = this.uid ? true : false;
     this.bindTouchEvent();
     this.initLoading();
-    this.cloudMove(document.querySelector(".p7 .cloud1"));
-    this.cloudMove(document.querySelector(".p7 .cloud2"));
-    this.cloudMove(document.querySelector(".p7 .cloud3"));
+    //this.cloudMove(document.querySelector(".p7 .cloud1"));
+    //this.cloudMove(document.querySelector(".p7 .cloud2"));
+    //this.cloudMove(document.querySelector(".p7 .cloud3"));
     this.bindAudioEvent();
     autoPlayAudio("myAudio");
   },
