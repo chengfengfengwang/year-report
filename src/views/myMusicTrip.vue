@@ -8,7 +8,7 @@
         <div class="p_grey">
           <div class="p_color"></div>
         </div>
-        <img src="../assets/img/mytrip/loading/uk.png" alt="" class="uk">
+        <img src="../assets/img/mytrip/loading/uk.png" alt class="uk">
         <span id="progressStatus">加载中...</span>
       </div>
     </div>
@@ -26,7 +26,7 @@
       </div>
       <div class="person">
         <img class="realp" src="../assets/img/mytrip/p1/p.png" alt>
-        <img class="yingzi" src="../assets/img/mytrip/p1/yingzi.png" alt="">
+        <img class="yingzi" src="../assets/img/mytrip/p1/yingzi.png" alt>
       </div>
       <div class="music_note note1">
         <img src="../assets/img/mytrip/p1/note1.png" alt>
@@ -106,7 +106,8 @@
       v-show="testShow"
     >
       <div class="text">
-        <div class="l1">在线学琴时间
+        <div class="l1">
+          在线学琴时间
           <span class="num">{{play_duration}}</span>分
         </div>
         <div class="l2">
@@ -357,10 +358,10 @@ export default {
     Bottom
   },
   mounted() {
+    console.log(location.href)
     this.openInApp = Boolean(window.WebShare) || Boolean(window.webkit);
     this.uid = getQueryVariable("uid");
     this.bindTouchEvent();
-    this.getMycount();
     this.initLoading();
     autoPlayAudio("myTripAudio");
     this.bindAudioEvent();
@@ -426,6 +427,35 @@ export default {
 
       var promiseList = [];
 
+      function getMycount() {
+        return new Promise((resolve, reject) => {
+          that.axios
+            .get(`${baseUrl}/v3/user_info/?uid=${that.uid}`)
+            .then(res => {
+              console.log("个人数据请求成功");
+              var res = res.data.data;
+              that.userInfo.nickname = res.nickname;
+              that.userInfo.avatar = res.avatar;
+              that.joinTime = res.regtime;
+              that.instrument_types = res.instrument_types;
+              that.joinIndex = res.index;
+              that.purchase_count = res.purchase_count;
+              that.purchase_course = res.purchase_course;
+              that.play_duration = res.play_duration; //弹奏时间
+              that.play_beats_count = res.play_beats_count; //弹奏音符
+              that.play_duration_lable = res.play_duration_lable; //超过多少人
+              that.play_a_count = res.play_a_count; //成绩A的次数
+              that.play_a_lable = res.play_a_lable; //成绩超越的人
+              that.$nextTick(() => {
+                that.createResultImg();
+              });
+              responseImgLoad();
+              resolve();
+            });
+        });
+      }
+      getMycount();
+
       var notoBold = new FontFaceObserver("noto-bold");
       promiseList.push(
         new Promise((resolve, reject) => {
@@ -469,7 +499,7 @@ export default {
 
       var p = document.querySelector(".p_color");
       var bgList = document.querySelectorAll(".page");
-      
+
       var bgArr = [],
         sum = 0;
       var fakeTemp = 0;
@@ -497,11 +527,11 @@ export default {
           img.src = e;
           if (img.complete) {
             responseImgLoad();
-            resolve()
+            resolve();
           }
           img.onload = function() {
             responseImgLoad();
-            resolve()
+            resolve();
           };
         });
         promiseList.push(p);
@@ -510,16 +540,7 @@ export default {
         clearInterval(timer);
         sum++;
         p.style.width = (sum / promiseList.length) * 100 + "%";
-        // p.style.width = (sum / bgArr.length) * 100 + "%";
-        // if (sum / bgArr.length == 1) {
-        //   setTimeout(() => {
-        //     console.log(that);
-        //     that.$set(that.page1, "fadeIn", true);
-        //     that.$set(that.page1, "animationStart", true);
-        //     document.querySelector("#progressStatus").innerHTML = "加载完成";
-        //   }, 1000);
-        // }
-      };
+      }
       Promise.all(promiseList).then(res => {
         document.querySelector("#progressStatus").innerHTML = "加载完成";
         that.$set(that.page1, "fadeIn", true);
@@ -527,27 +548,6 @@ export default {
       });
     },
     responseImgLoad() {},
-    getMycount() {
-      this.axios.get(`${baseUrl}/v3/user_info/?uid=${this.uid}`).then(res => {
-        console.log("个人数据请求成功");
-        var res = res.data.data;
-        this.userInfo.nickname = res.nickname;
-        this.userInfo.avatar = res.avatar;
-        this.joinTime = res.regtime;
-        this.instrument_types = res.instrument_types;
-        this.joinIndex = res.index;
-        this.purchase_count = res.purchase_count;
-        this.purchase_course = res.purchase_course;
-        this.play_duration = res.play_duration; //弹奏时间
-        this.play_beats_count = res.play_beats_count; //弹奏音符
-        this.play_duration_lable = res.play_duration_lable; //超过多少人
-        this.play_a_count = res.play_a_count; //成绩A的次数
-        this.play_a_lable = res.play_a_lable; //成绩超越的人
-        this.$nextTick(() => {
-          this.createResultImg();
-        });
-      });
-    },
     bindTouchEvent() {
       var that = this;
       var startX, startY, moveEndX, moveEndY;
@@ -698,11 +698,16 @@ export default {
     },
     share(num) {
       this.hideShare();
-      if(platForm=='IOS'){
-          webkit.messageHandlers.Share.postMessage({title:'AI音乐学院年度学习报告',content:location.href,mode:0,type:num});
-        }else{
-          WebShare.share(location.href, 0, num,'AI音乐学院年度学习报告');
-        }
+      if (platForm == "IOS") {
+        webkit.messageHandlers.Share.postMessage({
+          title: "AI音乐学院年度学习报告",
+          content: location.href,
+          mode: 0,
+          type: num
+        });
+      } else {
+        WebShare.share(location.href, 0, num, "AI音乐学院年度学习报告");
+      }
     }
   }
 };
@@ -736,14 +741,13 @@ export default {
   visibility: visible;
   background: url("../assets/img/mytrip/loading/bg.jpg") no-repeat center;
   background-size: cover;
-  .uk{
+  .uk {
     width: 100px;
     position: absolute;
-    top:15%;
+    top: 15%;
     left: 50%;
     transform: translateX(-50%);
   }
-  
 }
 .p1 {
   z-index: 10;
@@ -804,10 +808,10 @@ export default {
     .realp {
       width: 255px;
     }
-    .yingzi{
+    .yingzi {
       position: absolute;
       left: 120px;
-      bottom:-30px;
+      bottom: -30px;
       width: 325px;
     }
   }
