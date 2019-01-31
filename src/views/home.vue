@@ -332,7 +332,7 @@ import {
   getQueryVariable,
   coupon_id
 } from "./../utils/util.js";
-var FontFaceObserver = require('fontfaceobserver');
+var FontFaceObserver = require("fontfaceobserver");
 export default {
   name: "home",
   data() {
@@ -395,10 +395,6 @@ export default {
     };
   },
   mounted() {
-    var output = new FontFaceObserver('noto-bold');
-    output.load().then(function () {
-      console.log('noto-bold has loaded.');
-    });
     this.openInApp = Boolean(window.WebShare);
     this.uid = getQueryVariable("uid");
     this.isLogin = this.uid ? true : false;
@@ -414,16 +410,63 @@ export default {
     bindAudioEvent() {
       var audio = document.querySelector("#myAudio");
       audio.play();
-      document.querySelector('#home').addEventListener("touchstart", function() {
-        console.log('出发home audio')
-        if(audio){audio.play()}
-      });
+      document
+        .querySelector("#home")
+        .addEventListener("touchstart", function() {
+          console.log("出发home audio");
+          if (audio) {
+            audio.play();
+          }
+        });
     },
     initLoading() {
       var that = this;
+      var promiseList = [];
+
+      var notoBold = new FontFaceObserver("noto-bold");
+      promiseList.push(
+        new Promise((resolve, reject) => {
+          notoBold.load().then(function() {
+            console.log("noto-bold has loaded.");
+            responseImgLoad();
+            resolve();
+          });
+        })
+      );
+      var noto = new FontFaceObserver("noto");
+      promiseList.push(
+        new Promise((resolve, reject) => {
+          noto.load().then(function() {
+            console.log("noto has loaded.");
+            responseImgLoad();
+            resolve();
+          });
+        })
+      );
+      var notoSmbold = new FontFaceObserver("noto-smbold");
+      promiseList.push(
+        new Promise((resolve, reject) => {
+          notoBold.load().then(function() {
+            console.log("notoSmbold has loaded.");
+            responseImgLoad();
+            resolve();
+          });
+        })
+      );
+      var notoRegular = new FontFaceObserver("noto-regular");
+      promiseList.push(
+        new Promise((resolve, reject) => {
+          notoBold.load().then(function() {
+            console.log("notoRegular has loaded.");
+            responseImgLoad();
+            resolve();
+          });
+        })
+      );
+
       var p = document.querySelector(".p_color");
       var bgList = document.querySelectorAll(".page");
-      console.log(bgList);
+
       var bgArr = [],
         sum = 0;
       var fakeTemp = 0;
@@ -445,27 +488,38 @@ export default {
       //     clearInterval(timer)
       // },3000)
       bgArr.forEach((e, index) => {
-        var img = new Image();
-        img.src = e;
-        if (img.complete) {
-          responseImgLoad();
-        }
-        img.onload = function() {
-          responseImgLoad();
-        };
+        let p = new Promise((resolve, reject) => {
+          var img = new Image();
+          img.src = e;
+          if (img.complete) {
+            responseImgLoad();
+            resolve();
+          }
+          img.onload = function() {
+            responseImgLoad();
+            resolve();
+          };
+        });
+        promiseList.push(p);
       });
       function responseImgLoad() {
         clearInterval(timer);
         sum++;
-        p.style.width = (sum / bgArr.length) * 100 + "%";
-        if (sum / bgArr.length == 1) {
-          setTimeout(() => {
-            that.$set(that.page1, "fadeIn", true);
-            that.$set(that.page1, "animationStart", true);
-            document.querySelector("#progressStatus").innerHTML = "加载完成";
-          }, 1000);
-        }
+        p.style.width = (sum / promiseList.length) * 100 + "%";
+        // p.style.width = (sum / bgArr.length) * 100 + "%";
+        // if (sum / bgArr.length == 1) {
+        //   setTimeout(() => {
+        //     that.$set(that.page1, "fadeIn", true);
+        //     that.$set(that.page1, "animationStart", true);
+        //     document.querySelector("#progressStatus").innerHTML = "加载完成";
+        //   }, 1000);
+        // }
       }
+      Promise.all(promiseList).then(res => {
+        document.querySelector("#progressStatus").innerHTML = "加载完成";
+        that.$set(that.page1, "fadeIn", true);
+        that.$set(that.page1, "animationStart", true);
+      });
     },
     bindTouchEvent() {
       var that = this;
@@ -643,11 +697,11 @@ export default {
       WebShare.share(location.href, 0, num);
     }
   },
-  beforeRouteLeave (to, from, next) {
-    var audio = document.querySelector('#myAudio')
+  beforeRouteLeave(to, from, next) {
+    var audio = document.querySelector("#myAudio");
     audio.pause();
     audio.currentTime = 0;
-    next()
+    next();
     // 导航离开该组件的对应路由时调用
     // 可以访问组件实例 `this`
   }
@@ -1417,7 +1471,7 @@ export default {
     position: absolute;
     left: 0;
     //bottom: 0px;
-    top:50%;
+    top: 50%;
     background: url("../assets/img/home/p7/building.png") repeat center;
     background-size: cover;
     width: 100%;
@@ -1428,7 +1482,7 @@ export default {
   .tree {
     position: absolute;
     left: 0;
-    top:59%;
+    top: 59%;
     //bottom: -180px;
     background: url("../assets/img/home/p7/tree.png") no-repeat center;
     background-size: cover;
@@ -1461,7 +1515,7 @@ export default {
   .train {
     position: absolute;
     left: 0;
-    top:65%;
+    top: 65%;
     //bottom: 70px;
     background: url("../assets/img/home/p7/train.png") no-repeat center;
     background-size: cover;

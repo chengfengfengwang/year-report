@@ -1,6 +1,6 @@
 <template>
   <div class="container" id="myMusicTrip">
-    <audio autoplay  preload loop id="myTripAudio">
+    <audio autoplay preload loop id="myTripAudio">
       <source src="../assets/musicTrip.mp3" type="audio/mp3">
     </audio>
     <div class="page loading">
@@ -11,7 +11,11 @@
         <span id="progressStatus">加载中...</span>
       </div>
     </div>
-    <div class="page p1" v-show="testShow" v-bind:class="{fadeIn:page1.fadeIn,animationStart:page1.animationStart}">
+    <div
+      class="page p1"
+      v-show="testShow"
+      v-bind:class="{fadeIn:page1.fadeIn,animationStart:page1.animationStart}"
+    >
       <div class="logo_area">
         <span class="name px1-right">{{userInfo.nickname}}</span>
         <img class="logo" src="../assets/img/mytrip/p1/logo.png" alt>
@@ -59,7 +63,7 @@
         </div>
         <img src="../assets/img/mytrip/p2/hand.png" alt class="hand">
       </div>
-      
+
       <img class="star star1" src="../assets/img/mytrip/p2/star.png" alt>
       <img class="star star2" src="../assets/img/mytrip/p2/star1.png" alt>
       <img class="star star3" src="../assets/img/mytrip/p2/star2.png" alt>
@@ -100,8 +104,8 @@
       v-show="testShow"
     >
       <div class="text">
-        <div class="l1">
-          在线学琴时间<span class="num">{{play_duration}}</span>分
+        <div class="l1">在线学琴时间
+          <span class="num">{{play_duration}}</span>分
         </div>
         <div class="l2">
           弹奏音符
@@ -128,7 +132,7 @@
         <img src="../assets/img/mytrip/p4/hand.png" alt class="hand">
       </div>
       <div class="desklight">
-        <img src="../assets/img/mytrip/p4/deng.png" alt="" class="deng">
+        <img src="../assets/img/mytrip/p4/deng.png" alt class="deng">
         <img src="../assets/img/mytrip/p4/light.png" alt class="light">
       </div>
       <img src="../assets/img/mytrip/p4/star.png" alt class="star">
@@ -164,63 +168,78 @@
       v-bind:class="{fadeIn:page6.fadeIn,animationStart:page6.animationStart}"
       v-show="true"
     >
-    <div class="result_wrapper">
-      <div class="result">
-        <img :src="avatarBase64" alt class="avatar" crossorigin="Anonymous">
-        <div class="userinfo">
-          <div class="nickname">{{userInfo.nickname}}</div>
-          <div class="result_title">2018年学琴成绩单</div>
-        </div>
-        <div class="result_main">
-          <div>
-            <img v-show="playName==1" class="name_img" src="../assets/img/mytrip/p4/name1.png" alt>
-            <img v-show="playName==2" class="name_img" src="../assets/img/mytrip/p4/name2.png" alt>
-            <img v-show="playName==3" class="name_img" src="../assets/img/mytrip/p4/name3.png" alt>
-            <div v-show="playName==1" class="name_text">年轻人，乐坛的接力棒就交给你了！</div>
-            <div v-show="playName==2" class="name_text">阁下莫非就是江湖人称的“乐器王子”？</div>
-            <div v-show="playName==3" class="name_text">尖叫声在哪里?</div>
+      <div class="result_wrapper">
+        <div class="result">
+          <img :src="avatarBase64" alt class="avatar" crossorigin="Anonymous">
+          <div class="userinfo">
+            <div class="nickname">{{userInfo.nickname}}</div>
+            <div class="result_title">2018年学琴成绩单</div>
           </div>
-          <div class="learn_content">
-            <p>
-              学会了
-              <span class="b">{{instrumentTypes.join('、')}}</span>
-              <!-- 学会了<span class="b">吉他、尤克里里</span> -->
-            </p>
-            <p>
-              学习了
-              <span class="b">{{purchase_count}}</span>门课程
-            </p>
-            <p>
-              学琴时间
-              <span class="b">{{play_duration}}</span>分钟
-            </p>
-            <p>
-              弹奏了
-              <span class="b">{{play_beats_count}}</span>个音符
-            </p>
-            <p>
-              一共获得了
-              <span class="b">{{play_a_count}}</span>次
-              <span class="w">A</span>
-            </p>
-            <p>
-              超过了
-              <span class="b">{{play_a_lable}}%</span>的学员
-            </p>
+          <div class="result_main">
+            <div>
+              <img
+                v-show="playName==1"
+                class="name_img"
+                src="../assets/img/mytrip/p4/name1.png"
+                alt
+              >
+              <img
+                v-show="playName==2"
+                class="name_img"
+                src="../assets/img/mytrip/p4/name2.png"
+                alt
+              >
+              <img
+                v-show="playName==3"
+                class="name_img"
+                src="../assets/img/mytrip/p4/name3.png"
+                alt
+              >
+              <div v-show="playName==1" class="name_text">年轻人，乐坛的接力棒就交给你了！</div>
+              <div v-show="playName==2" class="name_text">阁下莫非就是江湖人称的“乐器王子”？</div>
+              <div v-show="playName==3" class="name_text">尖叫声在哪里?</div>
+            </div>
+            <div class="learn_content">
+              <p>
+                学会了
+                <span class="b">{{instrumentTypes.join('、')}}</span>
+                <!-- 学会了<span class="b">吉他、尤克里里</span> -->
+              </p>
+              <p>
+                学习了
+                <span class="b">{{purchase_count}}</span>门课程
+              </p>
+              <p>
+                学琴时间
+                <span class="b">{{play_duration}}</span>分钟
+              </p>
+              <p>
+                弹奏了
+                <span class="b">{{play_beats_count}}</span>个音符
+              </p>
+              <p>
+                一共获得了
+                <span class="b">{{play_a_count}}</span>次
+                <span class="w">A</span>
+              </p>
+              <p>
+                超过了
+                <span class="b">{{play_a_lable}}%</span>的学员
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="qr_area">
-          <div class="left">
-            <p>扫一扫查看你的音乐成绩单</p>
-            <p>领取新年礼包</p>
-          </div>
-          <div class="right">
-            <img src="../assets/img/mytrip/p6/downloadQr.png" alt class="qrcode">
+          <div class="qr_area">
+            <div class="left">
+              <p>扫一扫查看你的音乐成绩单</p>
+              <p>领取新年礼包</p>
+            </div>
+            <div class="right">
+              <img src="../assets/img/mytrip/p6/downloadQr.png" alt class="qrcode">
+            </div>
           </div>
         </div>
       </div>
-    </div>
-      
+
       <div v-show="openInApp" class="bottom_app">
         <div class="save_tip">长按图片保存成绩单</div>
         <div class="bottom_btn">
@@ -242,7 +261,7 @@
         </div>
       </div>
     </div>
-     <div class="share_menu" v-bind:class="{show:shareShow}">
+    <div class="share_menu" v-bind:class="{show:shareShow}">
       <div>分享到：</div>
       <div class="menu_wrapper">
         <div class="wx" @click="share(22)">
@@ -271,10 +290,15 @@
   </div>
 </template>
 <script>
-import { getQueryVariable,getPosition,autoPlayAudio,baseUrl } from "./../utils/util.js";
+import {
+  getQueryVariable,
+  getPosition,
+  autoPlayAudio,
+  baseUrl
+} from "./../utils/util.js";
 import Bottom from "./../components/Bottom";
 import html2canvas from "html2canvas";
-var FontFaceObserver = require('fontfaceobserver');
+var FontFaceObserver = require("fontfaceobserver");
 export default {
   data: function() {
     return {
@@ -322,33 +346,33 @@ export default {
       play_a_lable: "", //成绩超越的人
       openInApp: true,
       avatarBase64: "",
-      uid:'',
-      shareShow:false
+      uid: "",
+      shareShow: false
     };
   },
   components: {
     Bottom
   },
   mounted() {
-    var output = new FontFaceObserver('noto-regular');
-    output.load().then(function () {
-      console.log('noto-regular has loaded.');
+    var output = new FontFaceObserver("noto-regular");
+    output.load().then(function() {
+      console.log("noto-regular has loaded.");
     });
     this.openInApp = Boolean(window.WebShare);
     this.uid = getQueryVariable("uid");
     this.bindTouchEvent();
     this.getMycount();
     this.initLoading();
-    autoPlayAudio('myTripAudio');
+    autoPlayAudio("myTripAudio");
     this.bindAudioEvent();
     //this.imgToBase64('http://img.iguitar.immusician.com/avatar/cf8fb4dc146efe58190dd1706f04be95.jpg');
   },
   computed: {
-    author(){
-      if(this.openInApp){
-        return '你'
-      }else{
-        return 'TA'
+    author() {
+      if (this.openInApp) {
+        return "你";
+      } else {
+        return "TA";
       }
     },
     joinYear() {
@@ -392,15 +416,61 @@ export default {
     bindAudioEvent() {
       var audio = document.querySelector("#myTripAudio");
       audio.play();
-      document.querySelector('#myMusicTrip').addEventListener("touchstart", function() {
-        audio.play();
-      });
+      document
+        .querySelector("#myMusicTrip")
+        .addEventListener("touchstart", function() {
+          audio.play();
+        });
     },
     initLoading() {
       var that = this;
+
+      var promiseList = [];
+
+      var notoBold = new FontFaceObserver("noto-bold");
+      promiseList.push(
+        new Promise((resolve, reject) => {
+          notoBold.load().then(function() {
+            console.log("noto-bold has loaded.");
+            responseImgLoad();
+            resolve();
+          });
+        })
+      );
+      var noto = new FontFaceObserver("noto");
+      promiseList.push(
+        new Promise((resolve, reject) => {
+          noto.load().then(function() {
+            console.log("noto has loaded.");
+            responseImgLoad();
+            resolve();
+          });
+        })
+      );
+      var notoSmbold = new FontFaceObserver("noto-smbold");
+      promiseList.push(
+        new Promise((resolve, reject) => {
+          notoBold.load().then(function() {
+            console.log("notoSmbold has loaded.");
+            responseImgLoad();
+            resolve();
+          });
+        })
+      );
+      var notoRegular = new FontFaceObserver("noto-regular");
+      promiseList.push(
+        new Promise((resolve, reject) => {
+          notoBold.load().then(function() {
+            console.log("notoRegular has loaded.");
+            responseImgLoad();
+            resolve();
+          });
+        })
+      );
+
       var p = document.querySelector(".p_color");
       var bgList = document.querySelectorAll(".page");
-      console.log(bgList)
+      
       var bgArr = [],
         sum = 0;
       var fakeTemp = 0;
@@ -423,53 +493,62 @@ export default {
       //     clearInterval(timer)
       // },3000)
       bgArr.forEach((e, index) => {
-        var img = new Image();
-        img.src = e;
-        if (img.complete) {
-          responseImgLoad();
-        }
-        img.onload = function() {
-          responseImgLoad();
-        };
+        let p = new Promise((resolve, reject) => {
+          var img = new Image();
+          img.src = e;
+          if (img.complete) {
+            responseImgLoad();
+            resolve()
+          }
+          img.onload = function() {
+            responseImgLoad();
+            resolve()
+          };
+        });
+        promiseList.push(p);
       });
       function responseImgLoad() {
         clearInterval(timer);
         sum++;
-        p.style.width = (sum / bgArr.length) * 100 + "%";
-        if (sum / bgArr.length == 1) {
-          setTimeout(() => {
-            console.log(that)
-            that.$set(that.page1, "fadeIn", true);
-            that.$set(that.page1, "animationStart", true);
-            document.querySelector("#progressStatus").innerHTML = "加载完成";
-          }, 1000);
-        }
-      }
+        p.style.width = (sum / promiseList.length) * 100 + "%";
+        // p.style.width = (sum / bgArr.length) * 100 + "%";
+        // if (sum / bgArr.length == 1) {
+        //   setTimeout(() => {
+        //     console.log(that);
+        //     that.$set(that.page1, "fadeIn", true);
+        //     that.$set(that.page1, "animationStart", true);
+        //     document.querySelector("#progressStatus").innerHTML = "加载完成";
+        //   }, 1000);
+        // }
+      };
+      Promise.all(promiseList).then(res => {
+        document.querySelector("#progressStatus").innerHTML = "加载完成";
+        that.$set(that.page1, "fadeIn", true);
+        that.$set(that.page1, "animationStart", true);
+      });
     },
     responseImgLoad() {},
     getMycount() {
-      this.axios
-        .get(`${baseUrl}/v3/user_info/?uid=${this.uid}`)
-        .then(res => {
-          console.log('个人数据请求成功')
-          var res = res.data.data;
-          console.log(res)
-          this.userInfo.nickname = res.nickname;
-          this.userInfo.avatar = res.avatar;
-          this.joinTime = res.regtime;
-          this.instrument_types = res.instrument_types;
-          this.joinIndex = res.index;
-          this.purchase_count = res.purchase_count;
-          this.purchase_course = res.purchase_course;
-          this.play_duration = res.play_duration; //弹奏时间
-          this.play_beats_count = res.play_beats_count; //弹奏音符
-          this.play_duration_lable = res.play_duration_lable; //超过多少人
-          this.play_a_count = res.play_a_count; //成绩A的次数
-          this.play_a_lable = res.play_a_lable; //成绩超越的人
-          this.$nextTick(() => {
-            this.createResultImg();
-          });
+      this.axios.get(`${baseUrl}/v3/user_info/?uid=${this.uid}`).then(res => {
+        console.log("个人数据请求成功");
+        var res = res.data.data;
+        console.log(res);
+        this.userInfo.nickname = res.nickname;
+        this.userInfo.avatar = res.avatar;
+        this.joinTime = res.regtime;
+        this.instrument_types = res.instrument_types;
+        this.joinIndex = res.index;
+        this.purchase_count = res.purchase_count;
+        this.purchase_course = res.purchase_course;
+        this.play_duration = res.play_duration; //弹奏时间
+        this.play_beats_count = res.play_beats_count; //弹奏音符
+        this.play_duration_lable = res.play_duration_lable; //超过多少人
+        this.play_a_count = res.play_a_count; //成绩A的次数
+        this.play_a_lable = res.play_a_lable; //成绩超越的人
+        this.$nextTick(() => {
+          this.createResultImg();
         });
+      });
     },
     bindTouchEvent() {
       var that = this;
@@ -545,12 +624,12 @@ export default {
     createResultImg() {
       this.imgToBase64(this.userInfo.avatar).then(res => {
         this.avatarBase64 = res;
-        document.querySelector(".page.p6").classList.add('visi');
+        document.querySelector(".page.p6").classList.add("visi");
         html2canvas(document.querySelector(".result_wrapper"), {
-          backgroundColor: "transparent",
+          backgroundColor: "transparent"
           //allowTaint: true
         }).then(canvas => {
-          document.querySelector(".page.p6").classList.remove('visi');
+          document.querySelector(".page.p6").classList.remove("visi");
           //return
           //把画好的canvas转成base64
           document.querySelector(".result_wrapper").innerHTML = "";
@@ -567,26 +646,26 @@ export default {
       });
     },
     imgToBase64(url) {
-      var url = url + '?' + new Date().valueOf();
+      var url = url + "?" + new Date().valueOf();
       return new Promise((resolve, reject) => {
-            var img = new Image();
-            img.setAttribute("crossOrigin", "Anonymous");
-            img.src = url;
-            console.log(url)
-            console.log('------');
-            console.log(img.complete)
-            img.onload = function () {
-                var canvas = document.createElement('canvas');
-                canvas.width = img.width;
-                canvas.height = img.height;
-                var ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-                var base64 = canvas.toDataURL('image/png');
-                console.log('------')
-                //console.log(base64);
-                resolve(base64)
-                //document.querySelector('#test').src = base64
-            }
+        var img = new Image();
+        img.setAttribute("crossOrigin", "Anonymous");
+        img.src = url;
+        console.log(url);
+        console.log("------");
+        console.log(img.complete);
+        img.onload = function() {
+          var canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+          var base64 = canvas.toDataURL("image/png");
+          console.log("------");
+          //console.log(base64);
+          resolve(base64);
+          //document.querySelector('#test').src = base64
+        };
         // console.log("qwe");
         // var img = new Image(); //创建新的图片对象
         // var base64 = ""; //base64
@@ -623,11 +702,11 @@ export default {
         location.href = "http://api.iguitar.immusician.com/d?c=annals";
       }
     },
-    hideShare(){
-      this.shareShow = false
+    hideShare() {
+      this.shareShow = false;
     },
-    showShareMenu(){
-      this.shareShow = true
+    showShareMenu() {
+      this.shareShow = true;
     },
     share(num) {
       this.hideShare();
@@ -691,7 +770,7 @@ export default {
     border-radius: 30px;
     transition: width 1000ms;
   }
-  #progressStatus{
+  #progressStatus {
     font-size: 30px;
   }
 }
@@ -699,7 +778,7 @@ export default {
   z-index: 10;
   background: url("../assets/img/mytrip/p1/bg.png") no-repeat center;
   background-size: cover;
-  &.animationStart .music_note{
+  &.animationStart .music_note {
     &.note1 {
       .fly_note1;
     }
@@ -712,8 +791,8 @@ export default {
     // &.note4 {
     //   .fly_note4;
     // }
-  };
-  &.animationStart .light{
+  }
+  &.animationStart .light {
     animation: light_rotate 1000ms linear 1 normal forwards;
   }
   //opacity: 1;
@@ -825,7 +904,7 @@ export default {
     z-index: 29;
     margin: 157px 0 0 65px;
     line-height: 50px;
-    font-family: 'noto-regular';
+    font-family: "noto-regular";
     .t1,
     .t2,
     .t3,
@@ -837,12 +916,12 @@ export default {
     }
     //animation: bubble 900ms linear 1s 1 normal forwards;
   }
-  .ss{
+  .ss {
     width: 655px;
     height: 1022px;
     position: absolute;
     left: 50%;
-    top:50%;
+    top: 50%;
     transform: translate(-50%, -50%);
     background: url("../assets/img/mytrip/p2/sss.png") no-repeat center;
     background-size: cover;
@@ -887,7 +966,7 @@ export default {
   .hand {
     width: 32px;
     position: absolute;
-    top:47%;
+    top: 47%;
     left: 480px;
   }
 }
@@ -913,7 +992,7 @@ export default {
     }
   }
   .text {
-    font-family: 'noto-regular';
+    font-family: "noto-regular";
     margin: 104px 0 0 68px;
     line-height: 60px;
     .para {
@@ -973,7 +1052,7 @@ export default {
   //background-color: #4a6f6c;
   //background-position: 0 80%;
   //background-position: left -90px;
-  font-family: 'noto-regular';
+  font-family: "noto-regular";
   font-size: 32px;
   &.animationStart .text .l1 {
     .line-bubble1;
@@ -1009,40 +1088,40 @@ export default {
       }
     }
   }
-  .desklight{
+  .desklight {
     position: absolute;
     right: 0;
-    top:45%;
-    .deng{
+    top: 45%;
+    .deng {
       z-index: 38;
       width: 190px;
     }
     .light {
       z-index: 37;
-    width: 246px;
-    position: absolute;
-    top: 10%;
-    right: 63%;
-    animation: lightFadeIn 800ms linear 0ms infinite alternate forwards;
-    @keyframes lightFadeIn {
-      0% {
-        opacity: 0.3;
-      }
+      width: 246px;
+      position: absolute;
+      top: 10%;
+      right: 63%;
+      animation: lightFadeIn 800ms linear 0ms infinite alternate forwards;
+      @keyframes lightFadeIn {
+        0% {
+          opacity: 0.3;
+        }
 
-      100% {
-        opacity: 1;
+        100% {
+          opacity: 1;
+        }
       }
     }
   }
-  }
-  .ss{
+  .ss {
     position: absolute;
     width: 100%;
     height: 756px;
-    top:30%;
+    top: 30%;
     left: 50%;
     transform: translateX(-50%);
-    background: url('../assets/img/mytrip/p4/ss.png') no-repeat center;
+    background: url("../assets/img/mytrip/p4/ss.png") no-repeat center;
     background-size: cover;
   }
   .note {
@@ -1152,7 +1231,7 @@ export default {
   z-index: 50;
   background: url("../assets/img/mytrip/p5/bg.png") no-repeat center;
   background-size: 100% 100%;
-  font-family: 'noto-regular';
+  font-family: "noto-regular";
   font-size: 32px;
   &.animationStart .text .l1 {
     .line-bubble1;
@@ -1216,7 +1295,7 @@ export default {
   z-index: 60;
   background: url("../assets/img/mytrip/p6/bg.png") no-repeat center;
   background-size: cover;
-  .result_wrapper{
+  .result_wrapper {
     padding-top: 20px;
     padding-bottom: 60px;
   }
@@ -1254,7 +1333,7 @@ export default {
         font-size: 30px;
       }
       .result_title {
-        font-family: 'noto-bold';
+        font-family: "noto-bold";
       }
     }
     .result_main {
@@ -1317,9 +1396,10 @@ export default {
       }
     }
   }
-  .bottom_app,.bottom_h5{
+  .bottom_app,
+  .bottom_h5 {
     position: relative;
-    top:-100px;
+    top: -100px;
     // position: absolute;
     // top:80%;
     // width: 100%;
@@ -1385,7 +1465,7 @@ export default {
     .re {
       display: flex;
       justify-content: center;
-      align-items: center; 
+      align-items: center;
       img {
         width: 30px;
       }
