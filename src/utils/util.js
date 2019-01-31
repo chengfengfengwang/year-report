@@ -1,5 +1,5 @@
-const baseUrl = 'http://192.168.1.171:22222';
-const coupon_id = '5c4fd6c09a5f77026df85cbf'; //5c4fd6c09a5f77026df85cbf  本地 //5c4ec0f9ab9a700db1667639 //正式
+const baseUrl = 'http://iguitar.immusician.com:2525'; //http://192.168.1.171:22222
+const coupon_id = '5c4ec0f9ab9a700db1667639'; //5c4fd6c09a5f77026df85cbf  本地 //5c4ec0f9ab9a700db1667639 //正式
 function getPosition(e) {
     var x = e.getBoundingClientRect().left + document.documentElement.scrollLeft;
     var y = e.getBoundingClientRect().top + document.documentElement.scrollTop;

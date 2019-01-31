@@ -24,7 +24,8 @@
         <img src="../assets/img/mytrip/p1/text-img.png" alt>
       </div>
       <div class="person">
-        <img src="../assets/img/mytrip/p1/p.png" alt>
+        <img class="realp" src="../assets/img/mytrip/p1/p.png" alt>
+        <img class="yingzi" src="../assets/img/mytrip/p1/yingzi.png" alt="">
       </div>
       <div class="music_note note1">
         <img src="../assets/img/mytrip/p1/note1.png" alt>
@@ -791,6 +792,9 @@ export default {
   &.animationStart .light {
     animation: light_rotate 1000ms linear 1 normal forwards;
   }
+  &.animationStart .yingzi {
+    animation: fadeIn 2300ms linear 1 normal forwards;
+  }
   //opacity: 1;
   .logo_area {
     position: absolute;
@@ -823,8 +827,14 @@ export default {
     position: absolute;
     top: 47%;
     left: 156px;
-    img {
-      width: 468px;
+    .realp {
+      width: 255px;
+    }
+    .yingzi{
+      position: absolute;
+      left: 120px;
+      bottom:-30px;
+      width: 325px;
     }
   }
   .music_note {
