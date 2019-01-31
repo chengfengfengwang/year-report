@@ -127,7 +127,45 @@ html,body,.container,#app{
 .resultImg{
     width: 100%;
     z-index: 999;
-  }
-  .visi{
-      visibility: visible !important;
-  }
+}
+.visi{
+    visibility: visible !important;
+}
+.share_menu{
+    transition: bottom .8s;
+    position: absolute;
+    bottom: -400px;
+    background-color: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    z-index: 999;
+    font-size: 20px;
+    .menu_wrapper{
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        font-size: 14px;
+        img{
+            width: 100px;
+        }
+    }
+    //transform: translateY(100%)
+}
+.share_menu.show{
+    bottom: 0px;
+}
+.mask{
+    z-index: 998;
+    position: fixed;
+    left: 0;
+    top:0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, .6);
+    display: none;
+}
+.mask.show{
+    display: block;
+}

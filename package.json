@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "fontfaceobserver": "^2.1.0",
     "fontmin": "^0.9.7-beta",
     "html2canvas": "^1.0.0-alpha.12",
     "less": "^3.9.0",

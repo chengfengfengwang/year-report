@@ -1,6 +1,8 @@
 <template>
-  <div class="container">
-    <audio src="./../assets/bg_music.mp3" autoplay loop preload="auto"></audio>
+  <div class="container" id="home">
+    <audio autoplay preload loop id="myAudio">
+      <source src="../assets/full.mp3" type="audio/mp3">
+    </audio>
     <div class="page loading">
       <div class="progress_wrapper">
         <div class="p_grey">
@@ -50,15 +52,13 @@
         </p>
         <!-- <p
           class="c2"
-        >{{beginArr[0]}},{{beginArr[1]}}{{beginArr[2]}}{{beginArr[3]}},{{beginArr[4]}}{{beginArr[5]}}{{beginArr[6]}}人</p> -->
-        <p
-          class="c2"
-        >1,131,123人</p>
+        >{{beginArr[0]}},{{beginArr[1]}}{{beginArr[2]}}{{beginArr[3]}},{{beginArr[4]}}{{beginArr[5]}}{{beginArr[6]}}人</p>-->
+        <p class="c2">1,131,123人</p>
       </div>
       <div class="middle_img">
-        <img src="../assets/img/home/p2/orbit_p2@2x.png" alt="" class="orbit">
-        <img src="../assets/img/home/p2/music_group.png" alt="" class="music_group">
-        <img src="../assets/img/home/p2/logo_p2@2x.png" alt="" class="music_logo">
+        <img src="../assets/img/home/p2/orbit_p2@2x.png" alt class="orbit">
+        <img src="../assets/img/home/p2/music_group.png" alt class="music_group">
+        <img src="../assets/img/home/p2/logo_p2@2x.png" alt class="music_logo">
       </div>
       <div class="t2">
         <p class="c1">在AI音乐学院</p>
@@ -109,11 +109,11 @@
       <img src="./../assets/img/home/p4/text3.png" alt class="text3">
       <img src="./../assets/img/home/p4/text4.png" alt class="text4">
       <div class="layer1"></div>
-      <img src="./../assets/img/home/p2/note.png" alt class="note note1">
-      <img src="./../assets/img/home/p2/note.png" alt class="note note2">
-      <img src="./../assets/img/home/p2/note.png" alt class="note note3">
-      <img src="./../assets/img/home/p2/note.png" alt class="note note4">
-      <img src="./../assets/img/home/p2/note.png" alt class="note note5">
+      <img src="./../assets/img/home-fix/notet1@2x.png" alt class="note note1">
+      <img src="./../assets/img/home-fix/notet1@2x.png" alt class="note note2">
+      <img src="./../assets/img/home-fix/notet2@2x.png" alt class="note note3">
+      <img src="./../assets/img/home-fix/notet3@2x.png" alt class="note note4">
+      <img src="./../assets/img/home-fix/notet4@2x.png" alt class="note note5">
       <div class="layer2"></div>
       <div class="light"></div>
     </div>
@@ -123,11 +123,11 @@
       v-show="testPageShow"
     >
       <div class="layer1"></div>
-      <img src="./../assets/img/home/p2/note.png" alt class="note note1">
-      <img src="./../assets/img/home/p2/note.png" alt class="note note2">
-      <img src="./../assets/img/home/p2/note.png" alt class="note note3">
-      <img src="./../assets/img/home/p2/note.png" alt class="note note4">
-      <img src="./../assets/img/home/p2/note.png" alt class="note note5">
+      <img src="./../assets/img/home-fix/notet1@2x.png" alt class="note note1">
+      <img src="./../assets/img/home-fix/notet2@2x.png" alt class="note note2">
+      <img src="./../assets/img/home-fix/notet3@2x.png" alt class="note note3">
+      <img src="./../assets/img/home-fix/notet4@2x.png" alt class="note note4">
+      <img src="./../assets/img/home-fix/notet3@2x.png" alt class="note note5">
       <div class="layer2"></div>
       <div class="c1">这些明星省份的同学
         <br>也很有音乐细胞
@@ -161,7 +161,11 @@
       v-bind:class="{fadeIn:page7.fadeIn,animationStart:page7.animationStart}"
       v-show="testPageShow"
     >
-      <img src="./../assets/img/home/p7/text_img.png" alt class="text_img">
+      <img src="./../assets/img/home-fix/text1.png" alt class="textl1">
+      <img src="./../assets/img/home-fix/text2.png" alt class="textl2">
+      <img src="./../assets/img/home-fix/text3.png" alt class="textl3">
+      <img src="./../assets/img/home-fix/text4.png" alt class="textl4">
+      <!-- <img src="./../assets/img/home/p7/text_img.png" alt class="text_img"> -->
       <img src="./../assets/img/home/p7/text_img2.png" alt class="text_img2">
       <img src="./../assets/img/home/p7/cloud.png" alt class="cloud cloud1">
       <img src="./../assets/img/home/p7/cloud.png" alt class="cloud cloud2">
@@ -268,16 +272,16 @@
       <img class="star2" src="../assets/img/home/p1/star2.png" alt>
       <img class="star3" src="../assets/img/home/p1/star3.png" alt>
       <div v-show="openInApp" class="open_in_app">
-        <div class="ready_btn">
-          <img src="../assets/img/home/p11/p11_share@2x.png" alt> 准备好了
+        <div class="ready_btn" @click="getGiftInApp">
+          <img src="../assets/img/home/p11/p11_share@2x.png" alt> 领取优惠
         </div>
         <div class="bottom_menu">
           <div class="left" @click="reWatch">
             <img src="../assets/img/home/p11/p11_reboot@2x.png" alt>再看一遍
           </div>
-          <router-link class="right" to="/myMusicTrip" tag="div">
+          <div class="right" @click="toMyMusicTrip">
             <img src="../assets/img/home/p11/p11_next@2x.png" alt>查看我的2018
-          </router-link>
+          </div>
         </div>
       </div>
       <div v-show="!openInApp" class="open_in_h5">
@@ -292,11 +296,43 @@
         </div>
       </div>
     </div>
-    <!-- <div class="bottom"></div> -->
+    <div class="share_menu" v-bind:class="{show:shareShow}">
+      <div>分享到：</div>
+      <div class="menu_wrapper">
+        <div class="wx" @click="share(22)">
+          <img src="../assets/img/home-fix/wx.png" alt>
+          <div>微信</div>
+        </div>
+        <div class="pyq" @click="share(23)">
+          <img src="../assets/img/home-fix/pyq.png" alt>
+          <div>朋友圈</div>
+        </div>
+        <div class="qq" @click="share(24)">
+          <img src="../assets/img/home-fix/qq.png" alt>
+          <div>QQ</div>
+        </div>
+        <div class="qqzone" @click="share(6)">
+          <img src="../assets/img/home-fix/qqzone.png" alt>
+          <div>QQ空间</div>
+        </div>
+        <div class="qqzone" @click="share(1)">
+          <img src="../assets/img/home-fix/weibo.png" alt>
+          <div>微博</div>
+        </div>
+      </div>
+    </div>
+    <div @click="hideShare" class="mask" v-bind:class="{show:shareShow}"></div>
   </div>
 </template>
 <script>
-import { getPosition } from "./../utils/util.js";
+import {
+  getPosition,
+  autoPlayAudio,
+  baseUrl,
+  getQueryVariable,
+  coupon_id
+} from "./../utils/util.js";
+var FontFaceObserver = require('fontfaceobserver');
 export default {
   name: "home",
   data() {
@@ -351,28 +387,37 @@ export default {
         fadeIn: false,
         animationStart: false
       },
-      openInApp: false
+      openInApp: true,
+      uid: "",
+      isLogin: false,
+      coupon_id: coupon_id,
+      shareShow: false
     };
   },
   mounted() {
+    var output = new FontFaceObserver('noto-bold');
+    output.load().then(function () {
+      console.log('noto-bold has loaded.');
+    });
+    this.openInApp = Boolean(window.WebShare);
+    this.uid = getQueryVariable("uid");
+    this.isLogin = this.uid ? true : false;
     this.bindTouchEvent();
     this.initLoading();
-    //this.page2NumChange();
     this.cloudMove(document.querySelector(".p7 .cloud1"));
     this.cloudMove(document.querySelector(".p7 .cloud2"));
     this.cloudMove(document.querySelector(".p7 .cloud3"));
-    this.audio()
+    this.bindAudioEvent();
+    autoPlayAudio("myAudio");
   },
   methods: {
-    audio(){
-      var audio = document.querySelector('audio');
-      console.log('qqqqq')
-      console.log(audio);
-      document.body.addEventListener('click',function(){
-        console.log('click')
-        audio.play();
-      })
-      
+    bindAudioEvent() {
+      var audio = document.querySelector("#myAudio");
+      audio.play();
+      document.querySelector('#home').addEventListener("touchstart", function() {
+        console.log('出发home audio')
+        if(audio){audio.play()}
+      });
     },
     initLoading() {
       var that = this;
@@ -386,7 +431,6 @@ export default {
       bgList.forEach(function(e, index) {
         var style = e.currentStyle || window.getComputedStyle(e, false);
         //console.log(style.backgroundImage.slice(4, -1).replace(/"/g, ""))
-        console.log(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
         bgArr.push(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
       });
       var timer = setInterval(() => {
@@ -416,7 +460,6 @@ export default {
         p.style.width = (sum / bgArr.length) * 100 + "%";
         if (sum / bgArr.length == 1) {
           setTimeout(() => {
-            console.log(that);
             that.$set(that.page1, "fadeIn", true);
             that.$set(that.page1, "animationStart", true);
             document.querySelector("#progressStatus").innerHTML = "加载完成";
@@ -527,9 +570,86 @@ export default {
     reWatch() {
       location.reload();
     },
-    getGiftInH5(){
+    getGiftInApp() {
+      this.showShareMenu();
+      return;
+      if (!this.isLogin) {
+        layer.open({
+          content: "请先返回APP登录",
+          btn: "确定"
+        });
+      } else {
+        //调用分享
+        WebShare.share(location.href, 0, 23);
+        //return;
+      }
+    },
+    getGiftInH5() {
       location.href = "http://api.iguitar.immusician.com/d?c=annals";
+    },
+    toMyMusicTrip() {
+      if (!this.isLogin) {
+        layer.open({
+          content: "请先返回APP登录",
+          btn: "确定"
+        });
+      } else {
+        this.axios
+          .get(`${baseUrl}/v3/is_user_info/?uid=${this.uid}`)
+          .then(res => {
+            if (res.data.error == 0) {
+              this.$router.push("myMusicTrip");
+            } else {
+              layer.open({
+                content: "抱歉，你没有相关数据",
+                btn: "确定"
+              });
+            }
+          });
+      }
+    },
+    hideShare() {
+      this.shareShow = false;
+    },
+    showShareMenu() {
+      this.shareShow = true;
+    },
+    receiveGift() {
+      this.axios
+        .get(
+          `${baseUrl}/v3/coupon/send_annals_coupon?uid=${this.uid}&coupon_id=${
+            this.coupon_id
+          }`
+        )
+        .then(res => {
+          setTimeout(() => {
+            if (res.data.error == 0) {
+              layer.open({
+                content: "领取成功",
+                btn: "确定"
+              });
+            } else {
+              layer.open({
+                content: res.data.message,
+                btn: "确定"
+              });
+            }
+          }, 2000);
+        });
+    },
+    share(num) {
+      this.hideShare();
+      this.receiveGift();
+      WebShare.share(location.href, 0, num);
     }
+  },
+  beforeRouteLeave (to, from, next) {
+    var audio = document.querySelector('#myAudio')
+    audio.pause();
+    audio.currentTime = 0;
+    next()
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
   }
 };
 </script>
@@ -550,6 +670,7 @@ export default {
     opacity: 1;
     visibility: visible;
   }
+  letter-spacing: 4px;
 }
 .loading {
   opacity: 1;
@@ -768,29 +889,29 @@ export default {
       color: rgba(96, 255, 242, 1);
     }
   }
-  .middle_img{
+  .middle_img {
     position: absolute;
     left: 50%;
-      top:45%;
-      transform: translateX(-50%);
-    .orbit{
+    top: 45%;
+    transform: translateX(-50%);
+    .orbit {
       position: absolute;
       left: 50%;
-      top:50%;
+      top: 50%;
       transform: translateX(-50%) translateY(-50%);
       width: 618px;
     }
-    .music_group{
+    .music_group {
       position: absolute;
       left: 50%;
-      top:50%;
+      top: 50%;
       transform: translateX(-50%) translateY(-50%);
       width: 537px;
     }
-    .music_logo{
+    .music_logo {
       position: absolute;
       left: 50%;
-      top:50%;
+      top: 50%;
       transform: translateX(-50%) translateY(-50%);
       width: 363px;
     }
@@ -1007,7 +1128,7 @@ export default {
   .note {
     position: absolute;
 
-    width: 55px;
+    width: 50px;
   }
   .note1 {
     left: 300px;
@@ -1108,7 +1229,7 @@ export default {
   .note {
     position: absolute;
 
-    width: 55px;
+    width: 46px;
   }
   .note1 {
     left: 300px;
@@ -1197,20 +1318,60 @@ export default {
   background: url("../assets/img/home/p7/p7_bg.png") no-repeat center;
   background-size: 100% 100%;
   text-align: center;
-  &.animationStart .text_img {
-    .bubble1;
+  &.animationStart .textl1 {
+    .line-bubble1;
+  }
+  &.animationStart .textl2 {
+    .line-bubble2;
+  }
+  &.animationStart .textl3 {
+    .line-bubble3;
+  }
+  &.animationStart .textl4 {
+    .line-bubble4;
   }
   &.animationStart .text_img2 {
-    animation: fadeIn 900ms linear 3000ms 1 normal forwards;
+    animation: fadeIn 900ms linear 3900ms 1 normal forwards;
   }
   .text_img {
     width: 529px;
     margin-top: 110px;
     z-index: 72;
   }
+  .textl1,
+  .textl2,
+  .textl3,
+  .textl4 {
+    position: absolute;
+    left: 50%;
+  }
+  .textl1 {
+    top: 10%;
+    width: 590px;
+    margin-left: -295px;
+    //.line-bubble1
+  }
+  .textl2 {
+    top: 15%;
+    width: 600px;
+    margin-left: -300px;
+    //.line-bubble2
+  }
+  .textl3 {
+    top: 20%;
+    width: 320px;
+    margin-left: -160px;
+    //.line-bubble3
+  }
+  .textl4 {
+    top: 25%;
+    width: 390px;
+    margin-left: -195px;
+    //.line-bubble4
+  }
   .text_img2 {
     width: 426px;
-    margin-top: 40px;
+    top: 35%;
     z-index: 73;
     position: relative;
     opacity: 0;
@@ -1235,7 +1396,7 @@ export default {
   .city {
     position: absolute;
     left: 0;
-    top: 400px;
+    top: 35%;
     width: 100%;
     height: 592px;
     background: url("../assets/img/home/p7/city.png") no-repeat center;
@@ -1255,7 +1416,8 @@ export default {
   .building {
     position: absolute;
     left: 0;
-    bottom: 0px;
+    //bottom: 0px;
+    top:50%;
     background: url("../assets/img/home/p7/building.png") repeat center;
     background-size: cover;
     width: 100%;
@@ -1266,7 +1428,8 @@ export default {
   .tree {
     position: absolute;
     left: 0;
-    bottom: -180px;
+    top:59%;
+    //bottom: -180px;
     background: url("../assets/img/home/p7/tree.png") no-repeat center;
     background-size: cover;
     width: 100%;
@@ -1298,7 +1461,8 @@ export default {
   .train {
     position: absolute;
     left: 0;
-    bottom: 70px;
+    top:65%;
+    //bottom: 70px;
     background: url("../assets/img/home/p7/train.png") no-repeat center;
     background-size: cover;
     width: 100%;
@@ -1356,9 +1520,9 @@ export default {
     text-align: center;
     width: 100%;
     left: 0;
-    top: 80%;
+    top: 75%;
     font-family: noto-smbold;
-    font-size: 24px;
+    font-size: 26px;
     color: #fff;
     line-height: 40px;
     .w {
@@ -1532,6 +1696,7 @@ export default {
     }
     .l2 {
       opacity: 0;
+      letter-spacing: 2px;
     }
     .l3 {
       opacity: 0;
@@ -1567,9 +1732,11 @@ export default {
   }
   &.animationStart .ready_btn {
     animation: fadeUp 2000ms linear 7300ms 1 normal forwards;
+    //animation: fadeUp 2000ms linear 0ms 1 normal forwards;
   }
   &.animationStart .bottom_menu {
     animation: fadeUp 1000ms linear 8500ms 1 normal forwards;
+    //animation: fadeUp 1000ms linear 0ms 1 normal forwards;
   }
   &.animationStart .open_in_h5 {
     animation: fadeIn 1000ms linear 6500ms 1 normal forwards;
@@ -1642,6 +1809,7 @@ export default {
     font-size: 24px;
     color: #fff;
     line-height: 45px;
+    letter-spacing: 2px;
   }
   .text_img {
     width: 500px;
@@ -1747,33 +1915,33 @@ export default {
       }
     }
   }
-  .open_in_h5{
+  .open_in_h5 {
     position: absolute;
-    top:80%;
+    top: 80%;
     left: 0;
     width: 100%;
     text-align: center;
     opacity: 0;
-    .getgiftbtn{
-      img{
+    .getgiftbtn {
+      img {
         width: 324px;
       }
     }
-    .getgifttext{
-      img{
+    .getgifttext {
+      img {
         width: 218px;
       }
       margin-bottom: 10px;
     }
-    .rewatch{
+    .rewatch {
       font-size: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        img {
-          width: 18px;
-          margin-right: 18px;
-        }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 18px;
+        margin-right: 18px;
+      }
     }
   }
 }

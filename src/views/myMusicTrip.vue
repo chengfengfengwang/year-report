@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div class="container" id="myMusicTrip">
+    <audio autoplay  preload loop id="myTripAudio">
+      <source src="../assets/musicTrip.mp3" type="audio/mp3">
+    </audio>
     <div class="page loading">
       <div class="progress_wrapper">
         <div class="p_grey">
@@ -47,17 +50,20 @@
         <p class="t3 para">和 10W+ 的同学</p>
         <p class="t4">一起开启了{{author}}的音乐之旅</p>
       </div>
-      <div class="p_light">
-        <img src="../assets/img/mytrip/p2/p-light.png" alt>
+      <div class="ss">
+        <div class="p_light">
+          <img src="../assets/img/mytrip/p2/p-light.png" alt>
+        </div>
+        <div class="person">
+          <img src="../assets/img/mytrip/p2/p.png" alt>
+        </div>
+        <img src="../assets/img/mytrip/p2/hand.png" alt class="hand">
       </div>
+      
       <img class="star star1" src="../assets/img/mytrip/p2/star.png" alt>
       <img class="star star2" src="../assets/img/mytrip/p2/star1.png" alt>
       <img class="star star3" src="../assets/img/mytrip/p2/star2.png" alt>
       <img class="star star4" src="../assets/img/mytrip/p2/star3.png" alt>
-      <div class="person">
-        <img src="../assets/img/mytrip/p2/p.png" alt>
-      </div>
-      <img src="../assets/img/mytrip/p2/hand.png" alt class="hand">
     </div>
     <div
       class="page p3"
@@ -95,8 +101,7 @@
     >
       <div class="text">
         <div class="l1">
-          在线学琴时间
-          <span class="num">{{play_duration}}</span>分
+          在线学琴时间<span class="num">{{play_duration}}</span>分
         </div>
         <div class="l2">
           弹奏音符
@@ -118,10 +123,16 @@
           <img v-show="playName==3" class="img-name" src="../assets/img/mytrip/p4/name3.png" alt>
         </div>
       </div>
-      <img class="person" src="../assets/img/mytrip/p4/person.png" alt>
-      <img src="../assets/img/mytrip/p4/light.png" alt class="light">
+      <div class="ss">
+        <img class="person" src="../assets/img/mytrip/p4/person.png" alt>
+        <img src="../assets/img/mytrip/p4/hand.png" alt class="hand">
+      </div>
+      <div class="desklight">
+        <img src="../assets/img/mytrip/p4/deng.png" alt="" class="deng">
+        <img src="../assets/img/mytrip/p4/light.png" alt class="light">
+      </div>
       <img src="../assets/img/mytrip/p4/star.png" alt class="star">
-      <img src="../assets/img/mytrip/p4/hand.png" alt class="hand">
+      
       <img src="../assets/img/mytrip/p4/note1.png" alt class="note note1">
       <img src="../assets/img/mytrip/p4/note2.png" alt class="note note2">
       <img src="../assets/img/mytrip/p4/note3.png" alt class="note note3">
@@ -216,7 +227,7 @@
           <div class="left" @click="reWatch">
             <img src="../assets/img/mytrip/p6/rewatch.png" alt>再看一遍
           </div>
-          <div class="right" @click="share">
+          <div class="right" @click="showShareMenu">
             <img src="../assets/img/mytrip/p6/share.png" alt>晒一晒
           </div>
         </div>
@@ -231,11 +242,39 @@
         </div>
       </div>
     </div>
+     <div class="share_menu" v-bind:class="{show:shareShow}">
+      <div>分享到：</div>
+      <div class="menu_wrapper">
+        <div class="wx" @click="share(22)">
+          <img src="../assets/img/home-fix/wx.png" alt>
+          <div>微信</div>
+        </div>
+        <div class="pyq" @click="share(23)">
+          <img src="../assets/img/home-fix/pyq.png" alt>
+          <div>朋友圈</div>
+        </div>
+        <div class="qq" @click="share(24)">
+          <img src="../assets/img/home-fix/qq.png" alt>
+          <div>QQ</div>
+        </div>
+        <div class="qqzone" @click="share(6)">
+          <img src="../assets/img/home-fix/qqzone.png" alt>
+          <div>QQ空间</div>
+        </div>
+        <div class="qqzone" @click="share(1)">
+          <img src="../assets/img/home-fix/weibo.png" alt>
+          <div>微博</div>
+        </div>
+      </div>
+    </div>
+    <div @click="hideShare" class="mask" v-bind:class="{show:shareShow}"></div>
   </div>
 </template>
 <script>
+import { getQueryVariable,getPosition,autoPlayAudio,baseUrl } from "./../utils/util.js";
 import Bottom from "./../components/Bottom";
 import html2canvas from "html2canvas";
+var FontFaceObserver = require('fontfaceobserver');
 export default {
   data: function() {
     return {
@@ -281,17 +320,27 @@ export default {
       play_duration_lable: "", //超过多少人，百分比
       play_a_count: "", //成绩A的次数
       play_a_lable: "", //成绩超越的人
-      openInApp: false,
-      avatarBase64: ""
+      openInApp: true,
+      avatarBase64: "",
+      uid:'',
+      shareShow:false
     };
   },
   components: {
     Bottom
   },
   mounted() {
+    var output = new FontFaceObserver('noto-regular');
+    output.load().then(function () {
+      console.log('noto-regular has loaded.');
+    });
+    this.openInApp = Boolean(window.WebShare);
+    this.uid = getQueryVariable("uid");
     this.bindTouchEvent();
     this.getMycount();
     this.initLoading();
+    autoPlayAudio('myTripAudio');
+    this.bindAudioEvent();
     //this.imgToBase64('http://img.iguitar.immusician.com/avatar/cf8fb4dc146efe58190dd1706f04be95.jpg');
   },
   computed: {
@@ -340,6 +389,13 @@ export default {
     }
   },
   methods: {
+    bindAudioEvent() {
+      var audio = document.querySelector("#myTripAudio");
+      audio.play();
+      document.querySelector('#myMusicTrip').addEventListener("touchstart", function() {
+        audio.play();
+      });
+    },
     initLoading() {
       var that = this;
       var p = document.querySelector(".p_color");
@@ -393,9 +449,11 @@ export default {
     responseImgLoad() {},
     getMycount() {
       this.axios
-        .get("http://192.168.1.171:22222/v3/user_info/?god=268405561")
+        .get(`${baseUrl}/v3/user_info/?uid=${this.uid}`)
         .then(res => {
+          console.log('个人数据请求成功')
           var res = res.data.data;
+          console.log(res)
           this.userInfo.nickname = res.nickname;
           this.userInfo.avatar = res.avatar;
           this.joinTime = res.regtime;
@@ -406,8 +464,8 @@ export default {
           this.play_duration = res.play_duration; //弹奏时间
           this.play_beats_count = res.play_beats_count; //弹奏音符
           this.play_duration_lable = res.play_duration_lable; //超过多少人
-          (this.play_a_count = res.play_a_count), //成绩A的次数
-            (this.play_a_lable = res.play_a_lable); //成绩超越的人
+          this.play_a_count = res.play_a_count; //成绩A的次数
+          this.play_a_lable = res.play_a_lable; //成绩超越的人
           this.$nextTick(() => {
             this.createResultImg();
           });
@@ -446,12 +504,10 @@ export default {
         });
     },
     changePage(direction) {
-      console.log("事件响应");
       if (this.pageLock) {
         //防止触发多个touchmove事件
         return;
       }
-      console.log(this.currentPage);
       this.pageLock = true;
       if (direction == "up") {
         if (this.currentPage < 11) {
@@ -557,7 +613,7 @@ export default {
     getGift() {
       if (this.openInApp) {
         this.axios
-          .get("http://192.168.1.171:22222/v3/coupon/send_annals_coupon", {
+          .get(`${baseUrl}/v3/coupon/send_annals_coupon`, {
             headers: { coupon_id: "", uid: "" }
           })
           .then(res => {
@@ -567,7 +623,16 @@ export default {
         location.href = "http://api.iguitar.immusician.com/d?c=annals";
       }
     },
-    share() {}
+    hideShare(){
+      this.shareShow = false
+    },
+    showShareMenu(){
+      this.shareShow = true
+    },
+    share(num) {
+      this.hideShare();
+      WebShare.share(location.href, 0, num);
+    }
   }
 };
 </script>
@@ -633,7 +698,7 @@ export default {
 .p1 {
   z-index: 10;
   background: url("../assets/img/mytrip/p1/bg.png") no-repeat center;
-  background-size: 100% 100%;
+  background-size: cover;
   &.animationStart .music_note{
     &.note1 {
       .fly_note1;
@@ -673,18 +738,18 @@ export default {
   }
   .text_img {
     position: absolute;
-    top: 170px;
-    right: 120px;
+    top: 150px;
+    right: 100px;
     img {
-      width: 229px;
+      width: 200px;
     }
   }
   .person {
     position: absolute;
-    top: 615px;
-    left: 208px;
+    top: 47%;
+    left: 156px;
     img {
-      width: 193px;
+      width: 468px;
     }
   }
   .music_note {
@@ -713,7 +778,7 @@ export default {
     &.note4 {
       width: 34px;
       left: 360px;
-      top: 672px;
+      top: 52%;
     }
   }
   .light {
@@ -739,8 +804,8 @@ export default {
 }
 .p2 {
   z-index: 20;
-  background: url("../assets/img/mytrip/p2/bg.png") no-repeat center;
-  background-size: 100% 100%;
+  background: url("../assets/img/mytrip/p2/bg_new.png") no-repeat center;
+  background-size: cover;
   &.animationStart .text {
     .t1 {
       animation: bubble 900ms linear 1s 1 normal forwards;
@@ -756,6 +821,8 @@ export default {
     }
   }
   .text {
+    position: relative;
+    z-index: 29;
     margin: 157px 0 0 65px;
     line-height: 50px;
     font-family: 'noto-regular';
@@ -770,10 +837,20 @@ export default {
     }
     //animation: bubble 900ms linear 1s 1 normal forwards;
   }
+  .ss{
+    width: 655px;
+    height: 1022px;
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%, -50%);
+    background: url("../assets/img/mytrip/p2/sss.png") no-repeat center;
+    background-size: cover;
+  }
   .person {
     position: absolute;
-    top: 632px;
-    right: 113px;
+    top: 31%;
+    right: 80px;
     img {
       width: 206px;
     }
@@ -800,8 +877,8 @@ export default {
   }
   .p_light {
     position: absolute;
-    top: 585px;
-    right: 33px;
+    top: 27%;
+    right: -5px;
     .blink;
     img {
       width: 313px;
@@ -810,8 +887,8 @@ export default {
   .hand {
     width: 32px;
     position: absolute;
-    top: 792px;
-    left: 540px;
+    top:47%;
+    left: 480px;
   }
 }
 .p3 {
@@ -836,7 +913,7 @@ export default {
     }
   }
   .text {
-    font-family: noto-regular;
+    font-family: 'noto-regular';
     margin: 104px 0 0 68px;
     line-height: 60px;
     .para {
@@ -892,9 +969,11 @@ export default {
 .p4 {
   z-index: 40;
   background: url("../assets/img/mytrip/p4/bg.png") no-repeat center;
-  background-size: cover;
+  background-size: 100% 100%;
+  //background-color: #4a6f6c;
+  //background-position: 0 80%;
   //background-position: left -90px;
-  font-family: noto-regular;
+  font-family: 'noto-regular';
   font-size: 32px;
   &.animationStart .text .l1 {
     .line-bubble1;
@@ -909,10 +988,12 @@ export default {
     .line-bubble4;
   }
   .text {
+    position: relative;
+    z-index: 49;
     margin: 130px 0 0 70px;
     line-height: 50px;
     .num {
-      font-family: noto;
+      //font-family: noto;
       font-size: 38px;
       color: #95feef;
     }
@@ -927,6 +1008,42 @@ export default {
         width: 328px;
       }
     }
+  }
+  .desklight{
+    position: absolute;
+    right: 0;
+    top:45%;
+    .deng{
+      z-index: 38;
+      width: 190px;
+    }
+    .light {
+      z-index: 37;
+    width: 246px;
+    position: absolute;
+    top: 10%;
+    right: 63%;
+    animation: lightFadeIn 800ms linear 0ms infinite alternate forwards;
+    @keyframes lightFadeIn {
+      0% {
+        opacity: 0.3;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+  }
+  .ss{
+    position: absolute;
+    width: 100%;
+    height: 756px;
+    top:30%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: url('../assets/img/mytrip/p4/ss.png') no-repeat center;
+    background-size: cover;
   }
   .note {
     position: absolute;
@@ -993,25 +1110,9 @@ export default {
   }
   .person {
     position: absolute;
-    top: 63%;
+    top: 52%;
     left: 124px;
     width: 318px;
-  }
-  .light {
-    width: 246px;
-    position: absolute;
-    top: 52%;
-    right: 120px;
-    animation: lightFadeIn 800ms linear 0ms infinite alternate forwards;
-    @keyframes lightFadeIn {
-      0% {
-        opacity: 0.3;
-      }
-
-      100% {
-        opacity: 1;
-      }
-    }
   }
   .star {
     width: 271px;
@@ -1033,7 +1134,7 @@ export default {
     position: absolute;
     width: 40px;
     left: 204px;
-    top: 79.3%;
+    top: 78.3%;
     animation: handRotate 900ms linear 0ms infinite alternate forwards;
     transform-origin: 0 0;
     @keyframes handRotate {
@@ -1051,7 +1152,7 @@ export default {
   z-index: 50;
   background: url("../assets/img/mytrip/p5/bg.png") no-repeat center;
   background-size: 100% 100%;
-  font-family: noto-regular;
+  font-family: 'noto-regular';
   font-size: 32px;
   &.animationStart .text .l1 {
     .line-bubble1;
@@ -1072,7 +1173,7 @@ export default {
     margin: 130px 0 0 70px;
     line-height: 50px;
     .num {
-      font-family: noto;
+      //font-family: noto;
       font-size: 38px;
       color: #95feef;
     }
@@ -1110,6 +1211,8 @@ export default {
   }
 }
 .p6 {
+  min-height: 100%;
+  height: auto;
   z-index: 60;
   background: url("../assets/img/mytrip/p6/bg.png") no-repeat center;
   background-size: cover;
@@ -1151,7 +1254,7 @@ export default {
         font-size: 30px;
       }
       .result_title {
-        font-family: noto-bold;
+        font-family: 'noto-bold';
       }
     }
     .result_main {
@@ -1216,7 +1319,11 @@ export default {
   }
   .bottom_app,.bottom_h5{
     position: relative;
-    top:-120px;
+    top:-100px;
+    // position: absolute;
+    // top:80%;
+    // width: 100%;
+    // left: 0;
   }
   .bottom_app {
     .save_tip {
@@ -1227,7 +1334,7 @@ export default {
     .bottom_btn {
       display: flex;
       justify-content: space-between;
-      margin: 27px 80px 0 80px;
+      margin: 27px 60px 0 60px;
       font-size: 34px;
       font-family: PingFangSC-Regular;
       font-weight: 400;
