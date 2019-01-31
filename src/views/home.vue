@@ -401,8 +401,9 @@ export default {
     console.log(location.href+'qew');
     var d = new Date();
     console.log(d.getDate()+'-'+d.getHours()+'-'+d.getMinutes())
-    console.log(navigator.userAgent.toLowerCase())
-    this.openInApp = Boolean(window.WebShare) || Boolean(window.webkit);
+    var u = navigator.userAgent.toLowerCase();
+    this.openInApp = u.indexOf('immusician')!=-1;
+    console.log(window.webkit)
     this.uid = getQueryVariable("uid");
     this.isLogin = this.uid ? true : false;
     this.bindTouchEvent();
@@ -1796,24 +1797,24 @@ export default {
   background: url("../assets/img/home/p8/p8_bg.png") no-repeat center;
   background-size: 100% 100%;
   &.animationStart .year .end {
-    animation: numFadeOut 3000ms ease-out 500ms 1 normal forwards;
+    animation: numFadeOut 2000ms ease-out 500ms 1 normal forwards;
   }
   &.animationStart .year .nine {
-    animation: numFadeIn 2000ms ease-out 3000ms 1 normal forwards;
+    animation: numFadeIn 1300ms ease-out 2000ms 1 normal forwards;
   }
   &.animationStart .text_img {
-    animation: fadeIn 2000ms linear 5300ms 1 normal forwards;
+    animation: fadeIn 2000ms linear 4000ms 1 normal forwards;
   }
   &.animationStart .ready_btn {
-    animation: fadeUp 2000ms linear 7300ms 1 normal forwards;
+    animation: fadeUp 2000ms linear 6300ms 1 normal forwards;
     //animation: fadeUp 2000ms linear 0ms 1 normal forwards;
   }
   &.animationStart .bottom_menu {
-    animation: fadeUp 1000ms linear 8500ms 1 normal forwards;
+    animation: fadeUp 1000ms linear 7500ms 1 normal forwards;
     //animation: fadeUp 1000ms linear 0ms 1 normal forwards;
   }
   &.animationStart .open_in_h5 {
-    animation: fadeIn 1000ms linear 6500ms 1 normal forwards;
+    animation: fadeIn 1000ms linear 5500ms 1 normal forwards;
   }
   .year {
     position: relative;
@@ -2005,9 +2006,10 @@ export default {
       img {
         width: 218px;
       }
-      margin-bottom: 10px;
+      margin-bottom: 0px;
     }
     .rewatch {
+      padding: 10px 0;
       font-size: 20px;
       display: flex;
       justify-content: center;

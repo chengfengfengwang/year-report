@@ -360,7 +360,8 @@ export default {
   mounted() {
     console.log('又又打了一个包');
     console.log(location.href)
-    this.openInApp = Boolean(window.WebShare) || Boolean(window.webkit);
+    var u = navigator.userAgent.toLowerCase();
+    this.openInApp = u.indexOf('immusician')!=-1;
     this.uid = getQueryVariable("uid");
     this.bindTouchEvent();
     this.initLoading();
