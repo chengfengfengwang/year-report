@@ -330,7 +330,8 @@ import {
   autoPlayAudio,
   baseUrl,
   getQueryVariable,
-  coupon_id
+  coupon_id,
+  platForm
 } from "./../utils/util.js";
 var FontFaceObserver = require("fontfaceobserver");
 export default {
@@ -395,7 +396,11 @@ export default {
     };
   },
   mounted() {
-    this.openInApp = Boolean(window.WebShare);
+    console.log(location.href+'qew');
+    var d = new Date();
+    console.log(d.getDate()+'-'+d.getHours()+'-'+d.getMinutes())
+    console.log(navigator.userAgent.toLowerCase())
+    this.openInApp = Boolean(window.WebShare) || Boolean(window.webkit);
     this.uid = getQueryVariable("uid");
     this.isLogin = this.uid ? true : false;
     this.bindTouchEvent();
@@ -413,7 +418,6 @@ export default {
       document
         .querySelector("#home")
         .addEventListener("touchstart", function() {
-          console.log("出发home audio");
           if (audio) {
             audio.play();
           }
@@ -625,17 +629,15 @@ export default {
       location.reload();
     },
     getGiftInApp() {
-      this.showShareMenu();
-      return;
+      // this.showShareMenu();
+      // return;
       if (!this.isLogin) {
         layer.open({
           content: "请先返回APP登录",
           btn: "确定"
         });
       } else {
-        //调用分享
-        WebShare.share(location.href, 0, 23);
-        //return;
+        this.showShareMenu();
       }
     },
     getGiftInH5() {
@@ -648,9 +650,12 @@ export default {
           btn: "确定"
         });
       } else {
+        console.log(`${baseUrl}/v3/is_user_info/?uid=${this.uid}`)
         this.axios
           .get(`${baseUrl}/v3/is_user_info/?uid=${this.uid}`)
           .then(res => {
+            console.log('请求个人是否有年报')
+            console.log(res)
             if (res.data.error == 0) {
               this.$router.push("myMusicTrip");
             } else {
@@ -694,7 +699,11 @@ export default {
     share(num) {
       this.hideShare();
       this.receiveGift();
-      WebShare.share(location.href, 0, num);
+      if(platForm=='IOS'){
+          webkit.messageHandlers.Share.postMessage({title:'AI音乐学院年度学习报告',content:location.href,mode:0,type:num});
+        }else{
+          WebShare.share(location.href, 0, num,'AI音乐学院年度学习报告');
+        }
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -729,37 +738,37 @@ export default {
 .loading {
   opacity: 1;
   visibility: visible;
-  background: url("../assets/img/home/p3/bg.png") no-repeat center;
+  background: url("../assets/img/home/loading/WechatIMG43.jpeg") no-repeat center;
   background-size: cover;
-  .progress_wrapper {
-    margin: 500px auto 0 auto;
-    width: 50%;
-    padding: 0 10px;
-    overflow: hidden;
-    box-sizing: border-box;
-    text-align: center;
-  }
+  // .progress_wrapper {
+  //   margin: 500px auto 0 auto;
+  //   width: 50%;
+  //   padding: 0 10px;
+  //   overflow: hidden;
+  //   box-sizing: border-box;
+  //   text-align: center;
+  // }
 
-  .p_grey {
-    /* background-color: gray; */
-    width: 100%;
-    height: 30px;
-    border-radius: 30px;
-    overflow: hidden;
-    border: 1px solid #999;
-    margin-bottom: 20px;
-  }
+  // .p_grey {
+  //   /* background-color: gray; */
+  //   width: 100%;
+  //   height: 30px;
+  //   border-radius: 30px;
+  //   overflow: hidden;
+  //   border: 1px solid #999;
+  //   margin-bottom: 20px;
+  // }
 
-  .p_color {
-    background-color: blueviolet;
-    width: 0%;
-    height: 30px;
-    border-radius: 30px;
-    transition: width 1000ms;
-  }
-  #progressStatus {
-    font-size: 30px;
-  }
+  // .p_color {
+  //   background-color: blueviolet;
+  //   width: 0%;
+  //   height: 30px;
+  //   border-radius: 30px;
+  //   transition: width 1000ms;
+  // }
+  // #progressStatus {
+  //   font-size: 30px;
+  // }
 }
 .p1 {
   background: url("../assets/img/home/p1/p1_bg.png") no-repeat center;

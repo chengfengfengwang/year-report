@@ -160,3 +160,32 @@ body,
 .mask.show {
   display: block;
 }
+.progress_wrapper {
+  margin: 500px auto 0 auto;
+  width: 50%;
+  padding: 0 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 29px;
+  font-family: PingFangSC-Regular;
+}
+.p_grey {
+  /* background-color: gray; */
+  width: 308px;
+  height: 8px;
+  background: #ffffff;
+  opacity: 0.3;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.p_color {
+  background: linear-gradient(90deg, #ffda5b 0%, #fa3fba 98%);
+  border-radius: 3px;
+  width: 0%;
+  height: 8px;
+  transition: width 1000ms;
+}
+#progressStatus {
+  font-size: 30px;
+}

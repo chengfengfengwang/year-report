@@ -29,4 +29,12 @@ function autoPlayAudio(id) {
         document.getElementById(id).play();
     });
 }
-export {getPosition,getQueryVariable,autoPlayAudio,baseUrl,coupon_id}
+function testPlat(){
+    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
+        return 'IOS';
+      } else if (/(Android)/i.test(navigator.userAgent)) {
+        return 'Android';
+      } 
+}
+const platForm = testPlat();
+export {getPosition,getQueryVariable,autoPlayAudio,baseUrl,coupon_id,platForm}

@@ -8,6 +8,7 @@
         <div class="p_grey">
           <div class="p_color"></div>
         </div>
+        <img src="../assets/img/mytrip/loading/uk.png" alt="" class="uk">
         <span id="progressStatus">加载中...</span>
       </div>
     </div>
@@ -253,7 +254,7 @@
         </div>
       </div>
       <div v-show="!openInApp" class="bottom_h5">
-        <div class="btn" @click="getGift">
+        <div class="btn" @click="getGiftInh5">
           <img src="../assets/img/mytrip/p6/gift.png" alt>领取新手礼包
         </div>
         <div class="tip">领取礼包需下载APP</div>
@@ -295,7 +296,8 @@ import {
   getQueryVariable,
   getPosition,
   autoPlayAudio,
-  baseUrl
+  baseUrl,
+  platForm
 } from "./../utils/util.js";
 import Bottom from "./../components/Bottom";
 import html2canvas from "html2canvas";
@@ -355,7 +357,7 @@ export default {
     Bottom
   },
   mounted() {
-    this.openInApp = Boolean(window.WebShare);
+    this.openInApp = Boolean(window.WebShare) || Boolean(window.webkit);
     this.uid = getQueryVariable("uid");
     this.bindTouchEvent();
     this.getMycount();
@@ -475,7 +477,7 @@ export default {
       bgList.forEach(function(e, index) {
         var style = e.currentStyle || window.getComputedStyle(e, false);
         //console.log(style.backgroundImage.slice(4, -1).replace(/"/g, ""))
-        console.log(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
+        //console.log(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
         bgArr.push(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
       });
       var timer = setInterval(() => {
@@ -529,7 +531,6 @@ export default {
       this.axios.get(`${baseUrl}/v3/user_info/?uid=${this.uid}`).then(res => {
         console.log("个人数据请求成功");
         var res = res.data.data;
-        console.log(res);
         this.userInfo.nickname = res.nickname;
         this.userInfo.avatar = res.avatar;
         this.joinTime = res.regtime;
@@ -686,18 +687,8 @@ export default {
         // };
       });
     },
-    getGift() {
-      if (this.openInApp) {
-        this.axios
-          .get(`${baseUrl}/v3/coupon/send_annals_coupon`, {
-            headers: { coupon_id: "", uid: "" }
-          })
-          .then(res => {
-            console.log(res);
-          });
-      } else {
-        location.href = "http://api.iguitar.immusician.com/d?c=annals";
-      }
+    getGiftInh5() {
+      location.href = "http://api.iguitar.immusician.com/d?c=annals";
     },
     hideShare() {
       this.shareShow = false;
@@ -707,7 +698,11 @@ export default {
     },
     share(num) {
       this.hideShare();
-      WebShare.share(location.href, 0, num);
+      if(platForm=='IOS'){
+          webkit.messageHandlers.Share.postMessage({title:'AI音乐学院年度学习报告',content:location.href,mode:0,type:num});
+        }else{
+          WebShare.share(location.href, 0, num,'AI音乐学院年度学习报告');
+        }
     }
   }
 };
@@ -739,37 +734,16 @@ export default {
 .loading {
   opacity: 1;
   visibility: visible;
-  background: url("../assets/img/mytrip/p1/bg.png") no-repeat center;
+  background: url("../assets/img/mytrip/loading/bg.jpg") no-repeat center;
   background-size: cover;
-  .progress_wrapper {
-    margin: 500px auto 0 auto;
-    width: 50%;
-    padding: 0 10px;
-    overflow: hidden;
-    box-sizing: border-box;
-    text-align: center;
+  .uk{
+    width: 100px;
+    position: absolute;
+    top:15%;
+    left: 50%;
+    transform: translateX(-50%);
   }
-
-  .p_grey {
-    /* background-color: gray; */
-    width: 100%;
-    height: 30px;
-    border-radius: 30px;
-    overflow: hidden;
-    border: 1px solid #999;
-    margin-bottom: 20px;
-  }
-
-  .p_color {
-    background-color: blueviolet;
-    width: 0%;
-    height: 30px;
-    border-radius: 30px;
-    transition: width 1000ms;
-  }
-  #progressStatus {
-    font-size: 30px;
-  }
+  
 }
 .p1 {
   z-index: 10;
