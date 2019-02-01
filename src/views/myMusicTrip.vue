@@ -1173,7 +1173,7 @@ export default {
       position: absolute;
       top: 10%;
       right: 63%;
-      animation: lightFadeIn 800ms linear 0ms infinite alternate forwards;
+      animation: lightFadeIn 1500ms linear 0ms infinite alternate forwards;
       @keyframes lightFadeIn {
         0% {
           opacity: 0.3;
