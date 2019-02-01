@@ -653,7 +653,12 @@ export default {
     },
     reWatch() {
       console.log('click go')
-      this.$router.go(0);
+      if(this.openInApp){
+        location.href = updateUrl(window.location.href)
+      }else{
+        this.$router.go(0);
+      }
+      
       //location.reload();
     },
     getGiftInApp() {
@@ -746,6 +751,29 @@ export default {
           audio.pause();
           audio.currentTime = 0;
       };
+    },
+    updateUrl(url,key){
+        var key= (key || 't') +'=';  //默认key是"t",可以传入key自定义
+        var reg=new RegExp(key+'\\d+');  //正则：t=1472286066028
+        var timestamp=+new Date();
+        if(url.indexOf(key)>-1){ //有时间戳，直接更新
+            return url.replace(reg,key+timestamp);
+        }else{  //没有时间戳，加上时间戳
+            if(url.indexOf('\?')>-1){
+                var urlArr=url.split('\?');
+                if(urlArr[1]){
+                    return urlArr[0]+'?'+key+timestamp+'&'+urlArr[1];
+                }else{
+                    return urlArr[0]+'?'+key+timestamp;
+                }
+            }else{
+                if(url.indexOf('#')>-1){
+                    return url.split('#')[0]+'?'+key+timestamp+location.hash;
+                }else{
+                    return url+'?'+key+timestamp;
+                }
+            }
+        }
     }
   },
   beforeRouteLeave(to, from, next) {

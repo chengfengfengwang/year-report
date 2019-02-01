@@ -661,8 +661,8 @@ export default {
     },
     reWatch() {
       console.log("qweqwe");
-      this.$router.go(0);
-      //location.reload();
+      //this.$router.go(0);
+      location.reload();
     },
     createResultImg() {
       console.log('开始画图')
