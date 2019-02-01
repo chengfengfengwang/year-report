@@ -340,8 +340,8 @@ export default {
         animationStart: false
       },
       page6: {
-        fadeIn: true,
-        animationStart: true
+        fadeIn: false,
+        animationStart: false
       },
       currentPage: "1",
       pageLock: false,
@@ -1388,7 +1388,7 @@ export default {
     padding-bottom: 6%;
   }
   .result_wrapper.above7 {
-    padding-top: 50px;
+    padding-top: 30px;
   }
   .result {
     position: relative;
@@ -1495,7 +1495,7 @@ export default {
   .bottom_app.above7,
   .bottom_h5.above7 {
     position: relative;
-    top: -40px;
+    top: -70px;
   }
   .bottom_app {
     .save_tip {

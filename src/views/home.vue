@@ -420,7 +420,7 @@ export default {
     //this.cloudMove(document.querySelector(".p7 .cloud1"));
     //this.cloudMove(document.querySelector(".p7 .cloud2"));
     //this.cloudMove(document.querySelector(".p7 .cloud3"));
-    this.bindAudioEvent();
+    //this.bindAudioEvent();
     autoPlayAudio("myAudio");
     this.isHaveYearReport();
     this.bindCloseWindow()
@@ -652,6 +652,7 @@ export default {
       }, 80);
     },
     reWatch() {
+      console.log('click go')
       this.$router.go(0);
       //location.reload();
     },
