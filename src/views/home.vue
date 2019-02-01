@@ -405,7 +405,7 @@ export default {
     };
   },
   mounted() {
-    console.log('2点31打了一个包');
+    console.log('4点36打了一个包');
     console.log(location.href+'qew');
     this.isWeixin = isWeixin;
     var d = new Date();
@@ -654,7 +654,7 @@ export default {
     reWatch() {
       console.log('click go')
       if(this.openInApp){
-        location.href = updateUrl(window.location.href)
+        location.href = this.updateUrl(window.location.href)
       }else{
         this.$router.go(0);
       }
