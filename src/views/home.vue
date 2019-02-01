@@ -3,7 +3,7 @@
     <audio autoplay preload loop id="myAudio">
       <source src="../assets/full.mp3" type="audio/mp3">
     </audio>
-    <div class="music_icon" @click="playAudio" v-show="!loading && !isWeixin">
+    <div class="music_icon" v-bind:class="{app:openInApp}" @click="playAudio" v-show="!loading && !isWeixin">
       <img v-show="isPlay" src="../assets/img/home-fix/on@2x.png" alt="">
       <img v-show="!isPlay" src="../assets/img/home-fix/off@2x.png" alt="">
     </div>
@@ -767,6 +767,9 @@ export default {
   img{
     width: 44px;
   }
+}
+.music_icon.app{
+  top:90px
 }
 .page {
   width: 100%;

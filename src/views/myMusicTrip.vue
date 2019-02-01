@@ -3,7 +3,7 @@
     <audio autoplay preload loop id="myTripAudio">
       <source src="../assets/musicTrip.mp3" type="audio/mp3">
     </audio>
-    <div class="music_icon" @click="playAudio" v-show="!loading && !isWeixin">
+    <div class="music_icon" v-bind:class="{app:openInApp}" @click="playAudio" v-show="!loading && !isWeixin">
       <img v-show="isPlay" src="../assets/img/home-fix/on@2x.png" alt="">
       <img v-show="!isPlay" src="../assets/img/home-fix/off@2x.png" alt="">
     </div>
@@ -24,7 +24,7 @@
       v-show="testShow"
       v-bind:class="{fadeIn:page1.fadeIn,animationStart:page1.animationStart}"
     >
-      <div v-bind:class="{weixin:isWeixin}" class="logo_area">
+      <div v-bind:class="{weixin:isWeixin,app:openInApp}" class="logo_area">
         <span class="name px1-right">{{userInfo.nickname}}</span>
         <img class="logo" src="../assets/img/mytrip/p1/logo.png" alt>
       </div>
@@ -772,6 +772,9 @@ export default {
     width: 44px;
   }
 }
+.music_icon.app{
+  top:90px;
+}
 .container {
   position: relative;
   letter-spacing: 2px;
@@ -875,6 +878,10 @@ export default {
     .logo {
       width: 36px;
     }
+  }
+  .logo_area.app{
+    right: 125px !important;
+    top:90px !important;
   }
   .logo_area.weixin{
     right: 30px !important;
