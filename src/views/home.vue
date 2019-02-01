@@ -656,7 +656,7 @@ export default {
       if(this.openInApp){
         location.href = this.updateUrl(window.location.href)
       }else{
-        this.$router.go(0);
+        location.reload();
       }
       
       //location.reload();
