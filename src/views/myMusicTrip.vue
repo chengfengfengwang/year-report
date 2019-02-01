@@ -126,7 +126,7 @@
           <span class="num">{{play_duration_lable}}%</span> 的学员
         </div>
         <div class="l4">
-          {{author}}是当之无愧的
+          {{author}}<span v-show="isWeixin">就</span>是当之无愧的
           <img
             v-show="playName==1"
             class="img-name"
@@ -166,7 +166,7 @@
         </div>
         <div class="l4">
           超过了
-          <span class="num">{{play_a_lable}}% </span>的同学
+          <span class="num">{{play_duration_lable}}% </span>的同学
         </div>
       </div>
       <img src="../assets/img/mytrip/p5/star.png" alt class="star">
@@ -235,7 +235,7 @@
               </p>
               <p>
                 超过了
-                <span class="b">{{play_a_lable}}% </span>的学员
+                <span class="b">{{play_duration_lable}}% </span>的学员
               </p>
             </div>
           </div>
@@ -396,7 +396,7 @@ export default {
       if (this.openInApp) {
         return "你";
       } else {
-        return "TA";
+        return "我";
       }
     },
     joinYear() {
@@ -483,6 +483,7 @@ export default {
               that.play_duration_lable = res.play_duration_lable; //超过多少人
               that.play_a_count = res.play_a_count; //成绩A的次数
               that.play_a_lable = res.play_a_lable; //成绩超越的人
+              document.title = that.userInfo.nickname + '同学2018的学琴成绩单，为我加油吧！';
               that.$nextTick(() => {
                 that.createResultImg();
               });
@@ -772,15 +773,16 @@ export default {
     },
     share(num) {
       this.hideShare();
+      var title = this.userInfo.nickname + '同学2018的学琴成绩单，为我加油吧！'
       if (platForm == "IOS") {
         webkit.messageHandlers.Share.postMessage({
-          title: "AI音乐学院年度学习报告",
+          title: title,
           content: location.href,
           mode: 0,
           type: num
         });
       } else {
-        WebShare.share(location.href, 0, num, "AI音乐学院年度学习报告");
+        WebShare.share(location.href, 0, num, title);
       }
     },
     bindCloseWindow(){
@@ -1106,6 +1108,7 @@ export default {
     }
   }
   .text {
+    z-index: 39;
     font-family: "noto-regular";
     margin: 104px 0 0 68px;
     line-height: 60px;
@@ -1125,7 +1128,8 @@ export default {
     }
     .t3{
       .instru{
-        font-size: 36px
+        font-size: 36px;
+        color:#99FFED
       }
     }
   }

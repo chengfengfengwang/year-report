@@ -792,7 +792,7 @@ export default {
   z-index: 999;
   width: 44px;
   position: absolute;
-  right: 60px;
+  right: 36px;
   top:60px;
   img{
     width: 44px;
@@ -1208,7 +1208,7 @@ export default {
   }
   .text4 {
     position: absolute;
-    right: 59px;
+    right: 79px;
     top: 74px;
     width: 83px;
     z-index: 41;
@@ -1333,7 +1333,7 @@ export default {
   .c3 {
     position: absolute;
     top: 74px;
-    right: 63px;
+    right: 78px;
     writing-mode: vertical-rl;
     font-family: noto-smbold;
     font-size: 36px;
