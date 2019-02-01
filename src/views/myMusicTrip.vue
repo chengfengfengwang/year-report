@@ -218,24 +218,24 @@
               </p>
               <p>
                 学习了
-                <span class="b">{{purchase_count}}</span>门课程
+                <span class="b">{{purchase_count}} </span>门课程
               </p>
               <p>
                 学琴时间
-                <span class="b">{{play_duration}}</span>分钟
+                <span class="b">{{play_duration}} </span>分钟
               </p>
               <p>
                 弹奏了
-                <span class="b">{{play_beats_count}}</span>个音符
+                <span class="b">{{play_beats_count}} </span>个音符
               </p>
               <p>
                 一共获得了
-                <span class="b">{{play_a_count}}</span>次
+                <span class="b">{{play_a_count}} </span>次
                 <span class="w">A</span>
               </p>
               <p>
                 超过了
-                <span class="b">{{play_a_lable}}%</span>的学员
+                <span class="b">{{play_a_lable}}% </span>的学员
               </p>
             </div>
           </div>
