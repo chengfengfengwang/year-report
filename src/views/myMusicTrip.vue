@@ -3,7 +3,7 @@
     <audio autoplay preload loop id="myTripAudio">
       <source src="../assets/musicTrip.mp3" type="audio/mp3">
     </audio>
-    <div class="music_icon" v-bind:class="{app:openInApp}" @click="playAudio" v-show="!loading && !isWeixin">
+    <div class="music_icon" v-bind:class="{app:openInApp,hide:currentPage==6}" @click="playAudio" v-show="!loading && !isWeixin">
       <img v-show="isPlay" src="../assets/img/home-fix/on@2x.png" alt="">
       <img v-show="!isPlay" src="../assets/img/home-fix/off@2x.png" alt="">
     </div>
@@ -179,7 +179,7 @@
       v-show="true"
     >
     <div class="p6wrapper">
-      <div class="result_wrapper">
+      <div class="result_wrapper" v-bind:class="{above7:above7}">
         <div class="result">
           <img :src="avatarBase64" alt class="avatar" crossorigin="Anonymous">
           <div class="userinfo">
@@ -251,7 +251,7 @@
         </div>
       </div>
 
-      <div v-show="openInApp" class="bottom_app">
+      <div v-show="openInApp" class="bottom_app" v-bind:class="{above7:above7}">
         <div class="save_tip">长按图片保存成绩单</div>
         <div class="bottom_btn">
           <div class="left" @click="reWatch">
@@ -262,7 +262,7 @@
           </div>
         </div>
       </div>
-      <div v-show="!openInApp" class="bottom_h5">
+      <div v-show="!openInApp" class="bottom_h5" v-bind:class="{above7:above7}">
         <div class="btn" @click="getGiftInh5">
           <img src="../assets/img/mytrip/p6/gift.png" alt>领取新手礼包
         </div>
@@ -340,8 +340,8 @@ export default {
         animationStart: false
       },
       page6: {
-        fadeIn: false,
-        animationStart: false
+        fadeIn: true,
+        animationStart: true
       },
       currentPage: "1",
       pageLock: false,
@@ -366,7 +366,8 @@ export default {
       enterShow:false,
       isPlay:false,
       loading:true,
-      isWeixin:false
+      isWeixin:false,
+      above7:false
     };
   },
   components: {
@@ -383,6 +384,10 @@ export default {
     this.initLoading();
     autoPlayAudio("myTripAudio");
     this.bindCloseWindow();
+    this.above7 = window.innerHeight>700;
+    console.log('----above7---')
+    console.log(this.above7)
+    console.log('----above7---')
     //this.bindAudioEvent();
     //this.imgToBase64('http://img.iguitar.immusician.com/avatar/cf8fb4dc146efe58190dd1706f04be95.jpg');
   },
@@ -656,7 +661,8 @@ export default {
     },
     reWatch() {
       console.log("qweqwe");
-      location.reload();
+      this.$router.go(0);
+      //location.reload();
     },
     createResultImg() {
       console.log('开始画图')
@@ -774,6 +780,9 @@ export default {
 }
 .music_icon.app{
   top:90px;
+}
+.music_icon.hide{
+  visibility: hidden
 }
 .container {
   position: relative;
@@ -1378,6 +1387,9 @@ export default {
     //padding-bottom: 60px;
     padding-bottom: 6%;
   }
+  .result_wrapper.above7 {
+    padding-top: 50px;
+  }
   .result {
     position: relative;
     width: 630px;
@@ -1479,10 +1491,11 @@ export default {
   .bottom_h5 {
     position: relative;
     top: -100px;
-    // position: absolute;
-    // top:80%;
-    // width: 100%;
-    // left: 0;
+  }
+  .bottom_app.above7,
+  .bottom_h5.above7 {
+    position: relative;
+    top: -40px;
   }
   .bottom_app {
     .save_tip {
@@ -1702,8 +1715,6 @@ export default {
   color:#99FFED !important
 }
 .p6wrapper{
-  min-height: 100%;
-  height: auto;
-  overflow: auto;
+  padding-top: 2%;
 }
 </style>

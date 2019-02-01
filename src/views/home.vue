@@ -652,7 +652,8 @@ export default {
       }, 80);
     },
     reWatch() {
-      location.reload();
+      this.$router.go(0);
+      //location.reload();
     },
     getGiftInApp() {
       // this.showShareMenu();
