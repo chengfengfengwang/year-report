@@ -69,8 +69,8 @@
         </div>
         <div class="person">
           <img src="../assets/img/mytrip/p2/p.png" alt>
+          <img src="../assets/img/mytrip/p2/hand.png" alt class="hand">
         </div>
-        <img src="../assets/img/mytrip/p2/hand.png" alt class="hand">
       </div>
 
       <img class="star star1" src="../assets/img/mytrip/p2/star.png" alt>
@@ -1049,6 +1049,23 @@ export default {
     img {
       width: 206px;
     }
+    .hand {
+      width: 32px;
+      position: absolute;
+      top: 160px;
+      right: 66px;
+      // animation: handRotate 900ms linear 0ms infinite alternate forwards;
+      // transform-origin: bottom right;
+      // @keyframes handRotate {
+      //   0% {
+      //     transform: rotate(0deg);
+      //   }
+
+      //   100% {
+      //     transform: rotate(10deg);
+      //   }
+      // }
+    }
   }
   .star {
     position: absolute;
@@ -1079,12 +1096,7 @@ export default {
       width: 313px;
     }
   }
-  .hand {
-    width: 32px;
-    position: absolute;
-    top: 47%;
-    left: 480px;
-  }
+  
 }
 .p3 {
   z-index: 30;
