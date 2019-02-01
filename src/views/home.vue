@@ -3,6 +3,10 @@
     <audio autoplay preload loop id="myAudio">
       <source src="../assets/full.mp3" type="audio/mp3">
     </audio>
+    <div class="music_icon" @click="playAudio" v-show="!loading && !isWeixin">
+      <img v-show="isPlay" src="../assets/img/home-fix/on@2x.png" alt="">
+      <img v-show="!isPlay" src="../assets/img/home-fix/off@2x.png" alt="">
+    </div>
     <div class="page loading">
       <div class="progress_wrapper">
         <div class="p_grey">
@@ -331,7 +335,8 @@ import {
   baseUrl,
   getQueryVariable,
   coupon_id,
-  platForm
+  platForm,
+  isWeixin
 } from "./../utils/util.js";
 var FontFaceObserver = require("fontfaceobserver");
 export default {
@@ -393,12 +398,15 @@ export default {
       isLogin: false,
       coupon_id: coupon_id,
       shareShow: false,
-      hasYearReport:false
+      hasYearReport:false,
+      isPlay:false,
+      loading:true
     };
   },
   mounted() {
     console.log('又又打了一个包');
     console.log(location.href+'qew');
+    this.isWeixin = isWeixin;
     var d = new Date();
     console.log(d.getDate()+'-'+d.getHours()+'-'+d.getMinutes())
     var u = navigator.userAgent.toLowerCase();
@@ -413,9 +421,21 @@ export default {
     //this.cloudMove(document.querySelector(".p7 .cloud3"));
     this.bindAudioEvent();
     autoPlayAudio("myAudio");
-    this.isHaveYearReport()
+    this.isHaveYearReport();
+    this.bindCloseWindow()
   },
   methods: {
+    playAudio(){
+      console.log('playAudio');
+      var audio = document.querySelector("#myAudio");
+      if(this.isPlay){
+        this.isPlay = false;
+        audio.pause();
+      }else{
+        this.isPlay = true;
+        audio.play();
+      }
+    },
     bindAudioEvent() {
       var audio = document.querySelector("#myAudio");
       audio.play();
@@ -527,6 +547,7 @@ export default {
         document.querySelector("#progressStatus").innerHTML = "加载完成";
         that.$set(that.page1, "fadeIn", true);
         that.$set(that.page1, "animationStart", true);
+        that.loading= false;
       });
     },
     bindTouchEvent() {
@@ -715,6 +736,13 @@ export default {
         }else{
           WebShare.share(location.href, 0, num,'AI音乐学院年度学习报告');
         }
+    },
+    bindCloseWindow(){
+      window.onbeforeunload = function (e) {
+          var audio = document.querySelector("#myAudio");
+          audio.pause();
+          audio.currentTime = 0;
+      };
     }
   },
   beforeRouteLeave(to, from, next) {
@@ -729,6 +757,16 @@ export default {
 </script>
 <style lang="less" scoped>
 @import url("./../assets/css/common.less");
+.music_icon{
+  z-index: 999;
+  width: 44px;
+  position: absolute;
+  right: 60px;
+  top:60px;
+  img{
+    width: 44px;
+  }
+}
 .page {
   width: 100%;
   height: 100%;

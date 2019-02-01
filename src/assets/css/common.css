@@ -161,7 +161,10 @@ body,
   display: block;
 }
 .progress_wrapper {
-  margin: 500px auto 0 auto;
+  position: absolute;
+  top: 39%;
+  left: 50%;
+  transform: translateX(-50%);
   width: 50%;
   padding: 0 10px;
   overflow: hidden;
@@ -177,10 +180,10 @@ body,
   background: #ffffff;
   opacity: 0.3;
   border-radius: 3px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .p_color {
-  background: linear-gradient(90deg, #ffda5b 0%, #fa3fba 98%);
+  background: linear-gradient(90deg, #ff5a19 0%, #bc1aff 100%);
   border-radius: 3px;
   width: 0%;
   height: 8px;

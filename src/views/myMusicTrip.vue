@@ -3,14 +3,19 @@
     <audio autoplay preload loop id="myTripAudio">
       <source src="../assets/musicTrip.mp3" type="audio/mp3">
     </audio>
+    <div class="music_icon" @click="playAudio" v-show="!loading && !isWeixin">
+      <img v-show="isPlay" src="../assets/img/home-fix/on@2x.png" alt="">
+      <img v-show="!isPlay" src="../assets/img/home-fix/off@2x.png" alt="">
+    </div>
     <div class="page loading">
-      <div class="progress_wrapper">
+      <img src="../assets/img/mytrip/loading/uk.png" alt class="uk">
+      <div class="progress_wrapper">  
         <div class="p_grey">
           <div class="p_color"></div>
         </div>
-        <img src="../assets/img/mytrip/loading/uk.png" alt class="uk">
         <span id="progressStatus">加载中...</span>
       </div>
+      <!-- <img v-show="enterShow" src="../assets/img/mytrip/loading/btn.png" alt="" @click="enter" class="btn"> -->
     </div>
     <div
       class="page p1"
@@ -27,6 +32,9 @@
       <div class="person">
         <img class="realp" src="../assets/img/mytrip/p1/p.png" alt>
         <img class="yingzi" src="../assets/img/mytrip/p1/yingzi.png" alt>
+        <div class="music_note note4">
+          <img src="../assets/img/mytrip/p1/note4.png" alt>
+        </div>
       </div>
       <div class="music_note note1">
         <img src="../assets/img/mytrip/p1/note1.png" alt>
@@ -36,9 +44,6 @@
       </div>
       <div class="music_note note3">
         <img src="../assets/img/mytrip/p1/note3.png" alt>
-      </div>
-      <div class="music_note note4">
-        <img src="../assets/img/mytrip/p1/note4.png" alt>
       </div>
       <div class="light">
         <img src="../assets/img/mytrip/p1/light.png" alt>
@@ -51,9 +56,9 @@
       v-show="testShow"
     >
       <div class="text">
-        <p class="t1">{{joinYear}}年 {{joinMonth}} 月 {{joinDay}} 日，</p>
-        <p class="t2">{{author}}是第 {{joinIndex}} 个加入AI音乐学院的同学</p>
-        <p class="t3 para">和 10W+ 的同学</p>
+        <p class="t1"><span class="bl" style="color:#99FFED"> {{joinYear}} </span>年<span class="bl" style="color:#99FFED"> {{joinMonth}} </span>月<span class="bl" style="color:#99FFED"> {{joinDay}} </span>日，</p>
+        <p class="t2">{{author}}是第 <span class="bl" style="color:#99FFED"> {{joinIndex}} </span>个加入AI音乐学院的同学</p>
+        <p class="t3 para">和<span class="bl" style="color:#99FFED"> 10W+ </span>的同学</p>
         <p class="t4">一起开启了{{author}}的音乐之旅</p>
       </div>
       <div class="ss">
@@ -84,7 +89,7 @@
           <span class="instru">{{instrumentTypes.join('、')}}</span>
           <!-- <span v-for="item in instrumentTypes" :key="item" class="instru">{{item}}、</span> -->
         </p>
-        <p class="t4 para">{{author}}一共在AI音乐学院学习了 {{purchase_count}} 套课程</p>
+        <p class="t4 para">{{author}}一共在AI音乐学院学习了<span class="bl"> {{purchase_count}} </span>套课程</p>
         <div class="t5">
           <div v-show="index<5" v-for="(item, index) in purchase_course" :key="item">《{{item}}》</div>
           <p v-show="purchase_course.length>4" style="margin-left:.5em">……</p>
@@ -108,15 +113,15 @@
       <div class="text">
         <div class="l1">
           在线学琴时间
-          <span class="num">{{play_duration}}</span>分
+          <span class="num">{{play_duration}}</span> 分
         </div>
         <div class="l2">
           弹奏音符
-          <span class="num">{{play_beats_count}}</span>个
+          <span class="num">{{play_beats_count}}</span> 个
         </div>
         <div class="l3">
           超过了
-          <span class="num">{{play_duration_lable}}%</span>的学员
+          <span class="num">{{play_duration_lable}}%</span> 的学员
         </div>
         <div class="l4">
           {{author}}是当之无愧的
@@ -154,12 +159,12 @@
         <div class="l2">是{{author}}的人生态度</div>
         <div class="l3">
           一共拿到
-          <span class="num">{{play_a_count}}</span>次
+          <span class="num">{{play_a_count}} </span>次
           <span class="num">A</span>
         </div>
         <div class="l4">
           超过了
-          <span class="num">{{play_a_lable}}%</span>的同学
+          <span class="num">{{play_a_lable}}% </span>的同学
         </div>
       </div>
       <img src="../assets/img/mytrip/p5/star.png" alt class="star">
@@ -183,19 +188,19 @@
               <img
                 v-show="playName==1"
                 class="name_img"
-                src="../assets/img/mytrip/p4/name1.png"
+                src="../assets/img/mytrip/p6/name1.png"
                 alt
               >
               <img
                 v-show="playName==2"
                 class="name_img"
-                src="../assets/img/mytrip/p4/name2.png"
+                src="../assets/img/mytrip/p6/name2.png"
                 alt
               >
               <img
                 v-show="playName==3"
                 class="name_img"
-                src="../assets/img/mytrip/p4/name3.png"
+                src="../assets/img/mytrip/p6/name3.png"
                 alt
               >
               <div v-show="playName==1" class="name_text">年轻人，乐坛的接力棒就交给你了！</div>
@@ -298,7 +303,8 @@ import {
   getPosition,
   autoPlayAudio,
   baseUrl,
-  platForm
+  platForm,
+  isWeixin
 } from "./../utils/util.js";
 import Bottom from "./../components/Bottom";
 import html2canvas from "html2canvas";
@@ -351,7 +357,10 @@ export default {
       openInApp: true,
       avatarBase64: "",
       uid: "",
-      shareShow: false
+      shareShow: false,
+      enterShow:false,
+      isPlay:false,
+      loading:true
     };
   },
   components: {
@@ -360,13 +369,15 @@ export default {
   mounted() {
     console.log('又又打了一个包');
     console.log(location.href)
+    this.isWeixin = isWeixin;
     var u = navigator.userAgent.toLowerCase();
     this.openInApp = u.indexOf('immusician')!=-1;
     this.uid = getQueryVariable("uid");
     this.bindTouchEvent();
     this.initLoading();
     autoPlayAudio("myTripAudio");
-    this.bindAudioEvent();
+    this.bindCloseWindow();
+    //this.bindAudioEvent();
     //this.imgToBase64('http://img.iguitar.immusician.com/avatar/cf8fb4dc146efe58190dd1706f04be95.jpg');
   },
   computed: {
@@ -415,6 +426,17 @@ export default {
     }
   },
   methods: {
+    playAudio(){
+      console.log('playAudio');
+      var audio = document.querySelector("#myTripAudio");
+      if(this.isPlay){
+        this.isPlay = false;
+        audio.pause();
+      }else{
+        this.isPlay = true;
+        audio.play();
+      }
+    },
     bindAudioEvent() {
       var audio = document.querySelector("#myTripAudio");
       audio.play();
@@ -546,6 +568,8 @@ export default {
       }
       Promise.all(promiseList).then(res => {
         document.querySelector("#progressStatus").innerHTML = "加载完成";
+        that.loading= false;
+        that.enterShow = true;
         that.$set(that.page1, "fadeIn", true);
         that.$set(that.page1, "animationStart", true);
       });
@@ -712,12 +736,29 @@ export default {
       } else {
         WebShare.share(location.href, 0, num, "AI音乐学院年度学习报告");
       }
+    },
+    bindCloseWindow(){
+      window.onbeforeunload = function (e) {
+          var audio = document.querySelector("#myTripAudio");
+          audio.pause();
+          audio.currentTime = 0;
+      };
     }
   }
 };
 </script>
 <style lang="less" scoped>
 @import url("./../assets/css/common.less");
+.music_icon{
+  z-index: 999;
+  width: 44px;
+  position: absolute;
+  right: 60px;
+  top:60px;
+  img{
+    width: 44px;
+  }
+}
 .container {
   position: relative;
   letter-spacing: 2px;
@@ -750,8 +791,26 @@ export default {
     position: absolute;
     top: 15%;
     left: 50%;
-    transform: translateX(-50%);
+    margin-left: -30px;
+    animation: float 1700ms linear infinite alternate forwards;
   }
+  @keyframes float{
+    0% {
+        //transform: translate3d(0,0px,0);
+        transform: none
+    }
+    
+    100% {
+        transform: translate3d(0,50px,0);
+    }
+  }
+  .btn{
+      width: 270px;
+      position: absolute;
+      top:50%;
+      left: 50%;
+      margin-left: -135px;
+    }
 }
 .p1 {
   z-index: 10;
@@ -780,8 +839,8 @@ export default {
   //opacity: 1;
   .logo_area {
     position: absolute;
-    right: 30px;
-    top: 30px;
+    right: 125px;
+    top: 65px;
     display: flex;
     align-items: center;
     font-size: 20px;
@@ -800,7 +859,7 @@ export default {
   .text_img {
     position: absolute;
     top: 150px;
-    right: 100px;
+    right: 120px;
     img {
       width: 200px;
     }
@@ -817,6 +876,11 @@ export default {
       left: 120px;
       bottom: -30px;
       width: 325px;
+    }
+    .note4 {
+      width: 34px;
+      right: 20px;
+      top: 17%;
     }
   }
   .music_note {
@@ -841,11 +905,6 @@ export default {
       left: 399px;
       top: 518px;
       //.fly_note3;
-    }
-    &.note4 {
-      width: 34px;
-      left: 360px;
-      top: 52%;
     }
   }
   .light {
@@ -1605,5 +1664,9 @@ export default {
     margin-left: -26px;
     width: 52px;
   }
+}
+.bl{
+  font-size: 38px;
+  color:#99FFED
 }
 </style>

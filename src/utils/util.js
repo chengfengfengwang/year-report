@@ -37,4 +37,9 @@ function testPlat(){
       } 
 }
 const platForm = testPlat();
-export {getPosition,getQueryVariable,autoPlayAudio,baseUrl,coupon_id,platForm}
+function testWeixin() { //判断是否是微信
+    var ua = navigator.userAgent.toLowerCase();
+    return ua.match(/MicroMessenger/i) == "micromessenger";
+};
+var isWeixin = testWeixin();
+export {getPosition,getQueryVariable,autoPlayAudio,baseUrl,coupon_id,platForm,isWeixin}
