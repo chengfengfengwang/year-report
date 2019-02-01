@@ -400,7 +400,8 @@ export default {
       shareShow: false,
       hasYearReport:false,
       isPlay:false,
-      loading:true
+      loading:true,
+      isWeixin:false
     };
   },
   mounted() {
@@ -789,35 +790,6 @@ export default {
   visibility: visible;
   background: url("../assets/img/home/loading/WechatIMG43.jpeg") no-repeat center;
   background-size: cover;
-  // .progress_wrapper {
-  //   margin: 500px auto 0 auto;
-  //   width: 50%;
-  //   padding: 0 10px;
-  //   overflow: hidden;
-  //   box-sizing: border-box;
-  //   text-align: center;
-  // }
-
-  // .p_grey {
-  //   /* background-color: gray; */
-  //   width: 100%;
-  //   height: 30px;
-  //   border-radius: 30px;
-  //   overflow: hidden;
-  //   border: 1px solid #999;
-  //   margin-bottom: 20px;
-  // }
-
-  // .p_color {
-  //   background-color: blueviolet;
-  //   width: 0%;
-  //   height: 30px;
-  //   border-radius: 30px;
-  //   transition: width 1000ms;
-  // }
-  // #progressStatus {
-  //   font-size: 30px;
-  // }
 }
 .p1 {
   background: url("../assets/img/home/p1/p1_bg.png") no-repeat center;

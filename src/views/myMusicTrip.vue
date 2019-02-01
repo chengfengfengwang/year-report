@@ -8,12 +8,14 @@
       <img v-show="!isPlay" src="../assets/img/home-fix/off@2x.png" alt="">
     </div>
     <div class="page loading">
-      <img src="../assets/img/mytrip/loading/uk.png" alt class="uk">
-      <div class="progress_wrapper">  
-        <div class="p_grey">
-          <div class="p_color"></div>
+      <div class="middle_wrapper">
+        <img src="../assets/img/mytrip/loading/uk.png" alt class="uk">
+        <div class="progress_wrapper">  
+          <div class="p_grey">
+            <div class="p_color"></div>
+          </div>
+          <span id="progressStatus">加载中...</span>
         </div>
-        <span id="progressStatus">加载中...</span>
       </div>
       <!-- <img v-show="enterShow" src="../assets/img/mytrip/loading/btn.png" alt="" @click="enter" class="btn"> -->
     </div>
@@ -22,7 +24,7 @@
       v-show="testShow"
       v-bind:class="{fadeIn:page1.fadeIn,animationStart:page1.animationStart}"
     >
-      <div class="logo_area">
+      <div v-bind:class="{weixin:isWeixin}" class="logo_area">
         <span class="name px1-right">{{userInfo.nickname}}</span>
         <img class="logo" src="../assets/img/mytrip/p1/logo.png" alt>
       </div>
@@ -176,6 +178,7 @@
       v-bind:class="{fadeIn:page6.fadeIn,animationStart:page6.animationStart}"
       v-show="true"
     >
+    <div class="p6wrapper">
       <div class="result_wrapper">
         <div class="result">
           <img :src="avatarBase64" alt class="avatar" crossorigin="Anonymous">
@@ -269,6 +272,8 @@
         </div>
       </div>
     </div>
+      
+    </div>
     <div class="share_menu" v-bind:class="{show:shareShow}">
       <div>分享到：</div>
       <div class="menu_wrapper">
@@ -360,7 +365,8 @@ export default {
       shareShow: false,
       enterShow:false,
       isPlay:false,
-      loading:true
+      loading:true,
+      isWeixin:false
     };
   },
   components: {
@@ -786,12 +792,19 @@ export default {
   visibility: visible;
   background: url("../assets/img/mytrip/loading/bg.jpg") no-repeat center;
   background-size: cover;
+  .middle_wrapper{
+    width: 100%;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    transform: translateX(-50%)
+  }
   .uk {
     width: 100px;
     position: absolute;
-    top: 15%;
+    top: -340px;
     left: 50%;
-    margin-left: -30px;
+    margin-left: -50px;
     animation: float 1700ms linear infinite alternate forwards;
   }
   @keyframes float{
@@ -855,6 +868,10 @@ export default {
     .logo {
       width: 36px;
     }
+  }
+  .logo_area.weixin{
+    right: 30px !important;
+    top:30px !important;
   }
   .text_img {
     position: absolute;
@@ -1343,8 +1360,9 @@ export default {
   background: url("../assets/img/mytrip/p6/bg.png") no-repeat center;
   background-size: cover;
   .result_wrapper {
-    padding-top: 20px;
-    padding-bottom: 60px;
+    padding-top: 10px;
+    //padding-bottom: 60px;
+    padding-bottom: 6%;
   }
   .result {
     position: relative;
@@ -1667,6 +1685,11 @@ export default {
 }
 .bl{
   font-size: 38px;
-  color:#99FFED
+  color:#99FFED !important
+}
+.p6wrapper{
+  min-height: 100%;
+  height: auto;
+  overflow: auto;
 }
 </style>
