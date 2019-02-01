@@ -373,7 +373,7 @@ export default {
     Bottom
   },
   mounted() {
-    console.log('又又打了一个包');
+    console.log('2点31打了一个包');
     console.log(location.href)
     this.isWeixin = isWeixin;
     var u = navigator.userAgent.toLowerCase();
@@ -459,6 +459,7 @@ export default {
 
       function getMycount() {
         return new Promise((resolve, reject) => {
+          console.log('开始请求数据')
           that.axios
             .get(`${baseUrl}/v3/user_info/?uid=${that.uid}`)
             .then(res => {
@@ -483,6 +484,7 @@ export default {
               responseImgLoad();
               resolve();
             });
+            console.log('开始请求数据111')
         });
       }
       promiseList.push(getMycount());
@@ -527,20 +529,25 @@ export default {
           });
         })
       );
-
       var p = document.querySelector(".p_color");
       var bgList = document.querySelectorAll(".page");
-
       var bgArr = [],
         sum = 0;
       var fakeTemp = 0;
       var minPersent = (1 / bgList.length) * 100;
-      bgList.forEach(function(e, index) {
-        var style = e.currentStyle || window.getComputedStyle(e, false);
+      for(var i=0;i<bgList.length;i++){
+        var style = bgList[i].currentStyle || window.getComputedStyle(bgList[i], false);
         //console.log(style.backgroundImage.slice(4, -1).replace(/"/g, ""))
         //console.log(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
         bgArr.push(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
-      });
+      }
+      // bgList.forEach(function(e, index) {
+      //   console.log(e)
+      //   var style = e.currentStyle || window.getComputedStyle(e, false);
+      //   //console.log(style.backgroundImage.slice(4, -1).replace(/"/g, ""))
+      //   //console.log(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
+      //   bgArr.push(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
+      // });
       var timer = setInterval(() => {
         fakeTemp += 2;
         if (fakeTemp < minPersent) {

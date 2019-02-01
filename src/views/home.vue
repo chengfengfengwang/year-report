@@ -405,7 +405,7 @@ export default {
     };
   },
   mounted() {
-    console.log('又又打了一个包');
+    console.log('2点31打了一个包');
     console.log(location.href+'qew');
     this.isWeixin = isWeixin;
     var d = new Date();
