@@ -1043,7 +1043,7 @@ export default {
   .person {
     position: absolute;
     top: 31%;
-    right: 80px;
+    right: 70px;
     img {
       width: 206px;
     }
@@ -1071,7 +1071,7 @@ export default {
   .p_light {
     position: absolute;
     top: 27%;
-    right: -5px;
+    right: -18px;
     .blink;
     img {
       width: 313px;
@@ -1121,6 +1121,12 @@ export default {
     }
     .t5 {
       font-family: PingFangSC-Regular;
+      color: #99FFED
+    }
+    .t3{
+      .instru{
+        font-size: 36px
+      }
     }
   }
   .person {
@@ -1552,6 +1558,13 @@ export default {
         height: 80px;
         background: url("../assets/img/mytrip/p6/btn_bg.png") no-repeat center;
         background-size: cover;
+      }
+      .left{
+        width: 250px;
+        height: 80px;
+        img{
+          margin-right: 6px;
+        }
       }
     }
   }
