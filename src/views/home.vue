@@ -336,7 +336,9 @@ import {
   getQueryVariable,
   coupon_id,
   platForm,
-  isWeixin
+  isWeixin,
+  countVisit,
+  countShare
 } from "./../utils/util.js";
 var FontFaceObserver = require("fontfaceobserver");
 export default {
@@ -423,7 +425,16 @@ export default {
     //this.bindAudioEvent();
     autoPlayAudio("myAudio");
     this.isHaveYearReport();
-    this.bindCloseWindow()
+    this.bindCloseWindow();
+    countVisit(0)
+    // this.axios.post('http://192.168.1.171:22222' + '/v3/user_share',{
+    //     uid:getQueryVariable('uid'),       //个人信息  
+    //     is_whole:0,  //0整体 1个人
+    //     platform:0, //0是ios 1是安卓 -1未知
+    //     source: 0 //0 app打开 1外部打开
+    // }).then(res=>{
+
+    // })
   },
   methods: {
     playAudio(){
@@ -739,6 +750,7 @@ export default {
     share(num) {
       this.hideShare();
       this.receiveGift();
+      countShare(0);
       if(platForm=='IOS'){
           webkit.messageHandlers.Share.postMessage({title:'AI音乐学院年度学习报告',content:location.href,mode:0,type:num});
         }else{

@@ -178,7 +178,7 @@
       v-bind:class="{fadeIn:page6.fadeIn,animationStart:page6.animationStart}"
       v-show="true"
     >
-    <div class="p6wrapper">
+    <div class="p6wrapper" v-bind:class="{openInApp:openInApp}">
       <div class="result_wrapper" v-bind:class="{above7:above7}">
         <div class="result">
           <img :src="avatarBase64" alt class="avatar" crossorigin="Anonymous">
@@ -309,7 +309,9 @@ import {
   autoPlayAudio,
   baseUrl,
   platForm,
-  isWeixin
+  isWeixin,
+  countVisit,
+  countShare
 } from "./../utils/util.js";
 import Bottom from "./../components/Bottom";
 import html2canvas from "html2canvas";
@@ -384,6 +386,7 @@ export default {
     this.initLoading();
     autoPlayAudio("myTripAudio");
     this.bindCloseWindow();
+    countVisit(1);
     this.above7 = window.innerHeight>700;
     console.log('----above7---')
     console.log(this.above7)
@@ -773,7 +776,8 @@ export default {
     },
     share(num) {
       this.hideShare();
-      var title = this.userInfo.nickname + '同学2018的学琴成绩单，为我加油吧！'
+      var title = this.userInfo.nickname + '同学2018的学琴成绩单，为我加油吧！';
+      countShare(1);
       if (platForm == "IOS") {
         webkit.messageHandlers.Share.postMessage({
           title: title,
@@ -1772,5 +1776,8 @@ export default {
 }
 .p6wrapper{
   padding-top: 2%;
+}
+.p6wrapper.openInApp{
+  padding-top: 40px;
 }
 </style>
