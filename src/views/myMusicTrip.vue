@@ -380,7 +380,7 @@ export default {
     console.log(location.href)
     this.isWeixin = isWeixin;
     var u = navigator.userAgent.toLowerCase();
-    this.openInApp = u.indexOf('immusician')!=-1;
+    this.openInApp = u.indexOf('immusician')!=-1 || u.indexOf('buluobang')!=-1 || u.indexOf('bangtabs')!=-1;
     this.uid = getQueryVariable("uid");
     this.bindTouchEvent();
     this.initLoading();

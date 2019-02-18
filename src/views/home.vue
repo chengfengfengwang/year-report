@@ -413,7 +413,7 @@ export default {
     var d = new Date();
     console.log(d.getDate()+'-'+d.getHours()+'-'+d.getMinutes())
     var u = navigator.userAgent.toLowerCase();
-    this.openInApp = u.indexOf('immusician')!=-1;
+    this.openInApp = u.indexOf('immusician')!=-1 || u.indexOf('buluobang')!=-1 || u.indexOf('bangtabs')!=-1;
     console.log(window.webkit)
     this.uid = getQueryVariable("uid");
     this.isLogin = this.uid ? true : false;

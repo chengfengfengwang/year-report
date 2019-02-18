@@ -46,7 +46,7 @@ function testWeixin() { //判断是否是微信
 };
 var isWeixin = testWeixin();
 var u = navigator.userAgent.toLowerCase();
-var openInApp = u.indexOf('immusician')!=-1;
+var openInApp  = u.indexOf('immusician')!=-1 || u.indexOf('buluobang')!=-1 || u.indexOf('bangtabs')!=-1;
 function countVisit(is_whole){
     var myPlatForm;
     if(platForm=='IOS'){
@@ -65,7 +65,7 @@ function countVisit(is_whole){
     };
     console.log('---调用访问量接口---');
     console.log(param)
-    axios.post(testUrl + '/v3/user_view',param).then(res=>{
+    axios.post(baseUrl + '/v3/user_view',param).then(res=>{
 
     })
 }
@@ -79,7 +79,7 @@ function countShare(is_whole){
         myPlatForm = '-1'
     }
     var myOpenInApp = openInApp?'0':'1';
-    axios.post(testUrl + '/v3/user_share',{
+    axios.post(baseUrl + '/v3/user_share',{
         uid:getQueryVariable('uid'),       //个人信息  
         is_whole:is_whole+'',  //0整体 1个人
         platform:myPlatForm, //0是ios 1是安卓 -1未知
