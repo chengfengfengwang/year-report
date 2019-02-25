@@ -1942,6 +1942,7 @@ export default {
     letter-spacing: 2px;
   }
   .text_img {
+    z-index: 111;
     width: 500px;
     position: absolute;
     left: 128px;

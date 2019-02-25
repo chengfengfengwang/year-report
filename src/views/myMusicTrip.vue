@@ -3,14 +3,19 @@
     <audio autoplay preload loop id="myTripAudio">
       <source src="../assets/musicTrip.mp3" type="audio/mp3">
     </audio>
-    <div class="music_icon" v-bind:class="{app:openInApp,hide:currentPage==6}" @click="playAudio" v-show="!loading && !isWeixin">
-      <img v-show="isPlay" src="../assets/img/home-fix/on@2x.png" alt="">
-      <img v-show="!isPlay" src="../assets/img/home-fix/off@2x.png" alt="">
+    <div
+      class="music_icon"
+      v-bind:class="{app:openInApp,hide:currentPage==6}"
+      @click="playAudio"
+      v-show="!loading && !isWeixin"
+    >
+      <img v-show="isPlay" src="../assets/img/home-fix/on@2x.png" alt>
+      <img v-show="!isPlay" src="../assets/img/home-fix/off@2x.png" alt>
     </div>
     <div class="page loading">
       <div class="middle_wrapper">
         <img src="../assets/img/mytrip/loading/uk.png" alt class="uk">
-        <div class="progress_wrapper">  
+        <div class="progress_wrapper">
           <div class="p_grey">
             <div class="p_color"></div>
           </div>
@@ -58,9 +63,18 @@
       v-show="testShow"
     >
       <div class="text">
-        <p class="t1"><span class="bl" style="color:#99FFED"> {{joinYear}} </span>年<span class="bl" style="color:#99FFED"> {{joinMonth}} </span>月<span class="bl" style="color:#99FFED"> {{joinDay}} </span>日，</p>
-        <p class="t2">{{author}}是第 <span class="bl" style="color:#99FFED"> {{joinIndex}} </span>个加入AI音乐学院的同学</p>
-        <p class="t3 para">和<span class="bl" style="color:#99FFED"> 10W+ </span>的同学</p>
+        <p class="t1">
+          <span class="bl" style="color:#99FFED">{{joinYear}}</span>年
+          <span class="bl" style="color:#99FFED">{{joinMonth}}</span>月
+          <span class="bl" style="color:#99FFED">{{joinDay}}</span>日，
+        </p>
+        <p class="t2">
+          {{author}}是第
+          <span class="bl" style="color:#99FFED">{{joinIndex}}</span>个加入AI音乐学院的同学
+        </p>
+        <p class="t3 para">和
+          <span class="bl" style="color:#99FFED">10W+</span>的同学
+        </p>
         <p class="t4">一起开启了{{author}}的音乐之旅</p>
       </div>
       <div class="ss">
@@ -91,7 +105,10 @@
           <span class="instru">{{instrumentTypes.join('、')}}</span>
           <!-- <span v-for="item in instrumentTypes" :key="item" class="instru">{{item}}、</span> -->
         </p>
-        <p class="t4 para">{{author}}一共在AI音乐学院学习了<span class="bl"> {{purchase_count}} </span>套课程</p>
+        <p class="t4 para">
+          {{author}}一共在AI音乐学院学习了
+          <span class="bl">{{purchase_count}}</span>套课程
+        </p>
         <div class="t5">
           <div v-show="index<5" v-for="(item, index) in purchase_course" :key="item">《{{item}}》</div>
           <p v-show="purchase_course.length>4" style="margin-left:.5em">……</p>
@@ -126,7 +143,8 @@
           <span class="num">{{play_duration_lable}}%</span> 的学员
         </div>
         <div class="l4">
-          {{author}}<span v-show="isWeixin">就</span>是当之无愧的
+          {{author}}
+          <span v-show="isWeixin">就</span>是当之无愧的
           <img
             v-show="playName==1"
             class="img-name"
@@ -161,12 +179,12 @@
         <div class="l2">是{{author}}的人生态度</div>
         <div class="l3">
           一共拿到
-          <span class="num">{{play_a_count}} </span>次
+          <span class="num">{{play_a_count}}</span>次
           <span class="num">A</span>
         </div>
         <div class="l4">
           超过了
-          <span class="num">{{play_duration_lable}}% </span>的同学
+          <span class="num">{{play_duration_lable}}%</span>的同学
         </div>
       </div>
       <img src="../assets/img/mytrip/p5/star.png" alt class="star">
@@ -178,101 +196,100 @@
       v-bind:class="{fadeIn:page6.fadeIn,animationStart:page6.animationStart}"
       v-show="true"
     >
-    <div class="p6wrapper" v-bind:class="{openInApp:openInApp}">
-      <div class="result_wrapper" v-bind:class="{above7:above7}">
-        <div class="result">
-          <img :src="avatarBase64" alt class="avatar" crossorigin="Anonymous">
-          <div class="userinfo">
-            <div class="nickname">{{userInfo.nickname}}</div>
-            <div class="result_title">2018年学琴成绩单</div>
-          </div>
-          <div class="result_main">
-            <div>
-              <img
-                v-show="playName==1"
-                class="name_img"
-                src="../assets/img/mytrip/p6/name1.png"
-                alt
-              >
-              <img
-                v-show="playName==2"
-                class="name_img"
-                src="../assets/img/mytrip/p6/name2.png"
-                alt
-              >
-              <img
-                v-show="playName==3"
-                class="name_img"
-                src="../assets/img/mytrip/p6/name3.png"
-                alt
-              >
-              <div v-show="playName==1" class="name_text">年轻人，乐坛的接力棒就交给你了！</div>
-              <div v-show="playName==2" class="name_text">阁下莫非就是江湖人称的“乐器王子”？</div>
-              <div v-show="playName==3" class="name_text">尖叫声在哪里?</div>
+      <div class="p6wrapper" v-bind:class="{openInApp:openInApp}">
+        <div class="result_wrapper" v-bind:class="{above7:above7}">
+          <div class="result">
+            <img :src="avatarBase64" alt class="avatar" crossorigin="Anonymous">
+            <div class="userinfo">
+              <div class="nickname">{{userInfo.nickname}}</div>
+              <div class="result_title">2018年学琴成绩单</div>
             </div>
-            <div class="learn_content">
-              <p>
-                学会了
-                <span class="b">{{instrumentTypes.join('、')}}</span>
-                <!-- 学会了<span class="b">吉他、尤克里里</span> -->
-              </p>
-              <p>
-                学习了
-                <span class="b">{{purchase_count}} </span>门课程
-              </p>
-              <p>
-                学琴时间
-                <span class="b">{{play_duration}} </span>分钟
-              </p>
-              <p>
-                弹奏了
-                <span class="b">{{play_beats_count}} </span>个音符
-              </p>
-              <p>
-                一共获得了
-                <span class="b">{{play_a_count}} </span>次
-                <span class="w">A</span>
-              </p>
-              <p>
-                超过了
-                <span class="b">{{play_duration_lable}}% </span>的学员
-              </p>
+            <div class="result_main">
+              <div>
+                <img
+                  v-show="playName==1"
+                  class="name_img"
+                  src="../assets/img/mytrip/p6/name1.png"
+                  alt
+                >
+                <img
+                  v-show="playName==2"
+                  class="name_img"
+                  src="../assets/img/mytrip/p6/name2.png"
+                  alt
+                >
+                <img
+                  v-show="playName==3"
+                  class="name_img"
+                  src="../assets/img/mytrip/p6/name3.png"
+                  alt
+                >
+                <div v-show="playName==1" class="name_text">年轻人，乐坛的接力棒就交给你了！</div>
+                <div v-show="playName==2" class="name_text">阁下莫非就是江湖人称的“乐器王子”？</div>
+                <div v-show="playName==3" class="name_text">尖叫声在哪里?</div>
+              </div>
+              <div class="learn_content">
+                <p>
+                  学会了
+                  <span class="b">{{instrumentTypes.join('、')}}</span>
+                  <!-- 学会了<span class="b">吉他、尤克里里</span> -->
+                </p>
+                <p>
+                  学习了
+                  <span class="b">{{purchase_count}}</span>门课程
+                </p>
+                <p>
+                  学琴时间
+                  <span class="b">{{play_duration}}</span>分钟
+                </p>
+                <p>
+                  弹奏了
+                  <span class="b">{{play_beats_count}}</span>个音符
+                </p>
+                <p>
+                  一共获得了
+                  <span class="b">{{play_a_count}}</span>次
+                  <span class="w">A</span>
+                </p>
+                <p>
+                  超过了
+                  <span class="b">{{play_duration_lable}}%</span>的学员
+                </p>
+              </div>
             </div>
-          </div>
-          <div class="qr_area">
-            <div class="left">
-              <p>扫一扫查看你的音乐成绩单</p>
-              <p>领取新年礼包</p>
-            </div>
-            <div class="right">
-              <img src="../assets/img/mytrip/p6/downloadQr.png" alt class="qrcode">
+            <div class="qr_area">
+              <div class="left">
+                <p>扫一扫查看你的音乐成绩单</p>
+                <p>领取新年礼包</p>
+              </div>
+              <div class="right">
+                <img src="../assets/img/mytrip/p6/downloadQr.png" alt class="qrcode">
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div v-show="openInApp" class="bottom_app" v-bind:class="{above7:above7}">
-        <div class="save_tip">长按图片保存成绩单</div>
-        <div class="bottom_btn">
-          <div class="left" @click="reWatch">
-            <img src="../assets/img/mytrip/p6/rewatch.png" alt>再看一遍
+        <div v-show="openInApp" class="bottom_app" v-bind:class="{above7:above7}">
+          <div class="save_tip">长按图片保存成绩单</div>
+          <div class="bottom_btn">
+            <div class="left" @click="reWatch">
+              <img src="../assets/img/mytrip/p6/rewatch.png" alt>再看一遍
+            </div>
+            <div class="right" @click="showShareMenu">
+              <img src="../assets/img/mytrip/p6/share.png" alt>晒一晒
+            </div>
           </div>
-          <div class="right" @click="showShareMenu">
-            <img src="../assets/img/mytrip/p6/share.png" alt>晒一晒
+        </div>
+        <div v-show="!openInApp" class="bottom_h5" v-bind:class="{above7:above7}">
+          <div class="btn" @click="getGiftInh5">
+            <img src="../assets/img/mytrip/p6/gift.png" alt>领取新手礼包
+          </div>
+          <div class="tip">领取礼包需下载APP</div>
+          <div class="re" @click="reWatch">
+            <img src="../assets/img/mytrip/p6/rewatch-white.png" alt>再看一遍
           </div>
         </div>
       </div>
-      <div v-show="!openInApp" class="bottom_h5" v-bind:class="{above7:above7}">
-        <div class="btn" @click="getGiftInh5">
-          <img src="../assets/img/mytrip/p6/gift.png" alt>领取新手礼包
-        </div>
-        <div class="tip">领取礼包需下载APP</div>
-        <div class="re" @click="reWatch">
-          <img src="../assets/img/mytrip/p6/rewatch-white.png" alt>再看一遍
-        </div>
-      </div>
-    </div>
-      
     </div>
     <div class="share_menu" v-bind:class="{show:shareShow}">
       <div>分享到：</div>
@@ -365,32 +382,35 @@ export default {
       avatarBase64: "",
       uid: "",
       shareShow: false,
-      enterShow:false,
-      isPlay:false,
-      loading:true,
-      isWeixin:false,
-      above7:false
+      enterShow: false,
+      isPlay: false,
+      loading: true,
+      isWeixin: false,
+      above7: false
     };
   },
   components: {
     Bottom
   },
   mounted() {
-    console.log('2点31打了一个包');
-    console.log(location.href)
+    console.log("2点31打了一个包");
+    console.log(location.href);
     this.isWeixin = isWeixin;
     var u = navigator.userAgent.toLowerCase();
-    this.openInApp = u.indexOf('immusician')!=-1 || u.indexOf('buluobang')!=-1 || u.indexOf('bangtabs')!=-1;
+    this.openInApp =
+      u.indexOf("immusician") != -1 ||
+      u.indexOf("buluobang") != -1 ||
+      u.indexOf("bangtabs") != -1;
     this.uid = getQueryVariable("uid");
     this.bindTouchEvent();
     this.initLoading();
     autoPlayAudio("myTripAudio");
     this.bindCloseWindow();
     countVisit(1);
-    this.above7 = window.innerHeight>700;
-    console.log('----above7---')
-    console.log(this.above7)
-    console.log('----above7---')
+    this.above7 = window.innerHeight > 700;
+    console.log("----above7---");
+    console.log(this.above7);
+    console.log("----above7---");
     //this.bindAudioEvent();
     //this.imgToBase64('http://img.iguitar.immusician.com/avatar/cf8fb4dc146efe58190dd1706f04be95.jpg');
   },
@@ -440,13 +460,13 @@ export default {
     }
   },
   methods: {
-    playAudio(){
-      console.log('playAudio');
+    playAudio() {
+      console.log("playAudio");
       var audio = document.querySelector("#myTripAudio");
-      if(this.isPlay){
+      if (this.isPlay) {
         this.isPlay = false;
         audio.pause();
-      }else{
+      } else {
         this.isPlay = true;
         audio.play();
       }
@@ -467,7 +487,7 @@ export default {
 
       function getMycount() {
         return new Promise((resolve, reject) => {
-          console.log('开始请求数据')
+          console.log("开始请求数据");
           that.axios
             .get(`${baseUrl}/v3/user_info/?uid=${that.uid}`)
             .then(res => {
@@ -486,14 +506,15 @@ export default {
               that.play_duration_lable = res.play_duration_lable; //超过多少人
               that.play_a_count = res.play_a_count; //成绩A的次数
               that.play_a_lable = res.play_a_lable; //成绩超越的人
-              document.title = that.userInfo.nickname + '同学2018的学琴成绩单，为我加油吧！';
+              document.title =
+                that.userInfo.nickname + "同学2018的学琴成绩单，为我加油吧！";
               that.$nextTick(() => {
                 that.createResultImg();
               });
               responseImgLoad();
               resolve();
             });
-            console.log('开始请求数据111')
+          console.log("开始请求数据111");
         });
       }
       promiseList.push(getMycount());
@@ -544,8 +565,9 @@ export default {
         sum = 0;
       var fakeTemp = 0;
       var minPersent = (1 / bgList.length) * 100;
-      for(var i=0;i<bgList.length;i++){
-        var style = bgList[i].currentStyle || window.getComputedStyle(bgList[i], false);
+      for (var i = 0; i < bgList.length; i++) {
+        var style =
+          bgList[i].currentStyle || window.getComputedStyle(bgList[i], false);
         //console.log(style.backgroundImage.slice(4, -1).replace(/"/g, ""))
         //console.log(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
         bgArr.push(style.backgroundImage.match(/url\(\"?(.*)\"\)/)[1]);
@@ -590,7 +612,7 @@ export default {
       }
       Promise.all(promiseList).then(res => {
         document.querySelector("#progressStatus").innerHTML = "加载完成";
-        that.loading= false;
+        that.loading = false;
         that.enterShow = true;
         that.$set(that.page1, "fadeIn", true);
         that.$set(that.page1, "animationStart", true);
@@ -665,17 +687,17 @@ export default {
     },
     reWatch() {
       console.log("qweqwe");
-      if(this.openInApp){
-        location.href = this.updateUrl(window.location.href)
-      }else{
+      if (this.openInApp) {
+        location.href = this.updateUrl(window.location.href);
+      } else {
         location.reload();
         //this.$router.go(0);
       }
     },
     createResultImg() {
-      console.log('开始画图')
+      console.log("开始画图");
       this.imgToBase64(this.userInfo.avatar).then(res => {
-        console.log('base64生成完成')
+        console.log("base64生成完成");
         this.avatarBase64 = res;
         document.querySelector(".page.p6").classList.add("visi");
         html2canvas(document.querySelector(".result_wrapper"), {
@@ -698,28 +720,30 @@ export default {
         });
       });
     },
-    updateUrl(url,key){
-        var key= (key || 't') +'=';  //默认key是"t",可以传入key自定义
-        var reg=new RegExp(key+'\\d+');  //正则：t=1472286066028
-        var timestamp=+new Date();
-        if(url.indexOf(key)>-1){ //有时间戳，直接更新
-            return url.replace(reg,key+timestamp);
-        }else{  //没有时间戳，加上时间戳
-            if(url.indexOf('\?')>-1){
-                var urlArr=url.split('\?');
-                if(urlArr[1]){
-                    return urlArr[0]+'?'+key+timestamp+'&'+urlArr[1];
-                }else{
-                    return urlArr[0]+'?'+key+timestamp;
-                }
-            }else{
-                if(url.indexOf('#')>-1){
-                    return url.split('#')[0]+'?'+key+timestamp+location.hash;
-                }else{
-                    return url+'?'+key+timestamp;
-                }
-            }
+    updateUrl(url, key) {
+      var key = (key || "t") + "="; //默认key是"t",可以传入key自定义
+      var reg = new RegExp(key + "\\d+"); //正则：t=1472286066028
+      var timestamp = +new Date();
+      if (url.indexOf(key) > -1) {
+        //有时间戳，直接更新
+        return url.replace(reg, key + timestamp);
+      } else {
+        //没有时间戳，加上时间戳
+        if (url.indexOf("?") > -1) {
+          var urlArr = url.split("?");
+          if (urlArr[1]) {
+            return urlArr[0] + "?" + key + timestamp + "&" + urlArr[1];
+          } else {
+            return urlArr[0] + "?" + key + timestamp;
+          }
+        } else {
+          if (url.indexOf("#") > -1) {
+            return url.split("#")[0] + "?" + key + timestamp + location.hash;
+          } else {
+            return url + "?" + key + timestamp;
+          }
         }
+      }
     },
     imgToBase64(url) {
       var url = url + "?" + new Date().valueOf();
@@ -776,7 +800,7 @@ export default {
     },
     share(num) {
       this.hideShare();
-      var title = this.userInfo.nickname + '同学2018的学琴成绩单，为我加油吧！';
+      var title = this.userInfo.nickname + "同学2018的学琴成绩单，为我加油吧！";
       countShare(1);
       if (platForm == "IOS") {
         webkit.messageHandlers.Share.postMessage({
@@ -789,11 +813,11 @@ export default {
         WebShare.share(location.href, 0, num, title);
       }
     },
-    bindCloseWindow(){
-      window.onbeforeunload = function (e) {
-          var audio = document.querySelector("#myTripAudio");
-          audio.pause();
-          audio.currentTime = 0;
+    bindCloseWindow() {
+      window.onbeforeunload = function(e) {
+        var audio = document.querySelector("#myTripAudio");
+        audio.pause();
+        audio.currentTime = 0;
       };
     }
   }
@@ -801,21 +825,21 @@ export default {
 </script>
 <style lang="less" scoped>
 @import url("./../assets/css/common.less");
-.music_icon{
+.music_icon {
   z-index: 999;
   width: 44px;
   position: absolute;
   right: 60px;
-  top:60px;
-  img{
+  top: 60px;
+  img {
     width: 44px;
   }
 }
-.music_icon.app{
-  top:90px;
+.music_icon.app {
+  top: 90px;
 }
-.music_icon.hide{
-  visibility: hidden
+.music_icon.hide {
+  visibility: hidden;
 }
 .container {
   position: relative;
@@ -844,12 +868,12 @@ export default {
   visibility: visible;
   background: url("../assets/img/mytrip/loading/bg.jpg") no-repeat center;
   background-size: cover;
-  .middle_wrapper{
+  .middle_wrapper {
     width: 100%;
     position: absolute;
-    top:50%;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%)
+    transform: translateX(-50%);
   }
   .uk {
     width: 100px;
@@ -859,23 +883,23 @@ export default {
     margin-left: -50px;
     animation: float 1700ms linear infinite alternate forwards;
   }
-  @keyframes float{
+  @keyframes float {
     0% {
-        //transform: translate3d(0,0px,0);
-        transform: none
+      //transform: translate3d(0,0px,0);
+      transform: none;
     }
-    
+
     100% {
-        transform: translate3d(0,50px,0);
+      transform: translate3d(0, 50px, 0);
     }
   }
-  .btn{
-      width: 270px;
-      position: absolute;
-      top:50%;
-      left: 50%;
-      margin-left: -135px;
-    }
+  .btn {
+    width: 270px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -135px;
+  }
 }
 .p1 {
   z-index: 10;
@@ -921,13 +945,13 @@ export default {
       width: 36px;
     }
   }
-  .logo_area.app{
+  .logo_area.app {
     right: 125px !important;
-    top:90px !important;
+    top: 90px !important;
   }
-  .logo_area.weixin{
+  .logo_area.weixin {
     right: 30px !important;
-    top:30px !important;
+    top: 30px !important;
   }
   .text_img {
     position: absolute;
@@ -1100,7 +1124,6 @@ export default {
       width: 313px;
     }
   }
-  
 }
 .p3 {
   z-index: 30;
@@ -1140,12 +1163,12 @@ export default {
     }
     .t5 {
       font-family: PingFangSC-Regular;
-      color: #99FFED
+      color: #99ffed;
     }
-    .t3{
-      .instru{
+    .t3 {
+      .instru {
         font-size: 36px;
-        color:#99FFED
+        color: #99ffed;
       }
     }
   }
@@ -1579,10 +1602,10 @@ export default {
         background: url("../assets/img/mytrip/p6/btn_bg.png") no-repeat center;
         background-size: cover;
       }
-      .left{
+      .left {
         width: 250px;
         height: 80px;
-        img{
+        img {
           margin-right: 6px;
         }
       }
@@ -1770,14 +1793,14 @@ export default {
     width: 52px;
   }
 }
-.bl{
+.bl {
   font-size: 38px;
-  color:#99FFED !important
+  color: #99ffed !important;
 }
-.p6wrapper{
+.p6wrapper {
   padding-top: 2%;
 }
-.p6wrapper.openInApp{
+.p6wrapper.openInApp {
   padding-top: 40px;
 }
 </style>
