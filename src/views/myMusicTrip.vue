@@ -1563,6 +1563,84 @@ export default {
       }
     }
   }
+  @media only screen
+  and (min-device-width : 518px){
+    .result_wrapper{
+      padding-top: 10px !important
+    }
+    .result{
+      width: 500px !important;
+      height: 704px !important;
+      .name_img {
+        width: 400px !important;
+      }
+      .learn_content{
+        top: 150px !important;
+        font-size: 22px !important;
+        line-height: 30px !important;
+      }
+      .qr_area {
+        position: absolute;
+        right: 40px;
+        bottom: 40px;
+        display: flex;
+        align-items: center;
+        font-size: 17px;
+        font-family: PingFangSC-Regular;
+        color: rgba(102, 102, 102, 1);
+        line-height: 34px;
+        .left {
+          text-align: right;
+          margin-right: 20px;
+        }
+        .right {
+          img {
+            width: 95px;
+          }
+        }
+      }
+    }
+    .result_main{
+      top:160px !important
+    }
+    .userinfo {
+      position: absolute;
+      left: 0;
+      top: 70px !important;
+      width: 100%;
+      text-align: center;
+      font-family: PingFangSC-Regular;
+      font-size: 26px !important;
+      color: #d08b6f;
+      //box-shadow:1px 6px 8px 0px rgba(208, 111, 139, 0.35);
+      .nickname {
+        margin-bottom: 10px !important;
+        font-size: 24px !important;
+      }
+      .result_title {
+        font-family: "noto-bold";
+      }
+    }
+    .tip{
+      margin-bottom: 0px !important
+    }
+    .re{
+      img{
+        width: 20px !important;
+      }
+      font-size: 20px
+    }
+    .bottom_app,
+  .bottom_h5 {
+    position: relative;
+    top: -100px !important;
+  }
+  .bottom_app.above7,
+  .bottom_h5.above7 {
+    position: relative;
+    top: -90px !important;
+  }
+  }
   .bottom_app,
   .bottom_h5 {
     position: relative;
